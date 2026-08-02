@@ -33,3 +33,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0008](0008-kernel-combinator-exports.md) | Kernel combinator export strategy | Accepted |
 | [0009](0009-declaration-build-under-composite.md) | Declaration bundling under TypeScript project references | Accepted |
 | [0010](0010-config-di-token.md) | Configuration composition via a dependency-injection token | Accepted |
+| [0011](0011-logging-abstractions-only.md) | Logging ships abstractions only; the development ConsoleSink is deferred | Accepted |

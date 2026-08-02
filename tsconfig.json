@@ -4,6 +4,7 @@
     { "path": "packages/kernel" },
     { "path": "packages/errors" },
     { "path": "packages/di" },
-    { "path": "packages/config" }
+    { "path": "packages/config" },
+    { "path": "packages/logging" }
   ]
 }
