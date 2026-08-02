@@ -1,3 +1,22 @@
+---
+title: Knowledge Repository Constitution
+id: knowledge-readme
+document: knowledge/README.md
+document_type: normative
+authority: Process
+version: 1.0
+status: Frozen
+owner: Knowledge Architect
+reviewed_by: Independent AI Architecture Reviewer
+provenance: Executive Decision
+last_updated: 2026-08-02
+depends_on: []
+used_by:
+  - All human contributors
+  - All AI contributors
+loading_priority: Critical
+---
+
 # Knowledge Repository Constitution
 
 This document governs the knowledge repository located at `knowledge/`. It defines how knowledge is organized, written, reviewed, versioned, referenced, and consumed by AI agents and human contributors.

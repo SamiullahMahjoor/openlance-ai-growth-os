@@ -1,3 +1,46 @@
+---
+id: OL-KNOW-COMPANY-COMPANY
+document: knowledge/company/company.md
+
+title: Company Overview
+
+version: 1.0
+status: Frozen
+
+document_type: normative
+authority: Company
+
+owner: Founder
+reviewed_by: Independent AI Architecture Reviewer
+
+last_updated: 2026-08-02
+
+depends_on: []
+
+used_by:
+  - CMO Agent
+  - Content Marketing Director
+  - AI Copywriter
+  - SEO Director
+  - Employer Acquisition Specialist
+  - Freelancer Growth Specialist
+  - Customer Support Agent
+  - Partnership Manager
+  - Community Manager
+  - Product Manager
+  - Every AI Agent
+
+provenance:
+  - Founder Approved Company Overview
+
+loading_priority: Critical
+
+summary: >
+  The primary source of truth for what Open Lance is: the company
+  identity, mission, vision, values, marketplace model, and the rules AI
+  agents must remember. Every other document derives from it.
+---
+
 # Company Overview
 
 Open Lance is a two-sided freelance marketplace that connects businesses (clients) who post work with freelancers who find work, deliver it, and get paid. The brand tagline is "Built by freelancers, for freelancers."

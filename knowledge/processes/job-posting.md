@@ -4,14 +4,14 @@ document: knowledge/processes/job-posting.md
 
 title: Open Lance Job Posting Process
 
-version: 0.1
-status: Draft
+version: 1.0
+status: Frozen
 
 document_type: normative
 authority: Process
 
 owner: Product Manager
-reviewed_by: Pending
+reviewed_by: Independent AI Architecture Reviewer
 
 last_updated: 2026-08-02
 

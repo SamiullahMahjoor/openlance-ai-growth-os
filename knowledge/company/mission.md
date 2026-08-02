@@ -2,16 +2,16 @@
 id: OL-KNOW-COMPANY-MISSION
 title: Open Lance Mission
 document: knowledge/company/mission.md
-version: 0.1
-status: Draft
+version: 1.0
+status: Frozen
 
 document_type: normative
 authority: Mission
 
 owner: Founder
-reviewed_by: Pending
+reviewed_by: Independent AI Architecture Reviewer
 
-last_updated: 2026-08-01
+last_updated: 2026-08-02
 
 depends_on:
   - knowledge/company/company.md

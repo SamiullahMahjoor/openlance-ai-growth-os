@@ -1,13 +1,23 @@
 ---
-title: Open Lance Vision
+id: OL-KNOW-COMPANY-VISION
 document: knowledge/company/vision.md
-version: 1.0
+
+title: Open Lance Vision
+
+version: 1.1
 status: Frozen
+
+document_type: normative
+authority: Vision
+
 owner: Founder
-reviewed_by: AI Architecture Review
-last_updated: 2026-08-01
+reviewed_by: Independent AI Architecture Reviewer
+
+last_updated: 2026-08-02
+
 depends_on:
   - knowledge/company/company.md
+
 used_by:
   - Chief Growth Officer
   - Brand Strategist
@@ -15,6 +25,16 @@ used_by:
   - Freelancer Growth Specialist
   - Content Marketing Director
   - SEO Director
+
+provenance:
+  - Founder Approved Vision Statement
+
+loading_priority: Critical
+
+summary: >
+  Defines Open Lance's long-term vision and the direction against which
+  strategic decisions are evaluated. It expands on the company definition
+  and does not restate it.
 ---
 
 # Open Lance Vision
@@ -173,7 +193,7 @@ This document works together with:
 - knowledge/company/principles.md
 - knowledge/company/metrics.md
 - knowledge/product/pricing.md
-- knowledge/brand/branding.md
+- knowledge/brand/brand.md
 
 These documents should be consulted instead of duplicating their content here.
 

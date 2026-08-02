@@ -4,12 +4,12 @@ id: knowledge-contributing
 document: knowledge/CONTRIBUTING.md
 document_type: normative
 authority: Process
-version: 0.1
-status: Draft
+version: 1.0
+status: Frozen
 owner: Knowledge Architect
-reviewed_by: pending
+reviewed_by: Independent AI Architecture Reviewer
 provenance: Executive Decision; operationalizes knowledge/README.md
-last_updated: 2026-08-01
+last_updated: 2026-08-02
 depends_on:
   - knowledge/README.md
 used_by:
