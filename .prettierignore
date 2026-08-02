@@ -1,0 +1,21 @@
+# Constitutional layers are immutable and hand-authored; never reformat them.
+ai/
+knowledge/
+agents/
+prompts/
+templates/
+
+# Design and governance docs are hand-authored markdown.
+docs/
+
+# Generated / vendored
+node_modules/
+dist/
+docs-api/
+coverage/
+.turbo/
+pnpm-lock.yaml
+CHANGELOG.md
+
+# Markdown is hand-authored throughout this repo.
+**/*.md

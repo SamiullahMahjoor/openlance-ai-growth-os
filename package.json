@@ -1,0 +1,41 @@
+{
+  "name": "@openlance/aios-root",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OpenLance AI Growth OS implementation monorepo. Engineering substrate for the frozen constitutional architecture under ai/ and knowledge/.",
+  "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": ">=22.11.0",
+    "pnpm": ">=11"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "docs": "turbo run docs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "depcruise": "depcruise packages tools apps --config .dependency-cruiser.cjs",
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run depcruise && pnpm run test && pnpm run build",
+    "scaffold": "plop",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@openlance/aios-eslint-config": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "dependency-cruiser": "^16.9.0",
+    "eslint": "^9.17.0",
+    "plop": "^4.0.1",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "turbo": "^2.3.3",
+    "typedoc": "^0.27.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

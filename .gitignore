@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+docs-api/
+*.tsbuildinfo
+
+# Turborepo
+.turbo/
+
+# Test / coverage
+coverage/
+
+# Logs and OS noise
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+*.swp
+
+# Env (values are never committed; see aios-config secret abstraction)
+.env
+.env.*
+!.env.example

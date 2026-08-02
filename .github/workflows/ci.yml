@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  constitutional-guard:
+    name: Constitutional guard (Rule 6, criterion 1)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fail if any constitutional document changed
+        shell: bash
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ]; then base="${{ github.event.before }}"; fi
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            echo "No base commit to diff against; skipping guard."
+            exit 0
+          fi
+          changed="$(git diff --name-only "$base" HEAD || true)"
+          if echo "$changed" | grep -E '^(ai|knowledge)/' ; then
+            echo "::error::Implementation changes must never modify ai/ or knowledge/ (immutable constitution)."
+            exit 1
+          fi
+          echo "No constitutional documents changed."
+
+  build-and-validate:
+    name: Build and validate (Definition of Done)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm run typecheck
+      - name: Lint
+        run: pnpm run lint
+      - name: Format check
+        run: pnpm run format:check
+      - name: Dependency graph (Rule 2)
+        run: pnpm run depcruise
+      - name: Test
+        run: pnpm run test
+      - name: Build
+        run: pnpm run build
