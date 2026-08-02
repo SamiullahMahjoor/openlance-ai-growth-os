@@ -30,3 +30,5 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0005](0005-dependency-injection.md) | Custom dependency-injection container | Accepted |
 | [0006](0006-result-error-handling.md) | Result pattern for domain error handling | Accepted |
 | [0007](0007-design-first-cadence.md) | Design-first delivery cadence | Accepted |
+| [0008](0008-kernel-combinator-exports.md) | Kernel combinator export strategy | Accepted |
+| [0009](0009-declaration-build-under-composite.md) | Declaration bundling under TypeScript project references | Accepted |
