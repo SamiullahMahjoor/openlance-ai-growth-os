@@ -1,0 +1,182 @@
+# Phase 2A, Permanent Engineering Rules
+
+**Type:** Implementation governance. **Scope:** the implementation only.
+These rules do not modify, replace, reinterpret, or extend the constitutional architecture under `ai/` and `knowledge/`. They exist so that implementation stays permanently aligned with the frozen constitution. They are binding on every Phase 2A package and every later phase.
+
+**Standing constraints they operate under:**
+- No rule introduces an AI concept, business logic, or runtime behavior.
+- No rule changes constitutional ownership, dependencies, or namespaces.
+- Where implementation appears to need an architectural concept the constitution does not define, work stops and architectural clarification is requested (the "never invent architecture" gate); a rule below never fills that gap by invention.
+
+---
+
+## Rule 1, Public API Boundary
+
+**Statement.** Every package exposes exactly one supported public API, reached only through the package entry point. Internal files are private; deep imports into internals are prohibited.
+
+**Each package defines:**
+- **Public entry point:** `src/index.ts` (compiled to the package `exports["."]`). The only importable surface.
+- **Internal namespace:** `src/internal/**`, private, never re-exported from the barrel.
+- **Exported contracts:** the types, interfaces, and factories the barrel re-exports (the supported API surface).
+- **Internal implementation boundary:** everything not re-exported by the barrel is internal and unsupported.
+
+**Enforcement (automatic).**
+1. `package.json` `exports` map declares only `"."` pointing to the built barrel; there are no subpath exports, so `@openlance/aios-kernel/src/internal/x` fails module resolution.
+2. `main` / `module` / `types` point only to the barrel.
+3. ESLint `import/no-internal-modules` (and `no-restricted-imports` patterns) forbid importing `@openlance/aios-*/src/**` and any `dist/internal/**`.
+4. dependency-cruiser `not-to-deep-import` rule: cross-package imports must resolve to a barrel, never a nested module.
+5. TypeScript `paths` map each package to its barrel only.
+
+**Ownership.** Owned by Build & Dev Infrastructure (subsystem 09), which ships the `exports` convention, the ESLint rule, and the depcruise rule. Each package owns keeping its `src/internal/**` truly private.
+
+**Review requirements.** Any change that widens a package's public surface (a new export) requires review by a maintainer of that package; adding a subpath export is prohibited and fails CI.
+
+**CI integration.** `lint` and `depcruise` jobs fail the build on any deep import or subpath export. Required status checks.
+
+**Acceptance criteria.** A deep import anywhere in the repo fails `lint` and `depcruise`; every package has exactly one barrel and an `exports` map with a single `"."` entry; no package re-exports anything from `src/internal/**`.
+
+---
+
+## Rule 2, Dependency Graph Enforcement
+
+**Statement.** The constitutional dependency graph (`ai/architecture/dependency-map.md`) is immutable and is enforced automatically. The build fails on any violation, and no manual review may override the checks.
+
+**Complete validation strategy.**
+- **Source of truth:** `.dependency-cruiser.cjs`, whose rules are derived from `dependency-map.md` (substrate layering plus the reserved namespace edges).
+- **Cyclic dependency detection:** `no-circular` (severity error) across all packages.
+- **Forbidden package references:** each package declares an allowed dependency set; an import outside it fails. Substrate order `kernel < errors < di < config < logging < events < plugins`; namespace edges match the frozen map exactly (for example Evaluation observes but is not depended upon; Runtime depends on Agents/Reasoning/Retrieval; Tools on Safety).
+- **Architectural layer validation:** a `layers` ruleset asserts no package imports a more-operational layer than itself.
+- **Package boundary validation:** only barrels are importable across packages (shared with Rule 1's `not-to-deep-import`).
+- **Graph snapshot:** a committed snapshot of the resolved graph; any new edge produces a reviewable diff, so graph changes are never silent.
+- **CI enforcement:** a `depcruise` job runs on every push and pull request.
+- **Pull request validation:** `depcruise` (and `lint`, `typecheck`, `test`, `build`) are required status checks; branch protection blocks merge on failure and applies to administrators (`enforce_admins`), so no manual override is possible.
+
+**Ownership.** Owned by Build & Dev Infrastructure (subsystem 09). The ruleset is the single encoding of the frozen graph; a change to it requires an ADR that cites the constitutional edge it reflects, and it may never add an edge the constitution does not define.
+
+**Review requirements.** A change to `.dependency-cruiser.cjs` requires an ADR and maintainer review that confirms it mirrors `dependency-map.md` and introduces no new edge.
+
+**CI integration.** `depcruise` is a required, non-overridable check; a red graph blocks merge.
+
+**Acceptance criteria.** Introducing a cycle, a forbidden reference, a wrong-direction edge, or a deep import fails CI; the enforced graph is identical to `dependency-map.md`; no path exists to merge a violating change.
+
+---
+
+## Rule 3, Architecture Decision Records (ADR)
+
+**Statement.** Engineering decisions are separate from constitutional decisions. Every implementation-level decision the constitution does not fix is recorded as an immutable ADR. An ADR never redefines constitutional ownership.
+
+**Location and format.** ADRs live under [`docs/implementation/adr/`](adr/), one file per decision, `NNNN-kebab-title.md`, using [`adr/0000-template.md`](adr/0000-template.md). Fields: identifier, title, status, date, context, decision, rationale, consequences, related constitutional references, related ADRs.
+
+**Statuses.** `Proposed` -> `Accepted` -> (`Superseded by ADR-XXXX` | `Deprecated`). An Accepted ADR is immutable; it is superseded by a new ADR, never edited.
+
+**What requires an ADR.** Any decision not defined by the constitution: engineering/repository/build tooling, package management, testing framework, performance strategy, and implementation strategies. Anything that would touch constitutional ownership is out of scope for an ADR and triggers the "never invent architecture" gate instead.
+
+**Ownership.** Proposed by the engineering owner (AI Systems Architect, engineering capacity), recorded permanently. The ADR index in `adr/README.md` lists all records and their status.
+
+**Review requirements.** An ADR moves to Accepted only after review; a decision that reverses an Accepted ADR requires a new superseding ADR, never an in-place edit.
+
+**CI integration.** A `docs-check` job validates ADR front matter (required fields, valid status) and that every ADR referenced by a package or by `.dependency-cruiser.cjs` exists.
+
+**Acceptance criteria.** Every non-constitutional engineering decision in the repo is traceable to an Accepted ADR; no ADR alters constitutional ownership; the template and index exist and are enforced.
+
+---
+
+## Rule 4, Package Stability Classification
+
+**Statement.** Every package carries a stability classification that sets its expected change frequency, compatibility expectations, and the review required before it changes.
+
+**Model.**
+
+| Stability | Change frequency | Compatibility expectation | Review before change |
+|---|---|---|---|
+| Very High | Rare | Strong backward compatibility; breaking change needs a generation bump | Strictest: 2 maintainer approvals + ADR for any public-surface change |
+| High | Low | Backward compatible within a generation | 2 approvals; ADR for public-surface change |
+| Medium | Moderate | Compatible via deprecation windows | 1 maintainer approval |
+| Low | Frequent | Best effort | 1 approval |
+| Experimental | Unrestricted | None | Normal review |
+
+**Where recorded.** `package.json` `aios.stability` per package, plus the authoritative table below.
+
+**Phase 2A classification.**
+
+| Package | Stability | Rationale |
+|---|---|---|
+| `kernel` | Very High | Foundation; everything depends on it |
+| `errors` | Very High | Foundational failure contracts |
+| `di` | High | Composition mechanism; wide blast radius |
+| `config` | High | Every package reads config |
+| `logging` | Medium | Widely used, but additive by nature |
+| `events` | Medium | Internal contracts, additive |
+| `plugins` | Medium | Extension seam, additive |
+| `testing` | Low | Dev tooling; iterates freely |
+| tooling (`tools/*`, build) | Low | Dev infrastructure |
+| `apps/dev-harness` | Experimental | Integration proof only |
+| reserved namespace packages | Experimental | Not built in 2A |
+
+**Ownership.** The classification model is owned by Build & Dev Infrastructure; each package owns its declared `aios.stability`. Escalating a package to a higher stability requires an ADR.
+
+**Review requirements.** As per the model table; Very High packages require the strictest review and an ADR for any public-surface change.
+
+**CI integration.** `docs-check` asserts every package declares `aios.stability` and that it matches the authoritative table; a mismatch fails.
+
+**Acceptance criteria.** Every package has a declared, consistent stability; Very High packages cannot change their public surface without an ADR and the strictest review; the model is documented once and enforced.
+
+---
+
+## Rule 5, Performance Baseline Policy
+
+**Statement.** Every engineering subsystem defines measurable performance baselines before any optimization work. Measurements are observational and never change behavior. Baselines become regression gates in later phases.
+
+**Baseline areas (Phase 2A).**
+
+| Area | Metric | Method |
+|---|---|---|
+| Startup | Container build + module registration time | bench harness, fixed module set |
+| DI resolution | Time per resolve, per lifetime | bench harness, fixed graph |
+| Configuration loading | Merge + validate time for a fixed source set | bench harness |
+| Logging overhead | Cost per record (enabled vs below-threshold) | bench harness |
+| Event dispatch | Time per publish for N handlers | bench harness |
+| Plugin discovery | Discover + validate + load time for N plugins | bench harness |
+| Build performance | Cold and cached `turbo build` wall time | CI timing |
+| Test execution | Full `vitest run` wall time | CI timing |
+
+**Method and determinism.** Benchmarks run on fixed inputs with the determinism seams (`FixedClock`, `SequentialId`) so runs are comparable. Results are recorded under `benchmarks/` as committed baseline files. Measurement code lives outside package `src` and is never on a runtime path, so it cannot change behavior.
+
+**Regression gating.** In Phase 2A baselines are established and observational only. In later phases, CI compares a run against the committed baseline within a tolerance and fails on regression beyond it. The gate is added when a baseline exists, never before.
+
+**Ownership.** The policy is owned by Build & Dev Infrastructure; each subsystem owns its own baseline definition and the measurement method for its areas.
+
+**Review requirements.** Changing a committed baseline requires review and a note on why (a legitimate cost change vs a regression); a silent baseline change is prohibited.
+
+**CI integration.** A `bench` job runs the harness and, in Phase 2A, records results as artifacts (no gate yet); the gate is enabled per area once its baseline is committed.
+
+**Acceptance criteria.** Each area has a defined metric and method; baselines are reproducible under the determinism seams; measurement never touches a runtime path; the regression-gate mechanism is documented and ready to enable in later phases.
+
+---
+
+## Rule 6, Definition of Done
+
+**Statement.** No package, subsystem, milestone, or implementation phase is complete until it satisfies every mandatory engineering quality gate. Completion is determined by objective validation only; partial completion is never complete; no manual approval overrides a failed gate.
+
+Rule 6 is specified in full in a dedicated document: [DEFINITION-OF-DONE.md](DEFINITION-OF-DONE.md). It defines twelve mandatory completion criteria (constitutional compliance, architecture compliance, unit testing, integration testing, dependency-graph validation, static analysis, public-API verification, documentation, acceptance criteria, performance baseline, ADRs, and CI), the consolidated checklist, ownership, responsibilities, enforcement, the validation workflow, CI integration, and the review process.
+
+**Ownership.** Process and gates owned by Build & Dev Infrastructure; each package owns satisfying the DoD for its scope; milestone and phase completion owned by the engineering owner.
+
+**Enforcement.** Every automated gate is a required, non-overridable CI check; a CI path guard fails any implementation change that modifies `ai/**` or `knowledge/**`; merge is blocked while any required check fails.
+
+**Acceptance criteria.** The checklist is applied to every completion; no unit is marked complete with any criterion unmet; the DoD is applied uniformly to all future phases.
+
+---
+
+## Cross-rule ownership summary
+
+| Rule | Owner | Primary enforcement | Required CI check |
+|---|---|---|---|
+| 1 Public API Boundary | Build & Dev Infra + each package | `exports` map, ESLint, depcruise | `lint`, `depcruise` |
+| 2 Dependency Graph | Build & Dev Infra | dependency-cruiser from the frozen map | `depcruise` (non-overridable) |
+| 3 ADR | Engineering owner | ADR template + index + front-matter check | `docs-check` |
+| 4 Stability | Build & Dev Infra + each package | `aios.stability` + authoritative table | `docs-check` |
+| 5 Performance Baseline | Build & Dev Infra + each subsystem | bench harness + committed baselines | `bench` (record-only in 2A) |
+| 6 Definition of Done | Build & Dev Infra + each package + engineering owner | full DoD checklist + path guard | all required checks (non-overridable) |
+
+These six rules are permanent implementation governance. They add no AI concept, no business logic, and no runtime behavior; they exist solely to keep the implementation aligned with the immutable constitution.
