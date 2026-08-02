@@ -1,4 +1,8 @@
 {
   "files": [],
-  "references": [{ "path": "packages/kernel" }, { "path": "packages/errors" }]
+  "references": [
+    { "path": "packages/kernel" },
+    { "path": "packages/errors" },
+    { "path": "packages/di" }
+  ]
 }

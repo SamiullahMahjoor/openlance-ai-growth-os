@@ -1,0 +1,43 @@
+{
+  "name": "@openlance/aios-di",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Custom framework-neutral dependency-injection container: typed tokens, three lifetimes, module composition, and deterministic startup validation.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts"
+  },
+  "dependencies": {
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "substrate",
+    "constitution": [],
+    "stability": "High",
+    "apiVersion": "1.0.0",
+    "generation": 1
+  }
+}
