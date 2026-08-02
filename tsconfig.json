@@ -3,6 +3,7 @@
   "references": [
     { "path": "packages/kernel" },
     { "path": "packages/errors" },
-    { "path": "packages/di" }
+    { "path": "packages/di" },
+    { "path": "packages/config" }
   ]
 }
