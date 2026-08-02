@@ -34,3 +34,5 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0009](0009-declaration-build-under-composite.md) | Declaration bundling under TypeScript project references | Accepted |
 | [0010](0010-config-di-token.md) | Configuration composition via a dependency-injection token | Accepted |
 | [0011](0011-logging-abstractions-only.md) | Logging ships abstractions only; the development ConsoleSink is deferred | Accepted |
+| [0012](0012-plugin-load-in-memory.md) | Plugins are loaded from an in-memory provided list | Accepted |
+| [0013](0013-plugin-semver-subset.md) | Internal semver range subset for plugin compatibility | Accepted |

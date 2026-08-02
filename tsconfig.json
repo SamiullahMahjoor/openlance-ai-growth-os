@@ -6,6 +6,7 @@
     { "path": "packages/di" },
     { "path": "packages/config" },
     { "path": "packages/logging" },
-    { "path": "packages/events" }
+    { "path": "packages/events" },
+    { "path": "packages/plugins" }
   ]
 }
