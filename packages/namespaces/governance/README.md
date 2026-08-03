@@ -55,6 +55,17 @@ surface:
   triggers reference other dimensions (authority, autonomy, risk and trust, validation) but derive no
   relationship to them (ADR-0025), because `escalation.md` defers each such determination to its
   owner. Governance defines when escalation is required; the runtime performs it.
+- **Policy enforcement** (`ai/governance/policy-enforcement.md`): **immutable definitions only**
+  (ADR-0020, ADR-0025). `PolicyEnforcementPrinciple` + `POLICY_ENFORCEMENT_PRINCIPLES` (the four
+  principles in order) with descriptions; `PolicyEnforcementMandate` + `POLICY_ENFORCEMENT_MANDATES`
+  (the six absolute mandates in order) with descriptions. **No predicates.** Policy precedence
+  follows the AI Authority Hierarchy owned by `ai/README.md`; the module states that rule as
+  constitutional prose and references its owner, but defines no `PrecedenceLevel` classification, no
+  authority-level enum, and no `prevailsOver` predicate, because the ordering is owned by
+  `ai/README.md`, not by governance (referenced-model non-restatement rule). Resolving which of two
+  real policies prevails is a runtime evaluation over a `Policy`/`PolicyConflict` that governance
+  does not own; it is deferred to the runtime. Governance defines constitutional policy truth; the
+  runtime performs enforcement.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

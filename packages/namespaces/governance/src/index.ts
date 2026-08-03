@@ -49,3 +49,11 @@ export {
   ESCALATION_TRIGGERS,
   ESCALATION_TRIGGER_DESCRIPTIONS,
 } from './escalation.js';
+
+export type { PolicyEnforcementPrinciple, PolicyEnforcementMandate } from './policy-enforcement.js';
+export {
+  POLICY_ENFORCEMENT_PRINCIPLES,
+  POLICY_ENFORCEMENT_PRINCIPLE_DESCRIPTIONS,
+  POLICY_ENFORCEMENT_MANDATES,
+  POLICY_ENFORCEMENT_MANDATE_DESCRIPTIONS,
+} from './policy-enforcement.js';

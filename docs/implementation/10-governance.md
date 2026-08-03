@@ -93,6 +93,16 @@ binding on every remaining governance concern:
   immutable definitions only.
 - The missing models are **never invented** to create executable logic.
 
+**Referenced-model non-restatement rule (permanent corollary).** When a governance concern references
+a classification, ordering, or relationship owned by another constitutional owner, governance records
+only the reference and the governing rule. It must not recreate, restate, or derive the referenced
+model in executable code. This is why the authority ordering stays in the Charter (`ai/README.md`),
+risk levels stay in Risk Management, autonomy levels stay in Autonomy Boundaries, escalation
+evaluation stays in the runtime, and policy precedence *references* the Authority Hierarchy instead of
+reimplementing it. A governance concern may still state the referenced rule as constitutional prose
+(for example, "policy precedence follows the Authority Hierarchy owned by `ai/README.md`"); it may not
+turn the referenced model into an enum, an ordered array, a map, or a predicate.
+
 **Permission Governance (Stage 3)** is the first concern of the second kind. It owns rules
 (principles and mandates) that constrain "authority" (owned by the constitution root, `ai/README.md`),
 grants, and specific permissions (owned by the Agents namespace) - none of which governance owns.
@@ -122,6 +132,20 @@ dimensions (authority, autonomy, risk and trust, validation), but the module der
 to them (ADR-0025): `escalation.md` defers each such determination to that dimension's owner rather
 than defining it, so Escalation references the owner and encodes no cross-dimension predicate or map.
 
+**Policy Enforcement (Stage 6)** is the fourth concern of the second kind and the first to exercise
+the referenced-model non-restatement rule directly. Its four principles and six absolute mandates are
+governance-owned constitutional truth and are exposed as immutable definitions. The precedence rule
+"precedence follows authority" is itself governance-owned (Principle 2 and Mandate 2) and is stated
+verbatim; but the authority *ordering* it draws on (`Charter -> Principle -> Mandate -> Policy ->
+Specification -> Process -> Reference`) is owned by `ai/README.md`, and `policy-enforcement.md` Mandate
+2 and Boundaries attribute it there ("the higher authority level owned by `ai/README.md`"). So the
+module states the precedence rule and references its owner but defines no `PrecedenceLevel`
+classification, no authority-level enum, and no `prevailsOver` predicate - reproducing the ordering in
+executable code would restate a Charter-owned rule and would fail the boundary rule (its input type
+would not be governance-owned). Resolving which of two real policies prevails is a runtime evaluation
+over a `Policy` and a `PolicyConflict` that governance does not own, deferred to the runtime exactly
+as prior stages deferred Authority, ValidationResult, and the escalation evaluation.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -140,7 +164,10 @@ foundational first (later concerns reference the trust and autonomy classificati
 5. **Escalation** - the four escalation principles and the eight absolute escalation triggers, as
    immutable definitions only (`escalation.md`); no predicates (see 7a). Whether a specific action
    meets a trigger (an evaluation over an `Action`/`RuntimeState`) is deferred to the runtime.
-6. **Policy Enforcement** - precedence and `higherAuthorityWins` (`policy-enforcement.md`).
+6. **Policy Enforcement** - the four principles and six absolute mandates as immutable definitions
+   only (`policy-enforcement.md`); no predicates (see 7a). Policy precedence follows the AI Authority
+   Hierarchy owned by `ai/README.md`; the module states that rule and references its owner, but does
+   not reproduce the ordering as an enum or a `prevailsOver` predicate. Conflict resolution deferred.
 7. **Decision-Making** - the decision-governance model (`decision-making.md`).
 8. **Human Oversight** - the oversight model (`human-oversight.md`).
 9. **Change Governance** - the change-governance model (`change-governance.md`).
