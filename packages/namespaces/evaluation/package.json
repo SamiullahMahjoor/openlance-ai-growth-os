@@ -2,11 +2,49 @@
   "name": "@openlance/aios-evaluation",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/evaluation/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI evaluation abstraction (Specification authority, ADR-0024 category 1 Pure Domain Model): the evaluation classifications, immutable definitions and invariants, and pure ordering predicates that express the evaluation specification. No metric mechanism, test harness, or runtime (ai/evaluation/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-EVALUATION-README"
+      "OL-AI-EVALUATION-README",
+      "OL-AI-EVALUATION-EVALUATION",
+      "OL-AI-EVALUATION-EVALUATION-ARCHITECTURE",
+      "OL-AI-EVALUATION-EVALUATION-LIFECYCLE",
+      "OL-AI-EVALUATION-EVALUATION-METRICS",
+      "OL-AI-EVALUATION-EVALUATION-SCORING",
+      "OL-AI-EVALUATION-EVALUATION-VALIDATION",
+      "OL-AI-EVALUATION-EVALUATION-BENCHMARKING",
+      "OL-AI-EVALUATION-EVALUATION-COMPARISON",
+      "OL-AI-EVALUATION-EVALUATION-COMPATIBILITY",
+      "OL-AI-EVALUATION-EVALUATION-BOUNDARIES",
+      "OL-AI-EVALUATION-EVALUATION-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",

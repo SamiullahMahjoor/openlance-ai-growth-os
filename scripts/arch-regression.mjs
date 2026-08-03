@@ -95,12 +95,12 @@ const runCruise = (targets) => {
   }
 };
 
-// Namespace fixtures write scratch barrels only into namespaces that are still reserved (evaluation,
-// operations, evolution), never into an implemented namespace whose real source would be clobbered; a
-// legal fixture may import an implemented namespace by reference without writing to it. Relationships
-// come from the frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed);
-// operations may not depend on evaluation (forbidden); evaluation may not depend on evolution
-// (forbidden); evolution and evaluation may not depend on each other (cycle, forbidden).
+// Namespace fixtures write scratch barrels only into namespaces that are still reserved (operations,
+// evolution), never into an implemented namespace whose real source would be clobbered; a legal fixture
+// may import an implemented namespace by reference without writing to it. Relationships come from the
+// frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed); operations may
+// not depend on evolution (forbidden); evolution may not depend on operations (forbidden); operations
+// and evolution may not depend on each other (cycle, forbidden).
 const scenarios = [
   // --- Legal imports must succeed ---
   {
@@ -136,14 +136,14 @@ const scenarios = [
     files: [
       [
         'packages/namespaces/evolution/src/index.ts',
-        barrel("import '@openlance/aios-evaluation';"),
+        barrel("import '@openlance/aios-operations';"),
       ],
       [
-        'packages/namespaces/evaluation/src/index.ts',
+        'packages/namespaces/operations/src/index.ts',
         barrel("import '@openlance/aios-evolution';"),
       ],
     ],
-    targets: 'packages/namespaces/evolution packages/namespaces/evaluation',
+    targets: 'packages/namespaces/evolution packages/namespaces/operations',
     expect: 'fail',
     rule: 'no-circular',
   },
@@ -161,32 +161,34 @@ const scenarios = [
   {
     name: 'illegal-namespace-edge-bare-import',
     style: 'bare package (namespace)',
+    // operations (deps: governance, runtime) may not import evolution; both are still reserved, so the
+    // edge is exercised without touching any implemented namespace's source.
     files: [
-      ['packages/namespaces/evaluation/src/index.ts', barrel()],
+      ['packages/namespaces/evolution/src/index.ts', barrel()],
       [
         'packages/namespaces/operations/src/index.ts',
-        barrel("import '@openlance/aios-evaluation';"),
+        barrel("import '@openlance/aios-evolution';"),
       ],
     ],
-    targets: 'packages/namespaces/operations packages/namespaces/evaluation',
+    targets: 'packages/namespaces/operations packages/namespaces/evolution',
     expect: 'fail',
     rule: 'namespace-operations',
   },
   {
     name: 'reserved-namespace-forbidden-edge-bare-import',
     style: 'bare package (namespace)',
-    // evaluation (deps: governance only) may not import evolution; both are still reserved, so the
-    // per-namespace allow-list rule is exercised without touching any implemented namespace's source.
+    // evolution (deps: none) may not import operations; both are still reserved, so the per-namespace
+    // allow-list rule is exercised without touching any implemented namespace's source.
     files: [
-      ['packages/namespaces/evolution/src/index.ts', barrel()],
+      ['packages/namespaces/operations/src/index.ts', barrel()],
       [
-        'packages/namespaces/evaluation/src/index.ts',
-        barrel("import '@openlance/aios-evolution';"),
+        'packages/namespaces/evolution/src/index.ts',
+        barrel("import '@openlance/aios-operations';"),
       ],
     ],
-    targets: 'packages/namespaces/evaluation packages/namespaces/evolution',
+    targets: 'packages/namespaces/evolution packages/namespaces/operations',
     expect: 'fail',
-    rule: 'namespace-evaluation',
+    rule: 'namespace-evolution',
   },
   {
     name: 'testing-as-runtime-dep-bare-import',
