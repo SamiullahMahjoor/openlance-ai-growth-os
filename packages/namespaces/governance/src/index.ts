@@ -41,3 +41,11 @@ export {
   VALIDATION_DIMENSIONS,
   VALIDATION_DIMENSION_DESCRIPTIONS,
 } from './validation.js';
+
+export type { EscalationPrinciple, EscalationTrigger } from './escalation.js';
+export {
+  ESCALATION_PRINCIPLES,
+  ESCALATION_PRINCIPLE_DESCRIPTIONS,
+  ESCALATION_TRIGGERS,
+  ESCALATION_TRIGGER_DESCRIPTIONS,
+} from './escalation.js';

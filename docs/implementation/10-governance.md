@@ -112,6 +112,16 @@ what order, with what outcome - is a runtime evaluation over an `Action` and a `
 that governance does not own; it is deferred to the runtime exactly as the Authority model was in
 Stage 3. Governance defines what validation means; the runtime performs it.
 
+**Escalation (Stage 5)** is the third concern of the second kind. Its principles and its eight
+escalation triggers are governance-owned constitutional truth and are exposed as immutable
+definitions; the triggers are disjunctive (an agent escalates whenever any one holds), not a ranked
+scale, so there is no ordering predicate. Whether a specific action meets a trigger is a runtime
+evaluation over an `Action` and a `RuntimeState` that governance does not own, deferred to the
+runtime exactly as ValidationResult was in Stage 4. Several triggers reference other governance
+dimensions (authority, autonomy, risk and trust, validation), but the module derives no relationship
+to them (ADR-0025): `escalation.md` defers each such determination to that dimension's owner rather
+than defining it, so Escalation references the owner and encodes no cross-dimension predicate or map.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -127,7 +137,9 @@ foundational first (later concerns reference the trust and autonomy classificati
    mandates, and the six canonical sources (dimensions) an action is validated against, as immutable
    definitions only (`constitutional-validation.md`); no predicates (see 7a). The per-action
    validation result (an evaluation over an `Action`/`ValidationResult`) is deferred to the runtime.
-5. **Escalation** - the escalation triggers (`escalation.md`).
+5. **Escalation** - the four escalation principles and the eight absolute escalation triggers, as
+   immutable definitions only (`escalation.md`); no predicates (see 7a). Whether a specific action
+   meets a trigger (an evaluation over an `Action`/`RuntimeState`) is deferred to the runtime.
 6. **Policy Enforcement** - precedence and `higherAuthorityWins` (`policy-enforcement.md`).
 7. **Decision-Making** - the decision-governance model (`decision-making.md`).
 8. **Human Oversight** - the oversight model (`human-oversight.md`).

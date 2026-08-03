@@ -46,6 +46,15 @@ surface:
   order, with what outcome) is a runtime evaluation over an `Action`/`ValidationResult` that
   governance does not own; it is deferred to the runtime, exactly as the Authority model was in
   Permission Governance. Governance defines what validation means; the runtime performs it.
+- **Escalation** (`ai/governance/escalation.md`): **immutable definitions only** (ADR-0020,
+  ADR-0025). `EscalationPrinciple` + `ESCALATION_PRINCIPLES` (the four principles in order) with
+  descriptions; `EscalationTrigger` + `ESCALATION_TRIGGERS` (the eight absolute escalation triggers,
+  in order, named the escalation triggers by the document summary and the governance inventory) with
+  descriptions. **No predicates.** Whether a specific action meets a trigger is a runtime evaluation
+  over an `Action`/`RuntimeState` that governance does not own, so it is deferred to the runtime;
+  triggers reference other dimensions (authority, autonomy, risk and trust, validation) but derive no
+  relationship to them (ADR-0025), because `escalation.md` defers each such determination to its
+  owner. Governance defines when escalation is required; the runtime performs it.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that
