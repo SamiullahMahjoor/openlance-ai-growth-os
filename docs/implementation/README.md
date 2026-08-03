@@ -1,6 +1,6 @@
 # Phase 2A, Repository & Framework · Design Package
 
-**Status:** Built. The Phase 2A substrate is implemented and green (with the post-audit hardening pass applied); the 13 AI namespace packages are reserved, not implemented.
+**Status:** FROZEN. The Phase 2A substrate is implemented, fully validated, and frozen (H1 remediation applied, ADR-0019; see [PHASE-2A-FREEZE.md](PHASE-2A-FREEZE.md)); the 13 AI namespace packages are reserved, not implemented.
 **Cadence:** All subsystem designs first → one approval → build in dependency order.
 
 This directory holds the complete Phase 2A engineering design. It builds the **substrate beneath the 14 frozen AI namespaces** and implements **none** of their behavior. The constitutional documents under `ai/` and `knowledge/` are immutable specifications; this design conforms to them and never redesigns, merges, or reinterprets them.
@@ -44,6 +44,7 @@ Six permanent implementation-governance rules bind every package and every later
 | Rules 1 to 6 | [ENGINEERING-RULES.md](ENGINEERING-RULES.md) (Public API Boundary · Dependency Graph Enforcement · ADR · Stability Classification · Performance Baseline · Definition of Done) |
 | Definition of Done | [DEFINITION-OF-DONE.md](DEFINITION-OF-DONE.md) (Rule 6, the twelve mandatory completion gates) |
 | Decisions | [adr/](adr/) (Architecture Decision Records: process, template, and the accepted decisions) |
+| Freeze | [PHASE-2A-FREEZE.md](PHASE-2A-FREEZE.md) (Phase 2A immutability and the allowed-change policy) |
 
 Summary: (1) each package exposes exactly one barrel; deep imports are prohibited and CI-blocked. (2) the frozen dependency graph is enforced by dependency-cruiser as a non-overridable required check. (3) every non-constitutional engineering decision is an immutable ADR that never redefines constitutional ownership. (4) every package carries a stability class that sets its review bar. (5) every subsystem defines observational performance baselines that become regression gates in later phases. (6) nothing is complete until it passes all twelve Definition-of-Done gates, enforced in CI and non-overridable.
 

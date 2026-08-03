@@ -52,6 +52,8 @@ jobs:
         run: pnpm run format:check
       - name: Dependency graph (Rule 2)
         run: pnpm run depcruise
+      - name: Architectural regression (Rule 2, production import enforcement)
+        run: pnpm run arch:check
       - name: Dependency graph snapshot (Rule 2)
         run: pnpm run graph:check
       - name: Docs check (Rules 3 and 4)

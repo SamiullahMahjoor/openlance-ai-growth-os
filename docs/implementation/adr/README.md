@@ -41,3 +41,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0016](0016-realized-compilation-strategy.md) | Realized compilation and type-checking strategy | Accepted |
 | [0017](0017-dev-harness-deferral.md) | Defer apps/dev-harness to the start of the Runtime phase | Accepted |
 | [0018](0018-scaffold-and-golden-fixture-strategy.md) | Scaffold conventions and golden-fixture testing strategy | Accepted |
+| [0019](0019-production-import-graph-enforcement.md) | Enforce the dependency graph against production bare-specifier imports | Accepted |

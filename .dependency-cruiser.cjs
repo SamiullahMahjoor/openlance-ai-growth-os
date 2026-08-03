@@ -148,7 +148,10 @@ module.exports = {
     // golden test cruises the fixture with its own config (tools/scaffold/tests) instead.
     exclude: { path: '(^|/)(dist|docs-api|coverage|\\.turbo|goldenfixture|goldennamespace)/' },
     tsPreCompilationDeps: true,
-    tsConfig: { fileName: 'tsconfig.base.json' },
+    // Resolve bare workspace specifiers (@openlance/aios-*) to each package's SOURCE barrel
+    // via tsconfig `paths` (ADR-0019), so Rule 2 fires against the production bare-import syntax
+    // and not only against relative imports. Production compilation does not use this config.
+    tsConfig: { fileName: 'tsconfig.depcruise.json' },
     enhancedResolveOptions: {
       exportsFields: ['exports'],
       conditionNames: ['import', 'require', 'node', 'default', 'types'],

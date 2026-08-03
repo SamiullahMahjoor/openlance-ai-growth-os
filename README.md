@@ -20,7 +20,7 @@ TypeScript (strict, ESM) on Node.js, pnpm workspaces, Turborepo, Vitest, ESLint,
 
 ```
 pnpm install                 # install the workspace
-pnpm run validate            # typecheck, lint, format, depcruise, graph snapshot, docs-check, test, bench, docs, build
+pnpm run validate            # typecheck, lint, format, depcruise, arch:check, graph snapshot, docs-check, test, bench, docs, build
 pnpm run scaffold            # generate a new package or reserved namespace package
 ```
 

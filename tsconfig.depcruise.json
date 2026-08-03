@@ -1,0 +1,10 @@
+{
+  "//": "dependency-cruiser-only TypeScript config (ADR-0019). It exists so the cruiser resolves bare workspace specifiers (@openlance/aios-*) to each package's SOURCE barrel instead of its built dist/ (which is excluded) or leaving them unresolved. This makes Engineering Rule 2 fire against the production bare-import syntax, exactly as it already does for relative imports. It is NOT used for compilation: packages compile and type-check against built declarations (ADR-0016); production module resolution is unchanged.",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@openlance/aios-*": ["packages/*/src/index.ts", "packages/namespaces/*/src/index.ts"]
+    }
+  }
+}

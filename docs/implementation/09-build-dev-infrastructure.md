@@ -23,7 +23,9 @@ turbo tasks (each cached by content hash) + repo-level gates:
   bench      -> vitest bench --run (Rule 5, record-only)
   docs       -> typedoc --out docs-api
   lint       -> eslint (//#lint root task)
-  depcruise  -> dependency-cruiser (fails on cycle / boundary / deep-import; //#depcruise)
+  depcruise  -> dependency-cruiser (fails on cycle / boundary / deep-import; //#depcruise);
+                resolves bare @openlance/aios-* to source via tsconfig.depcruise.json (ADR-0019)
+  arch:check -> production-syntax architectural regression suite (Rules 1/2; scripts/arch-regression.mjs, ADR-0019)
   graph:check-> resolved package-graph snapshot diff (Rule 2; scripts/graph-snapshot.mjs)
   docs-check -> ADR + metadata + stability + constitution-id + README + .only/.skip (Rules 3/4; scripts/docs-check.mjs)
 

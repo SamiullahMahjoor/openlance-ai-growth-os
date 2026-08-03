@@ -21,9 +21,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "depcruise": "depcruise packages tools apps --config .dependency-cruiser.cjs",
+    "arch:check": "node scripts/arch-regression.mjs",
     "graph:snapshot": "node scripts/graph-snapshot.mjs",
     "graph:check": "node scripts/graph-snapshot.mjs --check",
-    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run depcruise && pnpm run graph:check && pnpm run docs-check && pnpm run test && pnpm run bench && pnpm run docs && pnpm run build",
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run depcruise && pnpm run arch:check && pnpm run graph:check && pnpm run docs-check && pnpm run test && pnpm run bench && pnpm run docs && pnpm run build",
     "scaffold": "plop",
     "changeset": "changeset"
   },
