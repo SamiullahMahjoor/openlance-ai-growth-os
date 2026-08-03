@@ -95,12 +95,12 @@ const runCruise = (targets) => {
   }
 };
 
-// Namespace fixtures write scratch barrels only into namespaces that are still reserved (operations,
-// evolution), never into an implemented namespace whose real source would be clobbered; a legal fixture
-// may import an implemented namespace by reference without writing to it. Relationships come from the
-// frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed); operations may
-// not depend on evolution (forbidden); evolution may not depend on operations (forbidden); operations
-// and evolution may not depend on each other (cycle, forbidden).
+// Only the evolution namespace remains reserved, so namespace fixtures write a scratch barrel into
+// evolution/src/index.ts and, where a second namespace or an implemented target is needed, add a marker
+// probe file (__arch_probe__.ts) into an implemented namespace's src -- which never clobbers its real
+// barrel and is swept afterward, the same pattern the substrate scenarios use. Relationships come from the
+// frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed); operations may not
+// depend on evolution (forbidden); evolution may not depend on operations (evolution deps: none, forbidden).
 const scenarios = [
   // --- Legal imports must succeed ---
   {
@@ -113,10 +113,13 @@ const scenarios = [
   {
     name: 'legal-namespace-bare-import',
     style: 'bare package (namespace)',
-    // operations -> runtime is an allowed edge; runtime is implemented, so the fixture imports the real
-    // runtime barrel by reference and is written only into the still-reserved operations namespace.
+    // operations -> runtime is an allowed edge; both are implemented, so the fixture adds a marker probe
+    // file to operations importing the real runtime and writes no scratch barrel.
     files: [
-      ['packages/namespaces/operations/src/index.ts', barrel("import '@openlance/aios-runtime';")],
+      [
+        'packages/namespaces/operations/src/__arch_probe__.ts',
+        probe("import '@openlance/aios-runtime';"),
+      ],
     ],
     targets: 'packages/namespaces/operations packages/namespaces/runtime',
     expect: 'pass',
@@ -132,18 +135,20 @@ const scenarios = [
   },
   {
     name: 'cycle-bare-import',
-    style: 'bare package (mutual)',
+    style: 'bare package (cycle)',
+    // Only evolution is still reserved, so a two-namespace package cycle cannot be built without writing
+    // an implemented namespace's real barrel (a marker probe is never the package entry, so it cannot close
+    // a package-level cycle). The cycle is therefore formed inside the reserved evolution namespace, with the
+    // closing edge a production bare workspace import (@openlance/aios-evolution): the barrel imports a marker
+    // sibling, and the sibling imports the package back, so no-circular fires against a bare specifier.
     files: [
+      ['packages/namespaces/evolution/src/index.ts', barrel("import './__arch_probe__cycle.js';")],
       [
-        'packages/namespaces/evolution/src/index.ts',
-        barrel("import '@openlance/aios-operations';"),
-      ],
-      [
-        'packages/namespaces/operations/src/index.ts',
+        'packages/namespaces/evolution/src/__arch_probe__cycle.ts',
         barrel("import '@openlance/aios-evolution';"),
       ],
     ],
-    targets: 'packages/namespaces/evolution packages/namespaces/operations',
+    targets: 'packages/namespaces/evolution',
     expect: 'fail',
     rule: 'no-circular',
   },
@@ -161,13 +166,14 @@ const scenarios = [
   {
     name: 'illegal-namespace-edge-bare-import',
     style: 'bare package (namespace)',
-    // operations (deps: governance, runtime) may not import evolution; both are still reserved, so the
-    // edge is exercised without touching any implemented namespace's source.
+    // operations (deps: governance, runtime) may not import evolution; evolution is still reserved and
+    // operations is implemented, so the forbidden edge is a marker probe in operations importing the
+    // reserved evolution barrel.
     files: [
       ['packages/namespaces/evolution/src/index.ts', barrel()],
       [
-        'packages/namespaces/operations/src/index.ts',
-        barrel("import '@openlance/aios-evolution';"),
+        'packages/namespaces/operations/src/__arch_probe__.ts',
+        probe("import '@openlance/aios-evolution';"),
       ],
     ],
     targets: 'packages/namespaces/operations packages/namespaces/evolution',
@@ -177,10 +183,10 @@ const scenarios = [
   {
     name: 'reserved-namespace-forbidden-edge-bare-import',
     style: 'bare package (namespace)',
-    // evolution (deps: none) may not import operations; both are still reserved, so the per-namespace
-    // allow-list rule is exercised without touching any implemented namespace's source.
+    // evolution (deps: none) may not import operations; evolution is still reserved and operations is
+    // implemented, so the reserved evolution barrel imports the real operations package and needs no
+    // scratch barrel written into operations.
     files: [
-      ['packages/namespaces/operations/src/index.ts', barrel()],
       [
         'packages/namespaces/evolution/src/index.ts',
         barrel("import '@openlance/aios-operations';"),

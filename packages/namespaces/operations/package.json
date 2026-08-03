@@ -2,11 +2,49 @@
   "name": "@openlance/aios-operations",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/operations/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI operations abstraction (Specification authority, ADR-0024 category 5 Composition Root): the operational classifications, immutable definitions and invariants, and pure ordering predicates that express the operations specification. No monitoring tool, dashboard, DI wiring, or runtime (ai/operations/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-OPERATIONS-README"
+      "OL-AI-OPERATIONS-README",
+      "OL-AI-OPERATIONS-OPERATIONS",
+      "OL-AI-OPERATIONS-OPERATIONS-ARCHITECTURE",
+      "OL-AI-OPERATIONS-OPERATIONS-LIFECYCLE",
+      "OL-AI-OPERATIONS-OBSERVABILITY",
+      "OL-AI-OPERATIONS-MONITORING",
+      "OL-AI-OPERATIONS-INCIDENT-MANAGEMENT",
+      "OL-AI-OPERATIONS-HEALTH-MANAGEMENT",
+      "OL-AI-OPERATIONS-DIAGNOSTICS",
+      "OL-AI-OPERATIONS-MAINTENANCE",
+      "OL-AI-OPERATIONS-OPERATIONS-BOUNDARIES",
+      "OL-AI-OPERATIONS-OPERATIONS-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
