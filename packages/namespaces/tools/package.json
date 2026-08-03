@@ -2,11 +2,49 @@
   "name": "@openlance/aios-tools",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/tools/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI tool abstraction (Specification authority, ADR-0024 category 4 Infrastructure Adapter): the tool classifications, immutable definitions and invariants, and pure ordering predicates that express the tool specification. No tool engine, runtime, network, or protocol, and no external interaction (ai/tools/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-TOOLS-README"
+      "OL-AI-TOOLS-README",
+      "OL-AI-TOOLS-TOOLS",
+      "OL-AI-TOOLS-TOOL-ARCHITECTURE",
+      "OL-AI-TOOLS-TOOL-LIFECYCLE",
+      "OL-AI-TOOLS-TOOL-CAPABILITIES",
+      "OL-AI-TOOLS-TOOL-SELECTION",
+      "OL-AI-TOOLS-TOOL-EXECUTION",
+      "OL-AI-TOOLS-TOOL-VALIDATION",
+      "OL-AI-TOOLS-TOOL-COMPOSITION",
+      "OL-AI-TOOLS-TOOL-COMPATIBILITY",
+      "OL-AI-TOOLS-TOOL-BOUNDARIES",
+      "OL-AI-TOOLS-TOOL-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
