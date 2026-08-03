@@ -2,11 +2,49 @@
   "name": "@openlance/aios-providers",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/providers/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI provider abstraction (Specification authority): the provider- and model-neutral classifications, definitions, invariants, and pure deterministic predicates that express the provider specification. No execution, network, or runtime (ai/providers/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-PROVIDERS-README"
+      "OL-AI-PROVIDERS-README",
+      "OL-AI-PROVIDERS-PROVIDERS",
+      "OL-AI-PROVIDERS-PROVIDER-ARCHITECTURE",
+      "OL-AI-PROVIDERS-PROVIDER-LIFECYCLE",
+      "OL-AI-PROVIDERS-PROVIDER-CAPABILITIES",
+      "OL-AI-PROVIDERS-PROVIDER-ABSTRACTION",
+      "OL-AI-PROVIDERS-PROVIDER-SELECTION",
+      "OL-AI-PROVIDERS-PROVIDER-ROUTING",
+      "OL-AI-PROVIDERS-PROVIDER-FALLBACK",
+      "OL-AI-PROVIDERS-PROVIDER-COMPATIBILITY",
+      "OL-AI-PROVIDERS-PROVIDER-BOUNDARIES",
+      "OL-AI-PROVIDERS-PROVIDER-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
