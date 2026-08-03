@@ -146,6 +146,18 @@ would not be governance-owned). Resolving which of two real policies prevails is
 over a `Policy` and a `PolicyConflict` that governance does not own, deferred to the runtime exactly
 as prior stages deferred Authority, ValidationResult, and the escalation evaluation.
 
+**Human Oversight (Stage 7)** is the fifth concern of the second kind. Its five principles and six
+absolute mandates are governance-owned constitutional truth and are exposed as immutable definitions.
+It defines no classification: the one candidate - the approval-triggering conditions named in the
+human-approval mandate (normative, high risk, legally significant, autonomy-expanding) - is a
+within-mandate phrase, not a first-class enumerated classification, and each term draws on another
+owner (the authority hierarchy in `ai/README.md`, risk management, autonomy boundaries, and
+`knowledge/company/legal.md`), so by the referenced-model non-restatement rule it is referenced, not
+recreated. Whether a specific action requires human approval, and whether a human approved, overrode,
+or reviewed it, is a runtime evaluation over an `Action`, an `ApprovalRequest`, and a `HumanActor`
+that governance does not own, deferred to the runtime exactly as prior stages deferred Authority,
+ValidationResult, the escalation evaluation, and the policy-conflict evaluation.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -168,8 +180,11 @@ foundational first (later concerns reference the trust and autonomy classificati
    only (`policy-enforcement.md`); no predicates (see 7a). Policy precedence follows the AI Authority
    Hierarchy owned by `ai/README.md`; the module states that rule and references its owner, but does
    not reproduce the ordering as an enum or a `prevailsOver` predicate. Conflict resolution deferred.
-7. **Decision-Making** - the decision-governance model (`decision-making.md`).
-8. **Human Oversight** - the oversight model (`human-oversight.md`).
+7. **Human Oversight** - the five principles and six absolute mandates as immutable definitions only
+   (`human-oversight.md`); no predicates (see 7a). The approval/override/review evaluation, and the
+   approval-triggering conditions (which draw on risk, autonomy, legal, and the authority hierarchy),
+   are referenced to their owners and deferred to the runtime.
+8. **Decision-Making** - the decision-governance model (`decision-making.md`).
 9. **Change Governance** - the change-governance model (`change-governance.md`).
 
 Each stage passes the full validation pipeline and an independent audit before the next begins.

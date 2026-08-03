@@ -66,6 +66,17 @@ surface:
   real policies prevails is a runtime evaluation over a `Policy`/`PolicyConflict` that governance
   does not own; it is deferred to the runtime. Governance defines constitutional policy truth; the
   runtime performs enforcement.
+- **Human oversight** (`ai/governance/human-oversight.md`): **immutable definitions only** (ADR-0020,
+  ADR-0025). `HumanOversightPrinciple` + `HUMAN_OVERSIGHT_PRINCIPLES` (the five principles in order)
+  with descriptions; `HumanOversightMandate` + `HUMAN_OVERSIGHT_MANDATES` (the six absolute mandates
+  in order) with descriptions. **No predicates.** Whether a specific action requires human approval,
+  and whether a human has approved, overridden, or reviewed it, is a runtime evaluation over an
+  `Action`/`ApprovalRequest`/`HumanActor` that governance does not own, so it is deferred to the
+  runtime. The approval-triggering conditions (normative, high risk, legally significant,
+  autonomy-expanding) draw on other constitutional owners (the authority hierarchy, risk management,
+  autonomy boundaries, `knowledge/company/legal.md`) and are referenced, not recreated as a
+  governance classification (referenced-model non-restatement rule). Governance defines oversight
+  truth; the runtime performs oversight workflow.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

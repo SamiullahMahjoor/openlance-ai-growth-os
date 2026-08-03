@@ -57,3 +57,11 @@ export {
   POLICY_ENFORCEMENT_MANDATES,
   POLICY_ENFORCEMENT_MANDATE_DESCRIPTIONS,
 } from './policy-enforcement.js';
+
+export type { HumanOversightPrinciple, HumanOversightMandate } from './human-oversight.js';
+export {
+  HUMAN_OVERSIGHT_PRINCIPLES,
+  HUMAN_OVERSIGHT_PRINCIPLE_DESCRIPTIONS,
+  HUMAN_OVERSIGHT_MANDATES,
+  HUMAN_OVERSIGHT_MANDATE_DESCRIPTIONS,
+} from './human-oversight.js';
