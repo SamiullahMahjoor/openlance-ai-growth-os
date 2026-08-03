@@ -2,11 +2,49 @@
   "name": "@openlance/aios-runtime",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/runtime/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI execution abstraction (Specification authority, ADR-0024 category 3 Runtime Service): the execution-model classifications and pure deterministic algorithms (the state-transition relation and the lifecycle/workflow/validation orderings) that express the execution specification. No runtime engine, orchestrator, or execution (ai/runtime/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-RUNTIME-README"
+      "OL-AI-RUNTIME-README",
+      "OL-AI-RUNTIME-RUNTIME",
+      "OL-AI-RUNTIME-EXECUTION-LIFECYCLE",
+      "OL-AI-RUNTIME-SESSION-LIFECYCLE",
+      "OL-AI-RUNTIME-EXECUTION-STATES",
+      "OL-AI-RUNTIME-EXECUTION-WORKFLOW",
+      "OL-AI-RUNTIME-CONTEXT-LOADING",
+      "OL-AI-RUNTIME-KNOWLEDGE-RESOLUTION",
+      "OL-AI-RUNTIME-VALIDATION-PIPELINE",
+      "OL-AI-RUNTIME-EXECUTION-BOUNDARIES",
+      "OL-AI-RUNTIME-FAILURE-RECOVERY",
+      "OL-AI-RUNTIME-EVENT-LIFECYCLE"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",

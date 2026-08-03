@@ -11,7 +11,8 @@
  * creates carries the `__arch_probe__` marker (probe files by name, temporary namespace barrels by
  * a leading marker comment). Cleanup removes only marker-carrying files and only the `src`
  * directories this suite created; it never touches a package that already had source. Namespace
- * fixtures use namespaces that are still reserved, never an implemented one.
+ * fixtures write scratch barrels only into namespaces that are still reserved; a legal fixture may
+ * reference an implemented namespace by import without writing to its source.
  *
  * It mutates the working tree transiently and must run as its own step, never concurrently with
  * build/test. Wired into `pnpm run validate` and CI as `arch:check`.
@@ -94,10 +95,12 @@ const runCruise = (targets) => {
   }
 };
 
-// Namespace fixtures use still-reserved namespaces (never governance or a namespace under
-// implementation). Relationships come from the frozen ai/architecture/dependency-map.md:
-// operations may depend on runtime (allowed) but not evaluation (forbidden); runtime may not depend
-// on evolution (forbidden); evolution and evaluation may not depend on each other (cycle, forbidden).
+// Namespace fixtures write scratch barrels only into namespaces that are still reserved (evaluation,
+// operations, evolution), never into an implemented namespace whose real source would be clobbered; a
+// legal fixture may import an implemented namespace by reference without writing to it. Relationships
+// come from the frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed);
+// operations may not depend on evaluation (forbidden); evaluation may not depend on evolution
+// (forbidden); evolution and evaluation may not depend on each other (cycle, forbidden).
 const scenarios = [
   // --- Legal imports must succeed ---
   {
@@ -110,8 +113,9 @@ const scenarios = [
   {
     name: 'legal-namespace-bare-import',
     style: 'bare package (namespace)',
+    // operations -> runtime is an allowed edge; runtime is implemented, so the fixture imports the real
+    // runtime barrel by reference and is written only into the still-reserved operations namespace.
     files: [
-      ['packages/namespaces/runtime/src/index.ts', barrel()],
       ['packages/namespaces/operations/src/index.ts', barrel("import '@openlance/aios-runtime';")],
     ],
     targets: 'packages/namespaces/operations packages/namespaces/runtime',
@@ -169,15 +173,20 @@ const scenarios = [
     rule: 'namespace-operations',
   },
   {
-    name: 'runtime-to-forbidden-namespace-bare-import',
+    name: 'reserved-namespace-forbidden-edge-bare-import',
     style: 'bare package (namespace)',
+    // evaluation (deps: governance only) may not import evolution; both are still reserved, so the
+    // per-namespace allow-list rule is exercised without touching any implemented namespace's source.
     files: [
       ['packages/namespaces/evolution/src/index.ts', barrel()],
-      ['packages/namespaces/runtime/src/index.ts', barrel("import '@openlance/aios-evolution';")],
+      [
+        'packages/namespaces/evaluation/src/index.ts',
+        barrel("import '@openlance/aios-evolution';"),
+      ],
     ],
-    targets: 'packages/namespaces/runtime packages/namespaces/evolution',
+    targets: 'packages/namespaces/evaluation packages/namespaces/evolution',
     expect: 'fail',
-    rule: 'namespace-runtime',
+    rule: 'namespace-evaluation',
   },
   {
     name: 'testing-as-runtime-dep-bare-import',
