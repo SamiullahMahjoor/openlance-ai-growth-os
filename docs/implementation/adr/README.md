@@ -47,3 +47,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0022](0022-domain-model-quality-policy.md) | Domain-model namespace quality policy | Accepted |
 | [0023](0023-namespace-development-lifecycle.md) | Namespace development lifecycle | Accepted |
 | [0024](0024-namespace-purity-categories.md) | Namespace purity categories | Accepted |
+| [0025](0025-constitutional-dimension-independence.md) | Constitutional dimension independence | Accepted |
