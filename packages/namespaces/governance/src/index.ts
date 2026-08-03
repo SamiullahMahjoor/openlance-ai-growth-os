@@ -65,3 +65,11 @@ export {
   HUMAN_OVERSIGHT_MANDATES,
   HUMAN_OVERSIGHT_MANDATE_DESCRIPTIONS,
 } from './human-oversight.js';
+
+export type { DecisionMakingPrinciple, DecisionMakingMandate } from './decision-making.js';
+export {
+  DECISION_MAKING_PRINCIPLES,
+  DECISION_MAKING_PRINCIPLE_DESCRIPTIONS,
+  DECISION_MAKING_MANDATES,
+  DECISION_MAKING_MANDATE_DESCRIPTIONS,
+} from './decision-making.js';

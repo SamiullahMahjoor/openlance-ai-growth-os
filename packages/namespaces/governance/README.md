@@ -77,6 +77,17 @@ surface:
   autonomy boundaries, `knowledge/company/legal.md`) and are referenced, not recreated as a
   governance classification (referenced-model non-restatement rule). Governance defines oversight
   truth; the runtime performs oversight workflow.
+- **Decision-making** (`ai/governance/decision-making.md`): **immutable definitions only** (ADR-0020,
+  ADR-0025). `DecisionMakingPrinciple` + `DECISION_MAKING_PRINCIPLES` (the five principles in order)
+  with descriptions; `DecisionMakingMandate` + `DECISION_MAKING_MANDATES` (the seven absolute
+  mandates in order) with descriptions. **No predicates and no classification.** The "decision
+  hierarchy" named in the document summary and inventory is the AI Authority Hierarchy owned by
+  `ai/README.md`; it is referenced, not reproduced as an enum or predicate (referenced-model
+  non-restatement rule). Whether a specific decision is authorized, owned, governed, reviewable,
+  validated, or safe is a runtime evaluation over a `Decision`/`DecisionContext`/`Action` that
+  governance does not own; it is deferred to the runtime, and how a decision is computed is owned by
+  the Reasoning namespace. Governance defines decision-making truth; the runtime performs decision
+  execution.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

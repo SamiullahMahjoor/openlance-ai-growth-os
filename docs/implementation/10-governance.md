@@ -158,6 +158,18 @@ or reviewed it, is a runtime evaluation over an `Action`, an `ApprovalRequest`, 
 that governance does not own, deferred to the runtime exactly as prior stages deferred Authority,
 ValidationResult, the escalation evaluation, and the policy-conflict evaluation.
 
+**Decision-Making (Stage 8)** is the sixth concern of the second kind. Its five principles and seven
+absolute mandates are governance-owned constitutional truth and are exposed as immutable definitions;
+the mandates are conjunctive (every significant decision satisfies all of them), not a ranked scale,
+so there is no ordering predicate. It defines no classification: the "decision hierarchy" named in the
+summary and the governance inventory is the AI Authority Hierarchy owned by `ai/README.md` (the
+Authorized mandate says so explicitly), so by the referenced-model non-restatement rule it is
+referenced, not reproduced. Whether a specific decision is authorized, owned, governed, reviewable,
+consistent, validated, or safe is a runtime evaluation over a `Decision`, a `DecisionContext`, and an
+`Action` that governance does not own, deferred to the runtime exactly as prior stages deferred
+Authority, ValidationResult, the escalation evaluation, the policy-conflict evaluation, and the
+human-approval workflow. How a decision is computed is owned by the Reasoning namespace.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -184,7 +196,10 @@ foundational first (later concerns reference the trust and autonomy classificati
    (`human-oversight.md`); no predicates (see 7a). The approval/override/review evaluation, and the
    approval-triggering conditions (which draw on risk, autonomy, legal, and the authority hierarchy),
    are referenced to their owners and deferred to the runtime.
-8. **Decision-Making** - the decision-governance model (`decision-making.md`).
+8. **Decision-Making** - the five principles and seven absolute mandates as immutable definitions only
+   (`decision-making.md`); no predicates, no classification (see 7a). The "decision hierarchy" is the
+   AI Authority Hierarchy owned by `ai/README.md` (referenced, not reproduced); the decision-governance
+   evaluation is deferred to the runtime, and how a decision is computed is owned by Reasoning.
 9. **Change Governance** - the change-governance model (`change-governance.md`).
 
 Each stage passes the full validation pipeline and an independent audit before the next begins.
