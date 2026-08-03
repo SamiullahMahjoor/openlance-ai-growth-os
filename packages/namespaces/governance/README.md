@@ -17,8 +17,8 @@ and no services.
 
 ## Public API (single barrel, Engineering Rule 1)
 
-Implemented incrementally, one governance concern per stage (see the design's stage plan). Current
-surface:
+Implemented incrementally, one governance concern per stage (see the design's stage plan). All nine
+governance concerns are now implemented; the surface is:
 
 - **Risk and trust** (`ai/governance/risk-management.md`): `TrustLevel` and `TRUST_LEVELS` (the four
   governance trust levels in order), `OversightRequirement`, and the predicates `requiredOversight`,
@@ -88,6 +88,16 @@ surface:
   governance does not own; it is deferred to the runtime, and how a decision is computed is owned by
   the Reasoning namespace. Governance defines decision-making truth; the runtime performs decision
   execution.
+- **Change governance** (`ai/governance/change-governance.md`): **immutable definitions only**
+  (ADR-0020, ADR-0025). `ChangeGovernancePrinciple` + `CHANGE_GOVERNANCE_PRINCIPLES` (the five
+  principles in order) with descriptions; `ChangeGovernanceMandate` + `CHANGE_GOVERNANCE_MANDATES`
+  (the six absolute mandates in order) with descriptions. **No predicates and no classification.**
+  The Approval Matrix (`ai/CONTRIBUTING.md`), the autonomy levels (`autonomy-boundaries.md`), and the
+  governance invariants (`ai/governance/README.md`) that a change touches are referenced, not
+  recreated (referenced-model non-restatement rule). Whether a specific change is approved, reviewed,
+  or traceable is a runtime evaluation over a `ChangeRequest`/`ChangeApproval`/`ChangeWorkflow` that
+  governance does not own; it is deferred to the runtime. Governance defines the constitutional truth
+  governing change; the runtime and the operational namespaces perform change execution.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

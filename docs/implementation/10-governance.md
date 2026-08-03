@@ -170,6 +170,20 @@ consistent, validated, or safe is a runtime evaluation over a `Decision`, a `Dec
 Authority, ValidationResult, the escalation evaluation, the policy-conflict evaluation, and the
 human-approval workflow. How a decision is computed is owned by the Reasoning namespace.
 
+**Change Governance (Stage 9)** is the seventh concern of the second kind and the final governance
+concern. Its five principles and six absolute mandates are governance-owned constitutional truth and
+are exposed as immutable definitions. It defines no classification: every structured thing a change
+touches is owned elsewhere and referenced, not recreated - the Approval Matrix (`ai/CONTRIBUTING.md`),
+the autonomy levels (`autonomy-boundaries.md`), and the governance invariants (`ai/governance/README.md`,
+named explicitly by the invariants-preserved mandate). Whether a specific change is approved, reviewed,
+or traceable is a runtime evaluation over a `ChangeRequest`, a `ChangeApproval`, and a `ChangeWorkflow`
+that governance does not own, deferred to the runtime exactly as prior stages deferred Authority,
+ValidationResult, the escalation evaluation, the policy-conflict evaluation, the human-approval
+workflow, and the decision evaluation. With Stage 9 complete, all nine governance concerns are
+implemented: two are Pure Domain Models with predicates (Risk, Autonomy) and seven are
+definitions-only concerns whose runtime evaluation is deferred (Permission, Constitutional Validation,
+Escalation, Policy Enforcement, Human Oversight, Decision-Making, Change Governance).
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -200,7 +214,11 @@ foundational first (later concerns reference the trust and autonomy classificati
    (`decision-making.md`); no predicates, no classification (see 7a). The "decision hierarchy" is the
    AI Authority Hierarchy owned by `ai/README.md` (referenced, not reproduced); the decision-governance
    evaluation is deferred to the runtime, and how a decision is computed is owned by Reasoning.
-9. **Change Governance** - the change-governance model (`change-governance.md`).
+9. **Change Governance** - the five principles and six absolute mandates as immutable definitions only
+   (`change-governance.md`); no predicates, no classification (see 7a). The Approval Matrix
+   (`ai/CONTRIBUTING.md`), the autonomy levels (`autonomy-boundaries.md`), and the governance
+   invariants (`ai/governance/README.md`) are referenced, not recreated; the change-approval and review
+   evaluation is deferred to the runtime. (Final governance concern; the namespace is now complete.)
 
 Each stage passes the full validation pipeline and an independent audit before the next begins.
 

@@ -73,3 +73,11 @@ export {
   DECISION_MAKING_MANDATES,
   DECISION_MAKING_MANDATE_DESCRIPTIONS,
 } from './decision-making.js';
+
+export type { ChangeGovernancePrinciple, ChangeGovernanceMandate } from './change-governance.js';
+export {
+  CHANGE_GOVERNANCE_PRINCIPLES,
+  CHANGE_GOVERNANCE_PRINCIPLE_DESCRIPTIONS,
+  CHANGE_GOVERNANCE_MANDATES,
+  CHANGE_GOVERNANCE_MANDATE_DESCRIPTIONS,
+} from './change-governance.js';
