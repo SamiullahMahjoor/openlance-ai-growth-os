@@ -37,6 +37,15 @@ surface:
   specific permissions (owned by the Agents namespace), which governance does not own; grant,
   delegation, authority, and revocation predicates are therefore not exposed and are enforced later
   by the runtime.
+- **Constitutional validation** (`ai/governance/constitutional-validation.md`): **immutable
+  definitions only** (ADR-0020, ADR-0025). `ValidationPrinciple` + `VALIDATION_PRINCIPLES` (the four
+  principles in order) with descriptions; `ValidationMandate` + `VALIDATION_MANDATES` (the eight
+  absolute mandates in order) with descriptions; `ValidationDimension` + `VALIDATION_DIMENSIONS` (the
+  six canonical sources an action is validated against, in order) with descriptions. **No
+  predicates.** A per-action validation result (whether an action satisfied the mandates, in what
+  order, with what outcome) is a runtime evaluation over an `Action`/`ValidationResult` that
+  governance does not own; it is deferred to the runtime, exactly as the Authority model was in
+  Permission Governance. Governance defines what validation means; the runtime performs it.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

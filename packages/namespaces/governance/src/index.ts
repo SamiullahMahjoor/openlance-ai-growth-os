@@ -31,3 +31,13 @@ export {
   PERMISSION_MANDATES,
   PERMISSION_MANDATE_DESCRIPTIONS,
 } from './permission.js';
+
+export type { ValidationPrinciple, ValidationMandate, ValidationDimension } from './validation.js';
+export {
+  VALIDATION_PRINCIPLES,
+  VALIDATION_PRINCIPLE_DESCRIPTIONS,
+  VALIDATION_MANDATES,
+  VALIDATION_MANDATE_DESCRIPTIONS,
+  VALIDATION_DIMENSIONS,
+  VALIDATION_DIMENSION_DESCRIPTIONS,
+} from './validation.js';

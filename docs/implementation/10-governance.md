@@ -103,6 +103,15 @@ defers every grant/delegation/authority/revocation predicate (for example `grant
 `delegationAllowed`, `revocableGrant`) - implementing them today would require inventing an Authority
 model and a grant schema, which ADR-0020, ADR-0025, and the never-invent gate forbid.
 
+**Constitutional Validation (Stage 4)** is the second concern of the second kind and applies the
+same rule. Its principles, mandates, and canonical validation dimensions are governance-owned
+constitutional truth and are exposed as immutable definitions. Its mandates are conjunctive (every
+significant action satisfies all of them), not a ranked scale, so there is no ordering predicate.
+The one predicate the concern could suggest - whether a specific action satisfied the mandates, in
+what order, with what outcome - is a runtime evaluation over an `Action` and a `ValidationResult`
+that governance does not own; it is deferred to the runtime exactly as the Authority model was in
+Stage 3. Governance defines what validation means; the runtime performs it.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -114,7 +123,10 @@ foundational first (later concerns reference the trust and autonomy classificati
    classification (`autonomy-boundaries.md`).
 3. **Permission Governance** - the five principles and seven mandates as immutable definitions only
    (`permission-governance.md`); no predicates (see 7a). Grant/delegation/authority predicates deferred.
-4. **Constitutional Validation** - the ordered set an action is validated against (`constitutional-validation.md`).
+4. **Constitutional Validation** - the four validation principles, the eight absolute validation
+   mandates, and the six canonical sources (dimensions) an action is validated against, as immutable
+   definitions only (`constitutional-validation.md`); no predicates (see 7a). The per-action
+   validation result (an evaluation over an `Action`/`ValidationResult`) is deferred to the runtime.
 5. **Escalation** - the escalation triggers (`escalation.md`).
 6. **Policy Enforcement** - precedence and `higherAuthorityWins` (`policy-enforcement.md`).
 7. **Decision-Making** - the decision-governance model (`decision-making.md`).
