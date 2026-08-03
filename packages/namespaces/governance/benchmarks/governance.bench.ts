@@ -1,6 +1,6 @@
 import { bench, describe } from 'vitest';
 
-import { higherTrust, requiredOversight } from '../src/index';
+import { higherAutonomy, higherTrust, requiredOversight } from '../src/index';
 
 /**
  * Observational micro-baselines for the governance predicates (Engineering Rule 5, ADR-0022).
@@ -14,5 +14,9 @@ describe('governance predicates', () => {
 
   bench('higherTrust', () => {
     higherTrust('low', 'critical');
+  });
+
+  bench('higherAutonomy', () => {
+    higherAutonomy('assisted', 'governed');
   });
 });

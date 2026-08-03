@@ -23,6 +23,12 @@ surface:
 - **Risk and trust** (`ai/governance/risk-management.md`): `TrustLevel` and `TRUST_LEVELS` (the four
   governance trust levels in order), `OversightRequirement`, and the predicates `requiredOversight`,
   `requiresHumanApproval`, `trustAtLeast`, and `higherTrust`.
+- **Autonomy boundaries** (`ai/governance/autonomy-boundaries.md`): `AutonomyLevel` and
+  `AUTONOMY_LEVELS` (the four governance autonomy levels in order), the predicates `autonomyAtLeast`
+  and `higherAutonomy`, and `AutonomyBound` and `AUTONOMY_BOUNDS` (the four bounds of autonomous
+  action). The relationship between an autonomy level and the trust levels it may act on
+  autonomously is deferred pending an architectural decision (the Supervised level is
+  constitutionally underspecified); it is not exported until decided.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that

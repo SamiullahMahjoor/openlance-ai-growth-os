@@ -20,3 +20,6 @@ export {
   trustAtLeast,
   higherTrust,
 } from './risk.js';
+
+export type { AutonomyLevel, AutonomyBound } from './autonomy.js';
+export { AUTONOMY_LEVELS, autonomyAtLeast, higherAutonomy, AUTONOMY_BOUNDS } from './autonomy.js';
