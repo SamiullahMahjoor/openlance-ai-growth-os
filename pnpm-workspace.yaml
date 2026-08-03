@@ -3,5 +3,9 @@ packages:
   - 'packages/namespaces/*'
   - 'apps/*'
   - 'tools/*'
+  # The scaffold golden-file test materialises these fixtures transiently; excluding them keeps
+  # pnpm and Turborepo from ever treating a generator fixture as a real workspace member.
+  - '!packages/goldenfixture'
+  - '!packages/namespaces/goldennamespace'
 allowBuilds:
   esbuild: true

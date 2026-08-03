@@ -209,6 +209,32 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.20.1)
 
+  packages/namespaces/agents: {}
+
+  packages/namespaces/evaluation: {}
+
+  packages/namespaces/evolution: {}
+
+  packages/namespaces/governance: {}
+
+  packages/namespaces/memory: {}
+
+  packages/namespaces/operations: {}
+
+  packages/namespaces/prompts: {}
+
+  packages/namespaces/providers: {}
+
+  packages/namespaces/reasoning: {}
+
+  packages/namespaces/retrieval: {}
+
+  packages/namespaces/runtime: {}
+
+  packages/namespaces/safety: {}
+
+  packages/namespaces/tools: {}
+
   packages/plugins:
     dependencies:
       '@openlance/aios-config':
@@ -295,7 +321,11 @@ importers:
         specifier: ^8.18.0
         version: 8.65.0(eslint@9.39.5)(typescript@5.9.3)
 
-  tools/scaffold: {}
+  tools/scaffold:
+    devDependencies:
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.1)
 
   tools/tsconfig: {}
 

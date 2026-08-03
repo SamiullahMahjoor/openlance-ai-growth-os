@@ -1,0 +1,15 @@
+{
+  "name": "@openlance/aios-providers",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reserved constitutional namespace package for ai/providers/. Not implemented in Phase 2A.",
+  "aios": {
+    "layer": "namespace",
+    "constitution": [
+      "OL-AI-PROVIDERS-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

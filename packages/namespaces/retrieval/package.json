@@ -1,0 +1,15 @@
+{
+  "name": "@openlance/aios-retrieval",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reserved constitutional namespace package for ai/retrieval/. Not implemented in Phase 2A.",
+  "aios": {
+    "layer": "namespace",
+    "constitution": [
+      "OL-AI-RETRIEVAL-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

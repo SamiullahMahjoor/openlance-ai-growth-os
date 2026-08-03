@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --coverage",
     "bench": "vitest bench --run",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts --out docs-api"
   },
   "dependencies": {
     "@openlance/aios-errors": "workspace:*",

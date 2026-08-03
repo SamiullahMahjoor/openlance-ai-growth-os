@@ -1,0 +1,15 @@
+{
+  "name": "@openlance/aios-memory",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reserved constitutional namespace package for ai/memory/. Not implemented in Phase 2A.",
+  "aios": {
+    "layer": "namespace",
+    "constitution": [
+      "OL-AI-MEMORY-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

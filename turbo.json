@@ -17,6 +17,8 @@
     "docs": {
       "dependsOn": ["^build"],
       "outputs": ["docs-api/**"]
-    }
+    },
+    "//#lint": {},
+    "//#depcruise": {}
   }
 }

@@ -30,6 +30,61 @@ const substrateLayering = SUBSTRATE.flatMap((name, i) => {
   ];
 });
 
+// Reserved AI-namespace graph, pre-registered from the frozen ai/architecture/dependency-map.md
+// so a future cross-boundary import fails CI even before the namespace packages have code. The
+// constitution and the knowledge repository are not packages, so only the inter-namespace-package
+// edges are encoded here. Each namespace may depend only on the namespaces listed for it.
+const NAMESPACES = [
+  'governance',
+  'providers',
+  'memory',
+  'retrieval',
+  'safety',
+  'reasoning',
+  'prompts',
+  'tools',
+  'agents',
+  'runtime',
+  'evaluation',
+  'operations',
+  'evolution',
+];
+
+const NAMESPACE_DEPS = {
+  governance: [],
+  providers: ['governance'],
+  memory: ['governance'],
+  retrieval: ['governance'],
+  safety: ['governance'],
+  reasoning: ['governance', 'retrieval'],
+  prompts: ['governance', 'retrieval'],
+  tools: ['governance', 'safety'],
+  agents: ['governance', 'reasoning', 'retrieval', 'memory', 'prompts', 'tools', 'providers'],
+  runtime: ['governance', 'agents', 'reasoning', 'retrieval'],
+  evaluation: ['governance'],
+  operations: ['governance', 'runtime'],
+  evolution: [],
+};
+
+/** A `to` matcher for namespace packages (real workspace path or symlinked node_modules path). */
+const nsTo = (names) =>
+  `(^packages/namespaces/(${names.join('|')})/|/@openlance/aios-(${names.join('|')})/)`;
+
+const namespaceGraph = NAMESPACES.flatMap((name) => {
+  const allowed = new Set([name, ...NAMESPACE_DEPS[name]]);
+  const forbidden = NAMESPACES.filter((other) => !allowed.has(other));
+  if (forbidden.length === 0) return [];
+  return [
+    {
+      name: `namespace-${name}`,
+      severity: 'error',
+      comment: `Rule 2: namespace '${name}' may depend only on [${NAMESPACE_DEPS[name].join(', ') || 'none'}] (frozen ai/architecture/dependency-map.md).`,
+      from: { path: `^packages/namespaces/${name}/` },
+      to: { path: nsTo(forbidden) },
+    },
+  ];
+});
+
 module.exports = {
   forbidden: [
     {
@@ -69,9 +124,16 @@ module.exports = {
       to: {},
     },
     ...substrateLayering,
+    ...namespaceGraph,
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
+    // The graph is a property of source, not of build output: excluding generated directories
+    // keeps `turbo run build docs test` artifacts from being cruised as orphan modules. The
+    // scaffold golden-file test creates and removes packages/goldenfixture/ during a run, so it
+    // is excluded here to keep the whole-repo cruise from racing that transient package; the
+    // golden test cruises the fixture with its own config (tools/scaffold/tests) instead.
+    exclude: { path: '(^|/)(dist|docs-api|coverage|\\.turbo|goldenfixture)/' },
     tsPreCompilationDeps: true,
     tsConfig: { fileName: 'tsconfig.base.json' },
     enhancedResolveOptions: {

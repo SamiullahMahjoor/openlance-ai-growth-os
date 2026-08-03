@@ -100,5 +100,9 @@ export default tseslint.config(
   {
     files: ['**/*.cjs'],
     languageOptions: { sourceType: 'commonjs' },
+    rules: {
+      // `require()` is the native module mechanism of CommonJS files.
+      '@typescript-eslint/no-require-imports': 'off',
+    },
   },
 );

@@ -2,8 +2,15 @@
   "name": "@openlance/aios-scaffold",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "description": "Plop templates for scaffolding AIOS packages and reserved namespace packages. Generators are defined in the repo-root plopfile.cjs.",
   "files": [
     "templates"
-  ]
+  ],
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
 }
