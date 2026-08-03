@@ -23,3 +23,11 @@ export {
 
 export type { AutonomyLevel, AutonomyBound } from './autonomy.js';
 export { AUTONOMY_LEVELS, autonomyAtLeast, higherAutonomy, AUTONOMY_BOUNDS } from './autonomy.js';
+
+export type { PermissionPrinciple, PermissionMandate } from './permission.js';
+export {
+  PERMISSION_PRINCIPLES,
+  PERMISSION_PRINCIPLE_DESCRIPTIONS,
+  PERMISSION_MANDATES,
+  PERMISSION_MANDATE_DESCRIPTIONS,
+} from './permission.js';

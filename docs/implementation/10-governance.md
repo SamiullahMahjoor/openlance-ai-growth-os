@@ -79,6 +79,30 @@ immutability is asserted; and boundary tests confirm no enforcement/scoring surf
 Executable code is at 100% coverage; any pure-data module is excluded per ADR-0022 with a comment.
 Benchmarks measure predicates only (Rule 5). No integration tests yet (no downstream consumer exists).
 
+## 7a. Governance implementation boundary rule (permanent)
+
+A direct consequence of ADR-0020 and ADR-0025, recorded here rather than as a further ADR, and
+binding on every remaining governance concern:
+
+- If the constitution defines **classifications, ordered concepts, or bounded concepts**, the concern
+  exposes an immutable domain model **plus pure predicates** (as Risk and Autonomy do).
+- If the constitution defines **rules, mandates, principles, or obligations that operate on models
+  owned elsewhere**, the concern exposes **immutable definitions only**.
+- Governance exposes executable logic only when **every input type is governance-owned, every output
+  is governance-owned, and the logic expresses constitutional truth verbatim**; otherwise it exposes
+  immutable definitions only.
+- The missing models are **never invented** to create executable logic.
+
+**Permission Governance (Stage 3)** is the first concern of the second kind. It owns rules
+(principles and mandates) that constrain "authority" (owned by the constitution root, `ai/README.md`),
+grants, and specific permissions (owned by the Agents namespace) - none of which governance owns.
+There is intentionally **no Authority domain model** today; authority is constitution-owned above
+governance and receives an executable representation only if and when the constitution later requires
+one. Therefore Stage 3 exposes the named principles and mandates as immutable definitions only, and
+defers every grant/delegation/authority/revocation predicate (for example `grantWithinBounds`,
+`delegationAllowed`, `revocableGrant`) - implementing them today would require inventing an Authority
+model and a grant schema, which ADR-0020, ADR-0025, and the never-invent gate forbid.
+
 ## 8. Stage plan
 
 Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
@@ -88,7 +112,8 @@ foundational first (later concerns reference the trust and autonomy classificati
    (`ai/governance/risk-management.md`), plus the package foundation. (This document's first stage.)
 2. **Autonomy Boundaries** - the four autonomy levels and the may/must-not/must-escalate/must-refuse
    classification (`autonomy-boundaries.md`).
-3. **Permission Governance** - the permission-grant model and its invariants (`permission-governance.md`).
+3. **Permission Governance** - the five principles and seven mandates as immutable definitions only
+   (`permission-governance.md`); no predicates (see 7a). Grant/delegation/authority predicates deferred.
 4. **Constitutional Validation** - the ordered set an action is validated against (`constitutional-validation.md`).
 5. **Escalation** - the escalation triggers (`escalation.md`).
 6. **Policy Enforcement** - precedence and `higherAuthorityWins` (`policy-enforcement.md`).

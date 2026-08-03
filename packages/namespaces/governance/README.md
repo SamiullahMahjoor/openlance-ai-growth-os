@@ -29,6 +29,14 @@ surface:
   action). The relationship between an autonomy level and the trust levels it may act on
   autonomously is deferred pending an architectural decision (the Supervised level is
   constitutionally underspecified); it is not exported until decided.
+- **Permission governance** (`ai/governance/permission-governance.md`): **immutable definitions
+  only** (ADR-0020, ADR-0025). `PermissionPrinciple` + `PERMISSION_PRINCIPLES` (the five principles
+  in order) with `PERMISSION_PRINCIPLE_DESCRIPTIONS`; `PermissionMandate` + `PERMISSION_MANDATES`
+  (the seven mandates in order) with `PERMISSION_MANDATE_DESCRIPTIONS`. **No predicates.** Permission
+  rules constrain "authority" (owned by the constitution root, `ai/README.md`) and grants and
+  specific permissions (owned by the Agents namespace), which governance does not own; grant,
+  delegation, authority, and revocation predicates are therefore not exposed and are enforced later
+  by the runtime.
 
 Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
 evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that
