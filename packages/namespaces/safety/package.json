@@ -2,11 +2,49 @@
   "name": "@openlance/aios-safety",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/safety/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI protective architecture (Specification authority): the safety classifications, principles, and invariants that express the safety specification. No engine, evaluator, or runtime (ai/safety/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run --passWithNoTests",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-SAFETY-README"
+      "OL-AI-SAFETY-README",
+      "OL-AI-SAFETY-SAFETY",
+      "OL-AI-SAFETY-SAFETY-PRINCIPLES",
+      "OL-AI-SAFETY-RISK-CLASSIFICATION",
+      "OL-AI-SAFETY-HAZARD-IDENTIFICATION",
+      "OL-AI-SAFETY-BOUNDARY-ENFORCEMENT",
+      "OL-AI-SAFETY-REFUSAL-MODEL",
+      "OL-AI-SAFETY-ESCALATION-MODEL",
+      "OL-AI-SAFETY-IMPACT-ASSESSMENT",
+      "OL-AI-SAFETY-UNCERTAINTY-MANAGEMENT",
+      "OL-AI-SAFETY-SAFE-DEGRADATION",
+      "OL-AI-SAFETY-SAFETY-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
