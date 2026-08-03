@@ -2,11 +2,49 @@
   "name": "@openlance/aios-retrieval",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/retrieval/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI knowledge-retrieval abstraction (Specification authority): the determination classifications, definitions, invariants, and pure deterministic predicates that express the retrieval specification. No search, index, store, or runtime (ai/retrieval/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-RETRIEVAL-README"
+      "OL-AI-RETRIEVAL-README",
+      "OL-AI-RETRIEVAL-RETRIEVAL",
+      "OL-AI-RETRIEVAL-RETRIEVAL-LIFECYCLE",
+      "OL-AI-RETRIEVAL-RETRIEVAL-WORKFLOW",
+      "OL-AI-RETRIEVAL-KNOWLEDGE-DISCOVERY",
+      "OL-AI-RETRIEVAL-KNOWLEDGE-SELECTION",
+      "OL-AI-RETRIEVAL-CONTEXT-ASSEMBLY",
+      "OL-AI-RETRIEVAL-CONTEXT-PRIORITIZATION",
+      "OL-AI-RETRIEVAL-DEPENDENCY-RESOLUTION",
+      "OL-AI-RETRIEVAL-LOADING-STRATEGY",
+      "OL-AI-RETRIEVAL-RETRIEVAL-BOUNDARIES",
+      "OL-AI-RETRIEVAL-RETRIEVAL-VALIDATION"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
