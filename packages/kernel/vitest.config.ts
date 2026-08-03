@@ -3,17 +3,17 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import base from '../../vitest.config';
 
 /**
- * Kernel test configuration. Inherits the repository Definition-of-Done coverage
- * floor (Rule 6) from the root config and narrows coverage measurement to the
- * modules that carry runtime logic. Interface-only modules (`id`, `disposable`)
- * and the barrel (`index`) contain no executable statements and are excluded.
+ * Kernel test configuration. Inherits the repository coverage policy (Rule 6 /
+ * ADR-0015): all of `src` is measured at 100%. `disposable` and `id` are type-only
+ * modules (interfaces with no emitted statements) and are excluded so they do not
+ * appear as phantom coverage entries. Every module with runtime logic is covered.
  */
 export default mergeConfig(
   base,
   defineConfig({
     test: {
       coverage: {
-        include: ['src/result.ts', 'src/option.ts', 'src/brand.ts', 'src/types.ts', 'src/clock.ts'],
+        exclude: ['src/disposable.ts', 'src/id.ts'],
       },
     },
   }),

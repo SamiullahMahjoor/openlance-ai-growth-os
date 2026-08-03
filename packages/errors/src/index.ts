@@ -18,9 +18,12 @@
  * Design: docs/implementation/02-error-framework.md. Decision: ADR-0006 (Result).
  */
 
-export * from './base.js';
-export * from './domain.js';
-export * from './infrastructure.js';
-export * from './validation.js';
-export * from './codes.js';
-export * from './result-interop.js';
+export { BaseError } from './base.js';
+export type { ErrorCategory } from './base.js';
+export { DomainError } from './domain.js';
+export { InfrastructureError } from './infrastructure.js';
+export { ValidationError } from './validation.js';
+export type { ValidationIssue } from './validation.js';
+export { InMemoryErrorCodeRegistry } from './codes.js';
+export type { ErrorCodeRegistry } from './codes.js';
+export { fromThrowable, toResult } from './result-interop.js';

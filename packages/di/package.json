@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "description": "Custom framework-neutral dependency-injection container: typed tokens, three lifetimes, module composition, and deterministic startup validation.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

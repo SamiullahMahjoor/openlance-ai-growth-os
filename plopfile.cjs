@@ -48,6 +48,11 @@ module.exports = function plopConfig(plop) {
       },
       {
         type: 'add',
+        path: 'packages/{{kebabCase name}}/tsconfig.build.json',
+        templateFile: 'tools/scaffold/templates/package/tsconfig.build.json.hbs',
+      },
+      {
+        type: 'add',
         path: 'packages/{{kebabCase name}}/vitest.config.ts',
         templateFile: 'tools/scaffold/templates/package/vitest.config.ts.hbs',
       },
@@ -55,6 +60,26 @@ module.exports = function plopConfig(plop) {
         type: 'add',
         path: 'packages/{{kebabCase name}}/src/index.ts',
         templateFile: 'tools/scaffold/templates/package/src/index.ts.hbs',
+      },
+      {
+        type: 'add',
+        path: 'packages/{{kebabCase name}}/src/{{kebabCase name}}.ts',
+        templateFile: 'tools/scaffold/templates/package/src/module.ts.hbs',
+      },
+      {
+        type: 'add',
+        path: 'packages/{{kebabCase name}}/tests/{{kebabCase name}}.test.ts',
+        templateFile: 'tools/scaffold/templates/package/tests/module.test.ts.hbs',
+      },
+      {
+        type: 'add',
+        path: 'packages/{{kebabCase name}}/benchmarks/{{kebabCase name}}.bench.ts',
+        templateFile: 'tools/scaffold/templates/package/benchmarks/module.bench.ts.hbs',
+      },
+      {
+        type: 'add',
+        path: 'packages/{{kebabCase name}}/benchmarks/baseline.md',
+        templateFile: 'tools/scaffold/templates/package/benchmarks/baseline.md.hbs',
       },
       {
         type: 'add',

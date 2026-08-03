@@ -52,7 +52,15 @@ jobs:
         run: pnpm run format:check
       - name: Dependency graph (Rule 2)
         run: pnpm run depcruise
-      - name: Test
+      - name: Dependency graph snapshot (Rule 2)
+        run: pnpm run graph:check
+      - name: Docs check (Rules 3 and 4)
+        run: pnpm run docs-check
+      - name: Test (Rule 6)
         run: pnpm run test
+      - name: Benchmarks (Rule 5, record-only)
+        run: pnpm run bench
+      - name: API docs (TypeDoc)
+        run: pnpm run docs
       - name: Build
         run: pnpm run build

@@ -14,11 +14,29 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
+    "bench": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "docs": {
       "dependsOn": ["^build"],
       "outputs": ["docs-api/**"]
     },
-    "//#lint": {},
-    "//#depcruise": {}
+    "//#lint": {
+      "inputs": [
+        "**/*.{ts,cts,mts,js,cjs,mjs}",
+        "eslint.config.mjs",
+        "tools/eslint-config/index.js"
+      ]
+    },
+    "//#depcruise": {
+      "inputs": [
+        "packages/**/*.ts",
+        "tools/**/*.ts",
+        "apps/**/*.ts",
+        ".dependency-cruiser.cjs",
+        "tsconfig.base.json"
+      ]
+    }
   }
 }

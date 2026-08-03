@@ -23,10 +23,24 @@
  * ADR-0008 (combinator export strategy).
  */
 
-export * from './result.js';
-export * from './option.js';
-export * from './brand.js';
-export * from './types.js';
-export * from './clock.js';
-export * from './id.js';
-export * from './disposable.js';
+export { ok, err, isOk, isErr, map, mapErr, andThen, unwrapOr } from './result.js';
+export type { Ok, Err, Result } from './result.js';
+export {
+  some,
+  none,
+  fromNullable,
+  isSome,
+  isNone,
+  mapOption,
+  andThenOption,
+  unwrapOrOption,
+} from './option.js';
+export type { Some, None, Option } from './option.js';
+export { brand } from './brand.js';
+export type { Brand } from './brand.js';
+export { correlationId, traceId } from './types.js';
+export type { CorrelationId, TraceId } from './types.js';
+export { SystemClock } from './clock.js';
+export type { Clock } from './clock.js';
+export type { IdGenerator } from './id.js';
+export type { Disposable } from './disposable.js';

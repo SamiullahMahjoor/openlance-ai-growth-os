@@ -1,0 +1,55 @@
+{
+  "@openlance/aios-agents": [],
+  "@openlance/aios-config": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-di": [
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-errors": [
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-evaluation": [],
+  "@openlance/aios-events": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel",
+    "@openlance/aios-logging"
+  ],
+  "@openlance/aios-evolution": [],
+  "@openlance/aios-governance": [],
+  "@openlance/aios-kernel": [],
+  "@openlance/aios-logging": [
+    "@openlance/aios-config",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-memory": [],
+  "@openlance/aios-operations": [],
+  "@openlance/aios-plugins": [
+    "@openlance/aios-config",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-logging"
+  ],
+  "@openlance/aios-prompts": [],
+  "@openlance/aios-providers": [],
+  "@openlance/aios-reasoning": [],
+  "@openlance/aios-retrieval": [],
+  "@openlance/aios-runtime": [],
+  "@openlance/aios-safety": [],
+  "@openlance/aios-testing": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-logging"
+  ],
+  "@openlance/aios-tools": []
+}

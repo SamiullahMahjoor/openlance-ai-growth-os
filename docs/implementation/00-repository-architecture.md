@@ -17,17 +17,26 @@ Three package classes:
 2. **Namespace** (`packages/namespaces/*`, reserved): one per frozen namespace. Not built in 2A.
 3. **Shared tooling** (`tools/*`): `eslint-config`, `tsconfig`, `scaffold` (Plop). Configuration packages, no runtime code.
 
-Apps (`apps/*`): composition roots. Phase 2A ships one, `dev-harness`, that boots the substrate to prove wiring; it contains no AI behavior.
+Apps (`apps/*`): composition roots. A `dev-harness` app that boots the substrate to prove wiring is **deferred to the start of the Runtime phase** (ADR-0017); in Phase 2A the composed wiring is exercised by the `@openlance/aios-testing` harness (`createHarness`) and the package test suites. `apps/` remains a reserved location and contains no AI behavior.
 
-Every substrate package: `src/` (barrel `index.ts`), `tests/`, `package.json`, `tsconfig.json` (extends base, project-referenced), `README.md` (purpose + owned concern + constitution trace).
+Every substrate package: `src/` (barrel `index.ts`), `tests/`, `benchmarks/` (Rule 5 baseline), `package.json`, `tsconfig.json` (extends base) plus `tsconfig.build.json` (the composite-off declaration build, ADR-0009), `README.md` (purpose + owned concern + constitution trace). Packages are built with tsup and type-checked per package with `tsc --noEmit` under Turborepo build ordering; `composite` remains available for a project-reference graph but Phase 2A does not wire `tsc -b` (ADR-0016).
 
 ## 3. Interface design (repository-level contracts)
 
 ```ts
-// Every implementation package.json carries a machine-readable constitution trace:
-// "aios": { "layer": "substrate" | "namespace" | "app" | "tools",
-//           "constitution": string[] /* frozen doc ids, e.g. ["OL-AI-RUNTIME-README"] */,
-//           "apiVersion": string, "generation": number }
+// Every implementation package.json carries a machine-readable metadata block:
+// "aios": {
+//   "layer": "substrate" | "namespace" | "app" | "tools",
+//   "constitution": string[],  // frozen doc ids, e.g. ["OL-AI-RUNTIME-README"];
+//                               // [] where the package realizes an engineering seam, not a constitutional concept
+//   "stability": "Very High" | "High" | "Medium" | "Low" | "Experimental",  // Engineering Rule 4; must match the authoritative table
+//   "apiVersion": string,      // the package's logical public-API contract version,
+//                              // distinct from the release "version" (0.0.0, unpublished);
+//                              // bumped when the supported public surface changes incompatibly
+//   "generation": number       // structural generation; bumped on a breaking regeneration of the package
+// }
+// docs-check (Rules 3 and 4) validates the block's presence, the stability class and its
+// match against the authoritative table, and that every constitution id resolves.
 
 // Shared tsconfig.base.json (conceptual): strict, noUncheckedIndexedAccess,
 // exactOptionalPropertyTypes, verbatimModuleSyntax, composite, declaration, ESM.
@@ -46,15 +55,15 @@ Namespace graph (reserved, from the frozen map): Governance◀constitution; Prov
 ```
 /
   package.json  pnpm-workspace.yaml  turbo.json
-  tsconfig.base.json  .eslintrc.cjs  .prettierrc  .dependency-cruiser.cjs
+  tsconfig.base.json  eslint.config.mjs  .prettierrc  .dependency-cruiser.cjs
   vitest.config.ts  .changeset/  .github/workflows/ci.yml
-  ai/  knowledge/  agents/  prompts/  templates/        # frozen, untouched
-  docs/implementation/                                  # this design package
+  dependency-graph.snapshot.json  scripts/            # graph snapshot + docs-check
+  ai/  knowledge/  agents/  prompts/  templates/       # frozen, untouched
+  docs/implementation/                                 # this design package
   packages/
     kernel/ errors/ di/ config/ logging/ events/ plugins/ testing/
-    namespaces/                                         # reserved, empty in 2A
-  apps/
-    dev-harness/
+    namespaces/                                        # reserved, empty in 2A
+  apps/                                                # dev-harness deferred to Runtime (ADR-0017)
   tools/
     eslint-config/ tsconfig/ scaffold/
 ```

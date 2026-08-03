@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "description": "Plugin framework: manifest contracts, compatibility validation, and an ordered lifecycle over an in-memory set of plugins. No discovery, dynamic loading, or reflection.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

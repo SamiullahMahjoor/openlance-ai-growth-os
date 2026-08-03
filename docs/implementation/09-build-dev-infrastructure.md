@@ -16,23 +16,29 @@ Not a runtime package. Delivered as repo-root config plus two `tools/*` config p
 ## 3. Interface design (pipeline contracts)
 
 ```
-turbo pipeline (each task cached by content hash):
-  build     -> tsc -b  (+ tsup for dist)      depends on ^build
-  typecheck -> tsc --noEmit
-  lint      -> eslint
-  test      -> vitest run --coverage
-  depcruise -> dependency-cruiser (fails on cycle / boundary / deep-import)
-  docs      -> typedoc
+turbo tasks (each cached by content hash) + repo-level gates:
+  build      -> tsup (bundle + rolled-up .d.ts via tsconfig.build.json)   depends on ^build
+  typecheck  -> tsc --noEmit (per package; ordered by ^build; ADR-0016)
+  test       -> vitest run --coverage (all of src, 100 thresholds; ADR-0015)
+  bench      -> vitest bench --run (Rule 5, record-only)
+  docs       -> typedoc --out docs-api
+  lint       -> eslint (//#lint root task)
+  depcruise  -> dependency-cruiser (fails on cycle / boundary / deep-import; //#depcruise)
+  graph:check-> resolved package-graph snapshot diff (Rule 2; scripts/graph-snapshot.mjs)
+  docs-check -> ADR + metadata + stability + constitution-id + README + .only/.skip (Rules 3/4; scripts/docs-check.mjs)
 
 dependency-cruiser ruleset (conceptual):
   - no-circular                     (severity: error)
   - substrate-layering              kernel<errors<di<config<logging<events<plugins
   - namespace-graph                 edges mirror ai/architecture/dependency-map.md
-  - not-to-deep-import              only package barrels may be imported
+  - not-to-deep-import              only package barrels may be imported; covers packages/<pkg>/src and packages/namespaces/<ns>/src
+  - substrate-not-to-namespace      a substrate package must not import a namespace package
   - testing-not-runtime-dep         no runtime dependency on @openlance/aios-testing
 
-Plop generators:
-  package          -> packages/<name>/{src/index.ts,tests,package.json,tsconfig.json,README.md + constitution trace}
+Plop generators (ADR-0018):
+  package          -> packages/<name>/{package.json (ADR-0009 build + coverage + bench scripts), tsconfig.json,
+                      tsconfig.build.json, vitest.config.ts (inherits root policy), src/index.ts + src/<name>.ts,
+                      tests/<name>.test.ts, benchmarks/<name>.bench.ts + baseline.md, README.md + constitution trace}
   namespace-package-> packages/namespaces/<ns>/{package.json,README.md}  (NO src; reserved only)
 ```
 
@@ -54,7 +60,7 @@ tools/
 ## 6. Implementation plan
 
 1. Pin toolchain: `.nvmrc`, root `packageManager` + `engines`, committed `pnpm-lock.yaml`.
-2. `tools/tsconfig` + `tsconfig.base.json`; per-package `tsconfig` extends + project references.
+2. `tools/tsconfig` + `tsconfig.base.json`; per-package `tsconfig.json` extends the preset, plus a `tsconfig.build.json` (`composite: false`) for the tsup declaration build (ADR-0009). Type checking is per-package `tsc --noEmit` under Turborepo ordering; a `tsc -b` reference graph is not wired (ADR-0016).
 3. `tools/eslint-config` (flat, strict, boundary + banned-globals rules) + Prettier.
 4. `turbo.json` pipeline (build/typecheck/lint/test/depcruise/docs), content-hash cached.
 5. `.dependency-cruiser.cjs`: substrate layering + reserved namespace graph from the frozen map.

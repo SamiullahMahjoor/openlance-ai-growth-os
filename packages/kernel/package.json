@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "description": "Zero-dependency substrate root: Result/Option, Brand, Clock/IdGenerator determinism seams, and Disposable.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

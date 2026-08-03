@@ -1,0 +1,20 @@
+# @openlance/aios-{{kebabCase name}} performance baselines
+
+Observational only (Engineering Rule 5). Phase 2A records baselines; it does not gate
+on them. Measurement runs outside `src`, never on a runtime path, and never changes
+behavior. Micro-benchmarks are defined in `{{kebabCase name}}.bench.ts` and reproduced
+with `pnpm --filter @openlance/aios-{{kebabCase name}} run bench`.
+
+- **Recorded:** not yet measured (scaffolded starter).
+- **Environment:** record the Node, pnpm, and Vitest versions and the machine when the
+  first real baseline is taken. Absolute numbers are machine-specific and indicative;
+  the committed harness is the reproducible artifact, not the values.
+
+## Applicable areas
+
+Replace the starter row once the package has real operations to measure. Remove any
+Rule 5 area the package does not own; measure it where that concern lives.
+
+| Area | Metric | Baseline |
+|---|---|---|
+| Starter surface | `{{camelCase name}}Ready` throughput | not yet measured |

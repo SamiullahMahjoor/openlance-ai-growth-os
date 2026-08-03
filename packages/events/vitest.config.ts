@@ -3,17 +3,17 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import base from '../../vitest.config';
 
 /**
- * Events test configuration. Inherits the repository Definition-of-Done coverage
- * floor (Rule 6) and measures coverage over the modules that carry runtime logic.
- * The barrel (`index`) and the type-only `subscription` module have no executable
- * statements.
+ * Events test configuration. Inherits the repository coverage policy (Rule 6 /
+ * ADR-0015): all of `src` is measured at 100%. `subscription` is a type-only module
+ * (the `Subscription` type alias, no emitted statements) and is excluded. Every module
+ * with runtime logic is covered.
  */
 export default mergeConfig(
   base,
   defineConfig({
     test: {
       coverage: {
-        include: ['src/event.ts', 'src/dispatcher.ts', 'src/bus.ts'],
+        exclude: ['src/subscription.ts'],
       },
     },
   }),

@@ -18,5 +18,12 @@
   },
   "peerDependencies": {
     "eslint": "^9"
+  },
+  "aios": {
+    "layer": "tools",
+    "constitution": [],
+    "stability": "Low",
+    "apiVersion": "1.0.0",
+    "generation": 1
   }
 }

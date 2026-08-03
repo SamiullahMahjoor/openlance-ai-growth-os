@@ -13,13 +13,17 @@
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "bench": "turbo run bench",
     "docs": "turbo run docs",
+    "docs-check": "node scripts/docs-check.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "depcruise": "depcruise packages tools apps --config .dependency-cruiser.cjs",
-    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run depcruise && pnpm run test && pnpm run build",
+    "graph:snapshot": "node scripts/graph-snapshot.mjs",
+    "graph:check": "node scripts/graph-snapshot.mjs --check",
+    "validate": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run depcruise && pnpm run graph:check && pnpm run docs-check && pnpm run test && pnpm run bench && pnpm run docs && pnpm run build",
     "scaffold": "plop",
     "changeset": "changeset"
   },
@@ -34,7 +38,7 @@
     "prettier": "^3.4.2",
     "tsup": "^8.3.5",
     "turbo": "^2.3.3",
-    "typedoc": "^0.27.5",
+    "typedoc": "^0.28.20",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

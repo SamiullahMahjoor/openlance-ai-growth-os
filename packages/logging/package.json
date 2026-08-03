@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "description": "Logging substrate: structured, correlated, immutable records over a vendor-neutral sink seam. Emits records only; observability is deferred to Operations.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

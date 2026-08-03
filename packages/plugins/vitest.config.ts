@@ -3,17 +3,17 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import base from '../../vitest.config';
 
 /**
- * Plugins test configuration. Inherits the repository Definition-of-Done coverage
- * floor (Rule 6) and measures coverage over the modules that carry runtime logic.
- * The barrel (`index`) and the type-only `manifest`/`plugin`/`context`/`source`
- * modules have no executable statements.
+ * Plugins test configuration. Inherits the repository coverage policy (Rule 6 /
+ * ADR-0015): all of `src` is measured at 100%. `context`, `manifest`, `plugin`, and
+ * `source` are type-only modules (public interfaces with no emitted statements) and
+ * are excluded. Every module with runtime logic is covered.
  */
 export default mergeConfig(
   base,
   defineConfig({
     test: {
       coverage: {
-        include: ['src/compatibility.ts', 'src/lifecycle.ts', 'src/host.ts'],
+        exclude: ['src/context.ts', 'src/manifest.ts', 'src/plugin.ts', 'src/source.ts'],
       },
     },
   }),

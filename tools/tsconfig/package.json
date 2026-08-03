@@ -6,5 +6,12 @@
   "files": [
     "base.json",
     "library.json"
-  ]
+  ],
+  "aios": {
+    "layer": "tools",
+    "constitution": [],
+    "stability": "Low",
+    "apiVersion": "1.0.0",
+    "generation": 1
+  }
 }

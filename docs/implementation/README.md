@@ -1,6 +1,6 @@
 # Phase 2A, Repository & Framework · Design Package
 
-**Status:** Design (awaiting approval). No production code exists yet.
+**Status:** Built. The Phase 2A substrate is implemented and green (with the post-audit hardening pass applied); the 13 AI namespace packages are reserved, not implemented.
 **Cadence:** All subsystem designs first → one approval → build in dependency order.
 
 This directory holds the complete Phase 2A engineering design. It builds the **substrate beneath the 14 frozen AI namespaces** and implements **none** of their behavior. The constitutional documents under `ai/` and `knowledge/` are immutable specifications; this design conforms to them and never redesigns, merges, or reinterprets them.
@@ -12,7 +12,7 @@ This directory holds the complete Phase 2A engineering design. It builds the **s
 | Language / runtime | TypeScript (strict, ESM) on Node.js LTS |
 | Framework posture | Custom, framework-neutral core (no framework inside packages) |
 | Monorepo + tasks | pnpm workspaces + Turborepo |
-| Compilation | `tsc` project references (+ `tsup` for dist bundles) |
+| Compilation | `tsup` bundle + rolled-up `.d.ts`, with per-package `tsc --noEmit` type checking under Turborepo build ordering (ADR-0016; `composite` remains available, but a `tsc -b` reference graph is not wired in Phase 2A) |
 | Tests | Vitest |
 | Boundary enforcement | dependency-cruiser (encodes the frozen dependency graph) |
 | Lint / format / docs / codegen | ESLint (flat) · Prettier · TypeDoc · Plop |
@@ -71,14 +71,14 @@ Phase 2A writes zero namespace behavior; it only reserves names and encodes the 
 ```
 kernel ─▶ errors ─▶ di ─▶ config ─▶ logging ─▶ events ─▶ plugins
 testing ─▶ kernel, errors            (dev-only on the rest)
-apps/dev-harness ─▶ di, config, logging, events, plugins   (composition root)
+apps/dev-harness ─▶ di, config, logging, events, plugins   (composition root; deferred to Runtime, ADR-0017)
 ```
 
 Every edge points toward a more-foundational package. This mirrors the shape of the frozen AI dependency graph and is enforced in CI.
 
 ## Build order
 
-`kernel → errors → di → config → logging → events → plugins`; `testing` is developed alongside every package; `build/dev infra` and `dev-harness` bracket the work.
+`kernel → errors → di → config → logging → events → plugins`; `testing` is developed alongside every package; `build/dev infra` brackets the work, and `dev-harness` is deferred to the Runtime phase (ADR-0017).
 
 ## Cross-cutting conventions (apply to every package)
 

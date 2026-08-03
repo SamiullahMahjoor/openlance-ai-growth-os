@@ -1,0 +1,9 @@
+import { describe, expect, it } from 'vitest';
+
+import { {{camelCase name}}Ready } from '../src/index';
+
+describe('@openlance/aios-{{kebabCase name}}', () => {
+  it('exposes a ready starter surface', () => {
+    expect({{camelCase name}}Ready()).toBe(true);
+  });
+});

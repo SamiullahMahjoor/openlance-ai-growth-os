@@ -36,3 +36,8 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0011](0011-logging-abstractions-only.md) | Logging ships abstractions only; the development ConsoleSink is deferred | Accepted |
 | [0012](0012-plugin-load-in-memory.md) | Plugins are loaded from an in-memory provided list | Accepted |
 | [0013](0013-plugin-semver-subset.md) | Internal semver range subset for plugin compatibility | Accepted |
+| [0014](0014-di-token-composition-root.md) | Cross-package services are exposed as DI tokens registered by the composition root | Accepted |
+| [0015](0015-runtime-coverage-policy.md) | Runtime coverage policy - measure all source, exclude only barrels and type-only modules | Accepted |
+| [0016](0016-realized-compilation-strategy.md) | Realized compilation and type-checking strategy | Accepted |
+| [0017](0017-dev-harness-deferral.md) | Defer apps/dev-harness to the start of the Runtime phase | Accepted |
+| [0018](0018-scaffold-and-golden-fixture-strategy.md) | Scaffold conventions and golden-fixture testing strategy | Accepted |

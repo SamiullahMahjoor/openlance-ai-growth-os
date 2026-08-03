@@ -1,0 +1,15 @@
+import { bench, describe } from 'vitest';
+
+import { {{camelCase name}}Ready } from '../src/index';
+
+/**
+ * Observational micro-baselines (Engineering Rule 5). Measurement only: these run
+ * outside `src`, never on a runtime path, and never change behavior. Recorded results
+ * live in benchmarks/baseline.md. Replace the starter bench with the package's real
+ * operations as they are implemented.
+ */
+describe('@openlance/aios-{{kebabCase name}} primitives', () => {
+  bench('{{camelCase name}}Ready', () => {
+    {{camelCase name}}Ready();
+  });
+});

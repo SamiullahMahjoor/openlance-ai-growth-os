@@ -4,11 +4,11 @@
  *
  * {{description}}
  *
- * This file is the single supported public API (Engineering Rule 1). Internal
- * implementation lives under `src/internal` and is never re-exported. Consumers
- * import only from the package entry point.
+ * This file is the single supported public API (Engineering Rule 1). Every other
+ * module under `src/` is internal and is reached only through this barrel; consumers
+ * import only from the package entry point, and deep imports fail CI.
  *
  * Constitution: {{constitution}}
  */
 
-export {};
+export { {{camelCase name}}Ready } from './{{kebabCase name}}.js';

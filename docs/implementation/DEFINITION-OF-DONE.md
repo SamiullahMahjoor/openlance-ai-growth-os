@@ -28,12 +28,12 @@ Implementation matches the approved design (`docs/implementation/00`–`09`): pa
 
 ### 3. Unit Testing
 All unit tests pass; every public component has appropriate unit coverage; no failing or skipped tests remain.
-**Validation:** `vitest run --coverage`; per-package coverage threshold; a skipped-test check.
-**Pass:** all tests green; coverage at or above threshold; zero `.skip`/`.only`.
+**Validation:** `vitest run --coverage` under the repository coverage policy (ADR-0015): every runtime source file under `src` is measured, thresholds are 100, and only the public barrel and genuinely type-only modules are excluded; a focused/skipped-test check (`docs-check`).
+**Pass:** all tests green; coverage at 100% under the policy; zero `.skip`/`.only`.
 
 ### 4. Integration Testing
-Where applicable, integration tests verify correct interaction between packages: dependency injection, configuration, logging, events, plugin loading, and package interaction, via the test harness / `dev-harness`.
-**Validation:** integration test suite (`createHarness`) in CI.
+Where applicable, integration tests verify correct interaction between packages: dependency injection, configuration, logging, events, plugin loading, and package interaction, via the test harness (`createHarness`). The `dev-harness` app is deferred to the start of the Runtime phase (ADR-0017); in Phase 2A the harness suite provides the integration coverage.
+**Validation:** the `createHarness` integration suite in CI.
 **Pass:** integration suite green for every applicable interaction.
 
 ### 5. Dependency Graph Validation
@@ -43,12 +43,12 @@ The graph passes automated validation: no cycles, no forbidden imports, no illeg
 
 ### 6. Static Analysis
 TypeScript compilation, type checking, linting, formatting, and dependency analysis all pass; no warning classified as an error remains.
-**Validation:** `tsc -b`, `tsc --noEmit`, ESLint (errors), Prettier check, dependency-cruiser.
+**Validation:** per-package `tsc --noEmit` under Turborepo build ordering (the realized compilation strategy, ADR-0016), ESLint (errors), Prettier check, dependency-cruiser.
 **Pass:** all static gates green; zero error-level findings.
 
 ### 7. Public API Verification
 Every package exposes only its approved public API: exported interfaces, public contracts, single package entry point, and internal implementation isolation. No consumer depends on internal files.
-**Validation:** `package.json` `exports` single `"."`; ESLint `no-internal-modules`; dependency-cruiser `not-to-deep-import` (Rule 1).
+**Validation:** `package.json` `exports` single `"."`; ESLint `no-restricted-imports` patterns; dependency-cruiser `not-to-deep-import` (Rule 1).
 **Pass:** one barrel; no subpath export; no deep import anywhere.
 
 ### 8. Documentation
@@ -73,7 +73,7 @@ If completion introduced a new engineering decision not already documented, a ne
 
 ### 12. Continuous Integration
 The complete CI pipeline passes, including all mandatory engineering gates. No package is merged while any required check is failing.
-**Validation:** the full pipeline (`build`, `typecheck`, `lint`, `test`, `depcruise`, `docs-check`, `bench`) as required status checks with branch protection.
+**Validation:** the full pipeline (`typecheck`, `lint`, `format:check`, `depcruise`, `graph:check` (Rule 2 snapshot), `docs-check`, `test`, `bench`, `docs`, `build`) as required status checks with branch protection.
 **Pass:** every required check green; merge blocked otherwise.
 
 ---
@@ -113,7 +113,7 @@ The DoD is mandatory. No manual approval overrides a failed validation. A packag
 
 ## Validation workflow
 
-1. **During development:** the author runs `pnpm turbo run build typecheck lint test depcruise` and the `bench` harness locally.
+1. **During development:** the author runs `pnpm run validate` locally (typecheck, lint, format check, depcruise, graph snapshot check, docs-check, test, bench, docs, build).
 2. **On pull request:** CI runs the full pipeline; the DoD checklist is attached with evidence; required checks must be green.
 3. **Completion review:** the reviewer confirms the judgment-bearing criteria and that all gates are green.
 4. **Mark complete:** the unit is marked complete only when the checklist is fully satisfied and evidenced. Any later change re-runs the DoD.

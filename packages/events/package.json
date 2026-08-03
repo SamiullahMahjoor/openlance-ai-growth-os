@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "description": "In-process publish/subscribe bus for framework-internal events: deterministic registration-order delivery with handler fault isolation. No transport, broker, or persistence.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

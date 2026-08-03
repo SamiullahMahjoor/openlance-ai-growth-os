@@ -1,11 +1,8 @@
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    include: ['tests/**/*.test.ts', 'src/**/*.test.ts'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json-summary'],
-    },
-  },
-});
+/**
+ * Test configuration for `@openlance/aios-{{kebabCase name}}`. Inherits the repository
+ * coverage policy (Rule 6 / ADR-0015): every runtime module under `src` is measured at
+ * 100%, and a new module participates automatically. If the package adds a genuinely
+ * type-only module (interfaces or type aliases with no emitted statements), switch to
+ * `mergeConfig` and add it to `coverage.exclude` with a comment naming why.
+ */
+export { default } from '../../vitest.config';

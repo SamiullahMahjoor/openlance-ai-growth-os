@@ -98,12 +98,25 @@ module.exports = {
       name: 'not-to-deep-import',
       severity: 'error',
       comment:
-        'Rule 1: a package may be imported only through its public barrel, never a nested module.',
-      from: { path: '^packages/([^/]+)/.+' },
+        'Rule 1: a package may be imported only through its public barrel, never a nested module. ' +
+        'Covers both the flat substrate layout (packages/<pkg>/src) and the nested namespace ' +
+        'layout (packages/namespaces/<ns>/src); the same-package back-reference exempts a ' +
+        "package's own internal imports.",
+      from: { path: '^(packages/namespaces/[^/]+|packages/[^/]+)/.+' },
       to: {
-        path: '^packages/([^/]+)/src/(?!index\\.ts$).+',
-        pathNot: ['^packages/$1/'],
+        path: '^(?:packages/namespaces/[^/]+|packages/[^/]+)/src/(?!index\\.ts$).+',
+        pathNot: ['^$1/'],
       },
+    },
+    {
+      name: 'substrate-not-to-namespace',
+      severity: 'error',
+      comment:
+        'Rule 2 (defense in depth): substrate packages are namespace-agnostic. No substrate -> ' +
+        'namespace edge exists in the frozen graph, so a substrate package must never depend on ' +
+        'an AI namespace package.',
+      from: { path: '^packages/(kernel|errors|di|config|logging|events|plugins|testing)/' },
+      to: { path: nsTo(NAMESPACES) },
     },
     {
       name: 'testing-not-a-runtime-dep',
@@ -133,7 +146,7 @@ module.exports = {
     // scaffold golden-file test creates and removes packages/goldenfixture/ during a run, so it
     // is excluded here to keep the whole-repo cruise from racing that transient package; the
     // golden test cruises the fixture with its own config (tools/scaffold/tests) instead.
-    exclude: { path: '(^|/)(dist|docs-api|coverage|\\.turbo|goldenfixture)/' },
+    exclude: { path: '(^|/)(dist|docs-api|coverage|\\.turbo|goldenfixture|goldennamespace)/' },
     tsPreCompilationDeps: true,
     tsConfig: { fileName: 'tsconfig.base.json' },
     enhancedResolveOptions: {
