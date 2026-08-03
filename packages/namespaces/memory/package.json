@@ -2,11 +2,49 @@
   "name": "@openlance/aios-memory",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/memory/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI memory abstraction (Specification authority): the retained-context classifications, definitions, invariants, and pure deterministic predicates that express the memory specification. No store, IO, or runtime (ai/memory/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-MEMORY-README"
+      "OL-AI-MEMORY-README",
+      "OL-AI-MEMORY-MEMORY",
+      "OL-AI-MEMORY-MEMORY-LIFECYCLE",
+      "OL-AI-MEMORY-MEMORY-WORKFLOW",
+      "OL-AI-MEMORY-MEMORY-TYPES",
+      "OL-AI-MEMORY-MEMORY-RETENTION",
+      "OL-AI-MEMORY-MEMORY-RETRIEVAL",
+      "OL-AI-MEMORY-MEMORY-CONSISTENCY",
+      "OL-AI-MEMORY-MEMORY-VALIDATION",
+      "OL-AI-MEMORY-MEMORY-QUALITY",
+      "OL-AI-MEMORY-MEMORY-BOUNDARIES",
+      "OL-AI-MEMORY-MEMORY-EVOLUTION"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",
