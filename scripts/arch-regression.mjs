@@ -1,47 +1,56 @@
 /**
- * Architectural regression suite (Constitutional Rule - Production Import Enforcement).
+ * Architectural regression suite (Constitutional Rule - Production Import Enforcement, ADR-0019).
  *
- * This suite proves that Engineering Rule 2 (dependency graph) and Rule 1 (public API
- * boundary) fire against the EXACT import syntax production code uses -- bare workspace
- * specifiers such as `@openlance/aios-errors` -- and not only against relative filesystem
- * imports. It constructs each forbidden and each legal scenario, runs dependency-cruiser
- * with the real repository config, asserts the expected rule fires (or that a legal import
- * passes), and removes every probe afterward. It is wired into `pnpm run validate` and CI.
+ * Proves that Engineering Rule 2 (dependency graph) and Rule 1 (public API boundary) fire against
+ * the exact import syntax production code uses -- bare workspace specifiers such as
+ * `@openlance/aios-errors` -- and not only against relative imports. It constructs each forbidden
+ * and each legal scenario, runs dependency-cruiser with the real repository config, asserts the
+ * expected rule fires (or that a legal import passes), and removes every probe afterward.
  *
- * A rule that cannot reject an illegal PRODUCTION import is considered non-functional
- * (ADR-0019). Adding a new architectural rule requires adding its scenarios here.
+ * SAFETY (critical, since Phase 2B namespaces now carry real source): every artifact this suite
+ * creates carries the `__arch_probe__` marker (probe files by name, temporary namespace barrels by
+ * a leading marker comment). Cleanup removes only marker-carrying files and only the `src`
+ * directories this suite created; it never touches a package that already had source. Namespace
+ * fixtures use namespaces that are still reserved, never an implemented one.
  *
- * It mutates the working tree transiently (probe files under real package `src/`), always
- * restoring it. It must run as its own step, never concurrently with build/test.
+ * It mutates the working tree transiently and must run as its own step, never concurrently with
+ * build/test. Wired into `pnpm run validate` and CI as `arch:check`.
  */
 import { execSync } from 'node:child_process';
-import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PROBE = '__arch_probe__';
+const namespacesDir = join(repoRoot, 'packages', 'namespaces');
 
 const createdFiles = new Set();
-const createdNamespaceSrc = new Set();
+const createdDirs = new Set();
+
+/** A temporary namespace barrel; carries the marker so cleanup can recognise it. */
+const barrel = (importLine = '') =>
+  `// ${PROBE}\n${importLine}${importLine ? '\n' : ''}export const value = 1;\n`;
+/** A probe file added alongside a package's real source; carries the marker. */
+const probe = (importLine) => `// ${PROBE}\n${importLine}\n`;
 
 const place = (relPath, content) => {
   const abs = join(repoRoot, relPath);
-  mkdirSync(dirname(abs), { recursive: true });
+  const dir = dirname(abs);
+  if (!existsSync(dir)) createdDirs.add(dir);
+  mkdirSync(dir, { recursive: true });
   writeFileSync(abs, content);
   createdFiles.add(abs);
-  const nsSrc = relPath.match(/^(packages\/namespaces\/[^/]+\/src)\//);
-  if (nsSrc) createdNamespaceSrc.add(join(repoRoot, nsSrc[1]));
 };
 
 const cleanupScenario = () => {
   for (const file of createdFiles) rmSync(file, { force: true });
   createdFiles.clear();
-  for (const dir of createdNamespaceSrc) rmSync(dir, { recursive: true, force: true });
-  createdNamespaceSrc.clear();
+  for (const dir of createdDirs) rmSync(dir, { recursive: true, force: true });
+  createdDirs.clear();
 };
 
-/** Defensive sweep: remove any leftover probe files and any src under a reserved namespace. */
+/** Remove any marker-carrying artifact and any now-empty namespace src dir; never touch real code. */
 const sweep = () => {
   const walk = (dir) => {
     let entries;
@@ -58,10 +67,16 @@ const sweep = () => {
     }
   };
   walk(join(repoRoot, 'packages'));
-  const nsDir = join(repoRoot, 'packages', 'namespaces');
-  for (const entry of readdirSync(nsDir, { withFileTypes: true })) {
-    if (entry.isDirectory())
-      rmSync(join(nsDir, entry.name, 'src'), { recursive: true, force: true });
+  for (const ns of readdirSync(namespacesDir, { withFileTypes: true })) {
+    if (!ns.isDirectory()) continue;
+    const src = join(namespacesDir, ns.name, 'src');
+    if (!existsSync(src)) continue;
+    for (const entry of readdirSync(src, { withFileTypes: true })) {
+      if (!entry.isFile()) continue;
+      const full = join(src, entry.name);
+      if (readFileSync(full, 'utf8').startsWith(`// ${PROBE}`)) rmSync(full, { force: true });
+    }
+    if (readdirSync(src).length === 0) rmSync(src, { recursive: true, force: true });
   }
 };
 
@@ -79,18 +94,16 @@ const runCruise = (targets) => {
   }
 };
 
-const BARREL = 'export const value = 1;\n';
-
-/**
- * Each scenario: name, the probe files to place, the cruise targets, the expected outcome
- * ('pass' = 0 violations; 'fail' = the named rule must fire), and the import style exercised.
- */
+// Namespace fixtures use still-reserved namespaces (never governance or a namespace under
+// implementation). Relationships come from the frozen ai/architecture/dependency-map.md:
+// operations may depend on runtime (allowed) but not evaluation (forbidden); runtime may not depend
+// on evolution (forbidden); evolution and evaluation may not depend on each other (cycle, forbidden).
 const scenarios = [
   // --- Legal imports must succeed ---
   {
     name: 'legal-substrate-bare-import',
     style: 'bare package',
-    files: [['packages/config/src/__arch_probe__.ts', "import '@openlance/aios-kernel';\n"]],
+    files: [['packages/config/src/__arch_probe__.ts', probe("import '@openlance/aios-kernel';")]],
     targets: 'packages/config packages/kernel',
     expect: 'pass',
   },
@@ -98,20 +111,17 @@ const scenarios = [
     name: 'legal-namespace-bare-import',
     style: 'bare package (namespace)',
     files: [
-      ['packages/namespaces/agents/src/index.ts', BARREL],
-      [
-        'packages/namespaces/runtime/src/index.ts',
-        "import '@openlance/aios-agents';\nexport const value = 1;\n",
-      ],
+      ['packages/namespaces/runtime/src/index.ts', barrel()],
+      ['packages/namespaces/operations/src/index.ts', barrel("import '@openlance/aios-runtime';")],
     ],
-    targets: 'packages/namespaces/runtime packages/namespaces/agents',
+    targets: 'packages/namespaces/operations packages/namespaces/runtime',
     expect: 'pass',
   },
   // --- Forbidden imports must fail, using PRODUCTION bare specifiers ---
   {
     name: 'layer-inversion-bare-import',
     style: 'bare package',
-    files: [['packages/kernel/src/__arch_probe__.ts', "import '@openlance/aios-errors';\n"]],
+    files: [['packages/kernel/src/__arch_probe__.ts', probe("import '@openlance/aios-errors';")]],
     targets: 'packages/kernel packages/errors',
     expect: 'fail',
     rule: 'substrate-layer-kernel',
@@ -121,15 +131,15 @@ const scenarios = [
     style: 'bare package (mutual)',
     files: [
       [
-        'packages/namespaces/governance/src/index.ts',
-        "import '@openlance/aios-providers';\nexport const value = 1;\n",
+        'packages/namespaces/evolution/src/index.ts',
+        barrel("import '@openlance/aios-evaluation';"),
       ],
       [
-        'packages/namespaces/providers/src/index.ts',
-        "import '@openlance/aios-governance';\nexport const value = 1;\n",
+        'packages/namespaces/evaluation/src/index.ts',
+        barrel("import '@openlance/aios-evolution';"),
       ],
     ],
-    targets: 'packages/namespaces/governance packages/namespaces/providers',
+    targets: 'packages/namespaces/evolution packages/namespaces/evaluation',
     expect: 'fail',
     rule: 'no-circular',
   },
@@ -137,10 +147,10 @@ const scenarios = [
     name: 'substrate-to-namespace-bare-import',
     style: 'bare package',
     files: [
-      ['packages/namespaces/governance/src/index.ts', BARREL],
-      ['packages/errors/src/__arch_probe__.ts', "import '@openlance/aios-governance';\n"],
+      ['packages/namespaces/evolution/src/index.ts', barrel()],
+      ['packages/errors/src/__arch_probe__.ts', probe("import '@openlance/aios-evolution';")],
     ],
-    targets: 'packages/errors packages/namespaces/governance',
+    targets: 'packages/errors packages/namespaces/evolution',
     expect: 'fail',
     rule: 'substrate-not-to-namespace',
   },
@@ -148,34 +158,31 @@ const scenarios = [
     name: 'illegal-namespace-edge-bare-import',
     style: 'bare package (namespace)',
     files: [
-      ['packages/namespaces/memory/src/index.ts', BARREL],
+      ['packages/namespaces/evaluation/src/index.ts', barrel()],
       [
-        'packages/namespaces/providers/src/index.ts',
-        "import '@openlance/aios-memory';\nexport const value = 1;\n",
+        'packages/namespaces/operations/src/index.ts',
+        barrel("import '@openlance/aios-evaluation';"),
       ],
     ],
-    targets: 'packages/namespaces/providers packages/namespaces/memory',
+    targets: 'packages/namespaces/operations packages/namespaces/evaluation',
     expect: 'fail',
-    rule: 'namespace-providers',
+    rule: 'namespace-operations',
   },
   {
     name: 'runtime-to-forbidden-namespace-bare-import',
     style: 'bare package (namespace)',
     files: [
-      ['packages/namespaces/safety/src/index.ts', BARREL],
-      [
-        'packages/namespaces/runtime/src/index.ts',
-        "import '@openlance/aios-safety';\nexport const value = 1;\n",
-      ],
+      ['packages/namespaces/evolution/src/index.ts', barrel()],
+      ['packages/namespaces/runtime/src/index.ts', barrel("import '@openlance/aios-evolution';")],
     ],
-    targets: 'packages/namespaces/runtime packages/namespaces/safety',
+    targets: 'packages/namespaces/runtime packages/namespaces/evolution',
     expect: 'fail',
     rule: 'namespace-runtime',
   },
   {
     name: 'testing-as-runtime-dep-bare-import',
     style: 'bare package',
-    files: [['packages/config/src/__arch_probe__.ts', "import '@openlance/aios-testing';\n"]],
+    files: [['packages/config/src/__arch_probe__.ts', probe("import '@openlance/aios-testing';")]],
     targets: 'packages/config packages/testing',
     expect: 'fail',
     rule: 'testing-not-a-runtime-dep',
@@ -184,7 +191,9 @@ const scenarios = [
   {
     name: 'forbidden-relative-import',
     style: 'relative',
-    files: [['packages/kernel/src/__arch_probe__.ts', "import '../../errors/src/index.js';\n"]],
+    files: [
+      ['packages/kernel/src/__arch_probe__.ts', probe("import '../../errors/src/index.js';")],
+    ],
     targets: 'packages/kernel packages/errors',
     expect: 'fail',
     rule: 'substrate-layer-kernel',
@@ -192,7 +201,7 @@ const scenarios = [
   {
     name: 'deep-import-relative',
     style: 'relative deep',
-    files: [['packages/config/src/__arch_probe__.ts', "import '../../errors/src/base.js';\n"]],
+    files: [['packages/config/src/__arch_probe__.ts', probe("import '../../errors/src/base.js';")]],
     targets: 'packages/config packages/errors',
     expect: 'fail',
     rule: 'not-to-deep-import',

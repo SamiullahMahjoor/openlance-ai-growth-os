@@ -1,0 +1,107 @@
+# Subsystem 10, Governance Namespace (Phase 2B)
+
+> **Constitution:** `ai/governance/` (11 frozen documents; id `OL-AI-GOVERNANCE-README`).
+> **Category:** Pure Domain Model (ADR-0024, category 1). **Model:** immutable, stateless domain
+> model (ADR-0020). **Quality:** ADR-0022. **Dependencies:** ADR-0021. **Lifecycle:** ADR-0023.
+
+## 1. Constitutional grounding
+
+Governance is the **Mandate**-authority rule layer of the AI layer. It *"defines the permanent
+governing rules every operational AI namespace must obey… and owns no operational behavior, no
+runtime execution, no business knowledge, and no implementation"* (`ai/governance/README.md`). Every
+governance document states rules, never mechanism: *"never defines an algorithm, a score, a
+workflow, or any executable procedure. It states the rule, never the mechanism"* (README line 120).
+Enforcement, checking, and scoring are explicitly operational and runtime, not governance.
+
+Per the frozen `ai/architecture/dependency-map.md`, Governance depends only on the constitution; it
+depends on no other namespace (depcruise `NAMESPACE_DEPS.governance = []`).
+
+## 2. Ownership and responsibilities
+
+The package `@openlance/aios-governance` is the **immutable, technology-neutral domain model** of the
+nine governance concerns (`ai/governance/governance.md`): decision-making, constitutional
+validation, escalation, human oversight, risk management, permission governance, policy enforcement,
+autonomy boundaries, and change governance. For each concern it owns only the elements the
+constitution states concretely and technology-neutrally: classifications, ordered levels, the
+identity of mandate/invariant/trigger sets, precedence orderings, and pure predicates that express a
+written rule verbatim.
+
+It **never owns** (each has a canonical owner, and none appears in the package): validation,
+permission, or policy enforcement/checking (runtime, operational); risk scoring or measurement
+(operational); an agent's specific permissions (Agents namespace); risk-category, role, or legal
+values (knowledge repository); the Approval Matrix or amendment workflow (`ai/CONTRIBUTING.md`); and
+any runtime, mutable state, event transport, IO, logging, configuration, or service.
+
+## 3. Public API (explicit barrel only)
+
+The barrel `src/index.ts` re-exports, per concern, the constitutional truth as strongly-typed,
+immutable definitions plus verbatim-rule predicates. Illustrative (final surface grows one concern
+per stage): `TrustLevel` + `requiredOversight` (risk); `AutonomyLevel` + `maximumAutonomy` (autonomy);
+the permission-grant model + its invariants (permissions); the ordered validation-concern set
+(validation); the escalation-trigger set (escalation); policy precedence + `higherAuthorityWins`
+(policy). Only ADR-0020-permitted predicate shapes appear (`requiredOversight(level)`,
+`trustAllows(level)`, `higherAuthorityWins(a, b)`); no runtime-context evaluator
+(`validate`/`evaluate`/`authorize`/`checkPermission`) ever appears.
+
+## 4. Internal architecture, modules, package layout
+
+One module per owned concern under `src/`, plus the barrel; no cross-module runtime coupling and no
+shared state. Planned modules: `risk`, `autonomy`, `permissions`, `validation`, `escalation`,
+`policy`, `decision`, `human-oversight`, `change`. Layout mirrors the substrate package convention:
+`package.json`, `tsconfig.json` + `tsconfig.build.json` (ADR-0009), `vitest.config.ts` (root policy,
+ADR-0015/0022), `src/`, `tests/`, `benchmarks/`, `README.md`.
+
+## 5. Dependency usage and integration points
+
+**Dependency usage (ADR-0021):** Governance imports only what it actually requires. As a pure domain
+model of classifications and predicates, it requires no substrate package for the current stages and
+declares no runtime dependency; it never imports another namespace (graph = `[]`). If a later stage
+genuinely needs a value type (for example a `Brand`), it may import `@openlance/aios-kernel` only.
+
+**Integration points:** Governance is consumed later by the runtime (whose validation pipeline
+enforces these rules) and by every operational namespace (all derive from governance). Governance is
+implemented first precisely because everything below consumes it and it consumes nothing.
+
+## 6. Lifecycle, state, error, and event ownership
+
+By constitutional design (ADR-0020), all four are empty for governance: **lifecycle** none (it does
+not boot, run, or shut down; that is the runtime); **state** none (the model is immutable/frozen; no
+mutable runtime state); **errors** none (it performs no execution, so it raises no runtime error);
+**events** none (it owns no event transport or lifecycle events). These empty sections are the
+correct shape of a Pure Domain Model, not gaps.
+
+## 7. Testing strategy (ADR-0022)
+
+Per module: every predicate is proven total and deterministic (same inputs -> same outputs, no time,
+random, or IO); every classification's completeness and ordering is asserted against the constitution
+(for example exactly four trust levels; `requiredOversight('critical')` yields human approval);
+immutability is asserted; and boundary tests confirm no enforcement/scoring surface is exported.
+Executable code is at 100% coverage; any pure-data module is excluded per ADR-0022 with a comment.
+Benchmarks measure predicates only (Rule 5). No integration tests yet (no downstream consumer exists).
+
+## 8. Stage plan
+
+Small, independently testable, constitutionally complete stages (ADR-0023). One concern per stage,
+foundational first (later concerns reference the trust and autonomy classifications):
+
+1. **Risk and Trust** - the four governance trust levels and the oversight each requires
+   (`ai/governance/risk-management.md`), plus the package foundation. (This document's first stage.)
+2. **Autonomy Boundaries** - the four autonomy levels and the may/must-not/must-escalate/must-refuse
+   classification (`autonomy-boundaries.md`).
+3. **Permission Governance** - the permission-grant model and its invariants (`permission-governance.md`).
+4. **Constitutional Validation** - the ordered set an action is validated against (`constitutional-validation.md`).
+5. **Escalation** - the escalation triggers (`escalation.md`).
+6. **Policy Enforcement** - precedence and `higherAuthorityWins` (`policy-enforcement.md`).
+7. **Decision-Making** - the decision-governance model (`decision-making.md`).
+8. **Human Oversight** - the oversight model (`human-oversight.md`).
+9. **Change Governance** - the change-governance model (`change-governance.md`).
+
+Each stage passes the full validation pipeline and an independent audit before the next begins.
+
+## 9. Acceptance criteria (per stage)
+
+- Every exported symbol traces directly to a frozen `ai/governance/` document (constitutional
+  traceability), and no enforcement/scoring/runtime surface is exported.
+- Full validation green: build, typecheck, lint, format, depcruise, arch:check, graph:check,
+  docs-check, test (100% on executable code), bench, docs.
+- Zero Phase 2A regression; `ai/`, `knowledge/`, and the frozen substrate unchanged.

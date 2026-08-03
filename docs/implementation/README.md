@@ -32,6 +32,7 @@ This directory holds the complete Phase 2A engineering design. It builds the **s
 | 07 | Plugin Framework | [07-plugin-framework.md](07-plugin-framework.md) |
 | 08 | Testing Infrastructure | [08-testing-infrastructure.md](08-testing-infrastructure.md) |
 | 09 | Build & Dev Infrastructure | [09-build-dev-infrastructure.md](09-build-dev-infrastructure.md) |
+| 10 | Governance Namespace (Phase 2B) | [10-governance.md](10-governance.md) |
 
 > Note: the task lists Error Framework as subsystem 6; in this package it is documented at 02 because it is foundational (errors precede DI in the dependency order). The subsystem identity is unchanged.
 

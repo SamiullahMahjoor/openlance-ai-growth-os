@@ -1,0 +1,15 @@
+# Line endings are normalized to LF in the repository and on checkout, on every platform, so the
+# toolchain (prettier `endOfLine: lf`, deterministic builds) behaves identically on Windows, macOS,
+# and Linux. Without this, `core.autocrlf=true` checkouts render tracked files CRLF locally and fail
+# `format:check` while the committed blobs remain LF.
+* text=auto eol=lf
+
+# Binary files must never be line-ending normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.woff binary
+*.woff2 binary

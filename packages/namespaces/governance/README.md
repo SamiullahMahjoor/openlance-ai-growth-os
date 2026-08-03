@@ -1,21 +1,41 @@
-# @openlance/aios-governance (reserved)
+# @openlance/aios-governance
 
-> **Implementation status: Reserved namespace — intentionally contains no runtime implementation.**
+The immutable, technology-neutral **domain model** of the AI layer's governing rules.
 
-A name and dependency-graph reservation for the frozen `ai/governance/` constitutional namespace. It contains only `package.json` and this `README.md`: no source, no exports, no tests, no build or CI configuration, and zero executable code. Its behavior is owned exclusively by the frozen constitution and will be implemented in a future phase.
+- **Constitution:** `ai/governance/` (id `OL-AI-GOVERNANCE-README`), the **Mandate** authority layer.
+- **Category:** Pure Domain Model (ADR-0024, category 1). **Model:** immutable, stateless (ADR-0020).
+- **Stability:** Experimental (Engineering Rule 4). **Design:** [docs/implementation/10-governance.md](../../../docs/implementation/10-governance.md).
 
-## Ownership and constitutional responsibility
+## What this package is
 
-This package reserves the `ai/governance/` namespace, whose constitutional responsibility is the governance mandates that bind every namespace below it: decision-making, escalation, and the enforcement of constitutional rules. It owns none of that behavior here; the frozen constitution (OL-AI-GOVERNANCE-README) owns it, and this package only reserves the name and the dependency edges so the package map is explicit and future conflicts are prevented.
+It states governance truth as strongly-typed classifications, immutable definitions, and pure
+deterministic predicates that express a constitutional rule verbatim. It provides the truth every
+operational namespace and the runtime consume; **it never enforces, checks, scores, validates, or
+executes** anything (those are operational, owned by the operational namespaces and the runtime, per
+`ai/governance/` and ADR-0020). It owns no runtime, no mutable state, no lifecycle, no events, no IO,
+and no services.
+
+## Public API (single barrel, Engineering Rule 1)
+
+Implemented incrementally, one governance concern per stage (see the design's stage plan). Current
+surface:
+
+- **Risk and trust** (`ai/governance/risk-management.md`): `TrustLevel` and `TRUST_LEVELS` (the four
+  governance trust levels in order), `OversightRequirement`, and the predicates `requiredOversight`,
+  `requiresHumanApproval`, `trustAtLeast`, and `higherTrust`.
+
+Every exported symbol traces directly to a frozen `ai/governance/` document. No runtime-context
+evaluator (`validate`, `evaluate`, `authorize`, `checkPermission`, `executePolicy`) is exported; that
+boundary is absolute (ADR-0020).
 
 ## Dependency direction
 
-Per the frozen `ai/architecture/dependency-map.md`, this namespace depends on the constitution. Dependencies flow only from the more operational namespaces toward the more foundational ones, never in reverse, so the graph has no cycles. These edges are pre-declared here and enforced by dependency-cruiser.
+Per the frozen `ai/architecture/dependency-map.md`, Governance depends only on the constitution and
+on no other namespace (dependency-cruiser `NAMESPACE_DEPS.governance = []`). As a pure domain model
+it requires no substrate package and declares no runtime dependency (ADR-0021).
 
-## Public API ownership (future)
+## Non-responsibilities
 
-When implemented in its future phase, this package will own the governance contracts (mandates, decision and escalation surfaces) that other namespaces are bound by. Until then it exports nothing.
-
-## Explicit non-responsibilities
-
-It owns no provider, no reasoning, no runtime, no tool, and no business truth; it governs, it does not execute. It is an architectural reservation only; it is not an implemented package.
+It owns no provider, memory, retrieval, reasoning, prompt, tool, agent, or runtime behavior, and no
+business truth. It governs by stating rules; it does not execute them. Enforcement of these rules is
+performed by the runtime and the operational namespaces, which consume this model.

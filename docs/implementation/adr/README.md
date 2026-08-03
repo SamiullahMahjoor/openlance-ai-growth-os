@@ -42,3 +42,8 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0017](0017-dev-harness-deferral.md) | Defer apps/dev-harness to the start of the Runtime phase | Accepted |
 | [0018](0018-scaffold-and-golden-fixture-strategy.md) | Scaffold conventions and golden-fixture testing strategy | Accepted |
 | [0019](0019-production-import-graph-enforcement.md) | Enforce the dependency graph against production bare-specifier imports | Accepted |
+| [0020](0020-namespace-implementation-model.md) | Namespace implementation model - immutable stateless domain model | Accepted |
+| [0021](0021-namespace-substrate-dependency-policy.md) | Namespace to substrate dependency policy | Accepted |
+| [0022](0022-domain-model-quality-policy.md) | Domain-model namespace quality policy | Accepted |
+| [0023](0023-namespace-development-lifecycle.md) | Namespace development lifecycle | Accepted |
+| [0024](0024-namespace-purity-categories.md) | Namespace purity categories | Accepted |
