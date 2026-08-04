@@ -74,9 +74,10 @@ Wiring), and per ADR-0032 Phase 3 continues through Stage 9 to express those and
 - **Stage 6, Plugin Loading** (ADR-0032, `29-plugin-loading.md`): the app-level plugin declaration (available /
   enabled / compatible / ready) attached to the chain, delegating compatibility to the frozen
   `@openlance/aios-plugins` host. Built. Actually loading/activating plugins remains Phase 4.
-- **Stage 7, Error Propagation** (planned): the app-level integration over the frozen `@openlance/aios-errors`
-  package (the `BaseError` taxonomy and the `Result` channel, ADR-0006). Propagating errors at run time remains
-  Phase 4.
+- **Stage 7, Error Propagation** (ADR-0033, `30-error-propagation.md`): the app-level description of the chain's
+  coded error topology, validating code uniqueness against the frozen `@openlance/aios-errors` registry (the
+  `BaseError` taxonomy and the `Result` channel, ADR-0006). Built. Catching / retrying / recovering errors at run
+  time remains Phase 4.
 - **Stage 8, Event Flow** (planned): the app-level integration over the frozen `@openlance/aios-events` package (the
   `EventBus`). Flowing events at run time remains Phase 4.
 - **Stage 9, Runtime Freeze** (planned): a single consolidated freeze of the Phase 3 integration layer.

@@ -1,0 +1,54 @@
+{
+  "name": "@openlance/aios-error-propagation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 3 Stage 7 error propagation: an immutable application-level error propagation plan describing the chain's coded error topology (which coded errors, in which category, propagate on the Result channel), attached to the Stage 6 chain. Descriptive metadata only; it consumes the frozen @openlance/aios-errors framework (ErrorCategory, InMemoryErrorCodeRegistry, Result) and never recreates the error hierarchy, registry, or bridges, delegates code-uniqueness validation to the frozen registry, executes nothing, and holds no runtime state (ADR-0033).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-plugin-loading": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-di-integration": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-execution-pipeline": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-namespace-wiring": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-runtime-lifecycle": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

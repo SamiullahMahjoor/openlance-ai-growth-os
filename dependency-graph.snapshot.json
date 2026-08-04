@@ -23,6 +23,11 @@
     "@openlance/aios-kernel",
     "@openlance/aios-namespace-wiring"
   ],
+  "@openlance/aios-error-propagation": [
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugin-loading"
+  ],
   "@openlance/aios-errors": [
     "@openlance/aios-kernel"
   ],
