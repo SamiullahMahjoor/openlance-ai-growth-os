@@ -75,6 +75,12 @@
   "@openlance/aios-reasoning": [],
   "@openlance/aios-retrieval": [],
   "@openlance/aios-runtime": [],
+  "@openlance/aios-runtime-lifecycle": [
+    "@openlance/aios-di-integration",
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel",
+    "@openlance/aios-runtime"
+  ],
   "@openlance/aios-safety": [],
   "@openlance/aios-testing": [
     "@openlance/aios-di",

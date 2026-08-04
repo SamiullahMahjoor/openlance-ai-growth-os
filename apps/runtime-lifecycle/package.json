@@ -1,0 +1,50 @@
+{
+  "name": "@openlance/aios-runtime-lifecycle",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 3 Stage 4 runtime lifecycle: an immutable runtime lifecycle plan that binds the DI-integrated application to the frozen runtime lifecycle model. Descriptive planning metadata only; it consumes the frozen @openlance/aios-runtime model and the DI integration, re-declares no state/transition/phase, holds no runtime state, carries nothing out, and validates only by delegating to the frozen transitionAllowed (ADR-0029).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-di-integration": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-namespace-wiring": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}
