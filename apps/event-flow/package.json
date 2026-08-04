@@ -1,0 +1,55 @@
+{
+  "name": "@openlance/aios-event-flow",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 3 Stage 8 event flow: an immutable application-level event flow plan describing the chain's framework event topology (which framework events flow), realizing each declared event type via the frozen @openlance/aios-events createEvent, attached to the Stage 7 chain. Descriptive metadata only; it consumes the frozen event framework and never recreates the EventBus/dispatcher/subscriptions or calls any bus operation, delegates envelope realization to the frozen createEvent, executes nothing, and holds no runtime state (ADR-0034).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-error-propagation": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-di-integration": "workspace:*",
+    "@openlance/aios-execution-pipeline": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-namespace-wiring": "workspace:*",
+    "@openlance/aios-plugin-loading": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-runtime-lifecycle": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

@@ -78,8 +78,9 @@ Wiring), and per ADR-0032 Phase 3 continues through Stage 9 to express those and
   coded error topology, validating code uniqueness against the frozen `@openlance/aios-errors` registry (the
   `BaseError` taxonomy and the `Result` channel, ADR-0006). Built. Catching / retrying / recovering errors at run
   time remains Phase 4.
-- **Stage 8, Event Flow** (planned): the app-level integration over the frozen `@openlance/aios-events` package (the
-  `EventBus`). Flowing events at run time remains Phase 4.
+- **Stage 8, Event Flow** (ADR-0034, `31-event-flow.md`): the app-level description of the chain's framework event
+  topology, realizing each declared event type via the frozen `@openlance/aios-events` `createEvent` (never calling
+  the bus). Built. Publishing / subscribing / dispatching events at run time remains Phase 4.
 - **Stage 9, Runtime Freeze** (planned): a single consolidated freeze of the Phase 3 integration layer.
 
 ## Immutability of Phase 3
