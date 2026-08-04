@@ -34,6 +34,12 @@
     "@openlance/aios-logging"
   ],
   "@openlance/aios-evolution": [],
+  "@openlance/aios-execution-pipeline": [
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel",
+    "@openlance/aios-runtime",
+    "@openlance/aios-runtime-lifecycle"
+  ],
   "@openlance/aios-governance": [],
   "@openlance/aios-kernel": [],
   "@openlance/aios-logging": [
