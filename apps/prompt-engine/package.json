@@ -1,0 +1,54 @@
+{
+  "name": "@openlance/aios-prompt-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 2 Prompt Engine: the Runtime's operational prompt subsystem, the operational realization of the frozen Prompts namespace. It carries out operational prompt preparation up to expression (definition registration, template and inheritance resolution, variable resolution, assembly in the frozen layer order, normalization, validation) and produces an execution-ready payload (a frozen Provider-Engine ProviderRequest). It consumes the frozen @openlance/aios-prompts model and the @openlance/aios-provider-engine request contract, re-owns neither prompt semantics nor execution, executes nothing, caches nothing, and contains no vendor knowledge (ADR-0036).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-prompts": "workspace:*",
+    "@openlance/aios-provider-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-PROMPTS-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

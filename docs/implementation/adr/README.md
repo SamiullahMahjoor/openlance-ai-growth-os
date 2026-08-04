@@ -58,3 +58,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0033](0033-error-propagation-plan.md) | The error propagation plan describes the chain's coded error topology and delegates validation to the frozen error registry | Accepted |
 | [0034](0034-event-flow-plan.md) | The event flow plan describes the chain's framework event topology and delegates envelope realization to the frozen event constructor | Accepted |
 | [0035](0035-phase4-operational-layer-and-provider-engine.md) | Phase 4 operational services execute behind a governance-cleared seam and register through the composition root; the Provider Engine is the Runtime's vendor-neutral operational provider subsystem | Accepted |
+| [0036](0036-prompt-engine.md) | The Prompt Engine is the Runtime's operational prompt subsystem; it consumes the frozen prompt model and the Provider Engine, preparing execution-ready payloads without re-owning prompt semantics or execution | Accepted |
