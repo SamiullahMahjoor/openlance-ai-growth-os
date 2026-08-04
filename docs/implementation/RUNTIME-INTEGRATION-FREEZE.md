@@ -3,9 +3,11 @@
 **Status: FROZEN.** Phase 3 (Runtime Integration) is COMPLETE, VALIDATED, AUDITED, and FROZEN. This document is the
 consolidated freeze of the whole eight-package Runtime Integration Layer built in Stages 1 to 8 and ratified in
 Stage 9. Decision authority: ADR-0032 established that "the Phase 3 integration layer freezes together at the
-consolidated Stage 9 Runtime Freeze"; this document executes and records that freeze. No new ADR is required (the
-freeze decision is already recorded in ADR-0032; Stage 9 introduced no new architectural decision and built no new
-functionality).
+consolidated Stage 9 Runtime Freeze"; this document executes and records that freeze. **No new ADR is created**: an
+ADR records an architectural decision, not a milestone, and a freeze, validation, audit, or completion milestone
+alone does not introduce or change an architectural decision. The freeze decision (freeze the layer at Stage 9) is
+already recorded in ADR-0032; Stage 9 introduced no new architectural decision and built no new functionality.
+(Committing the freeze is an implementation-workflow action, not a constitutional requirement of the freeze.)
 
 ## 1. Architectural overview
 
@@ -149,3 +151,52 @@ No runtime execution, orchestration, scheduling, or activation; no operational n
 agent, or plugin execution; no event dispatch or error handling at run time. Governance Enforcement, and real
 execution generally, are operational Phase 4 capabilities. Phase 4 is a separate, design-first phase and is not
 begun.
+
+## 13. Freeze integrity (release readiness)
+
+Every one of the eight Phase 3 packages was verified, at freeze, to have all of the following (all pass):
+
+| Package | impl doc | freeze doc | README | public API docs | ADR references | no TODO/FIXME | no unresolved findings |
+|---|---|---|---|---|---|---|---|
+| composition-root | 23 | yes | yes | yes | ADR-0026 | none | none |
+| namespace-wiring | 24 | yes | yes | yes | ADR-0027 | none | none |
+| di-integration | 25 | yes | yes | yes | ADR-0028 | none | none |
+| runtime-lifecycle | 26 | yes | yes | yes | ADR-0029 | none | none |
+| execution-pipeline | 27 | yes | yes | yes | ADR-0030 | none | none |
+| plugin-loading | 29 | yes | yes | yes | ADR-0032 | none | none |
+| error-propagation | 30 | yes | yes | yes | ADR-0033 | none | none |
+| event-flow | 31 | yes | yes | yes | ADR-0034 | none | none |
+
+- **Public API docs**: each package's README has a "Public API" section, and its `src/index.ts` barrel carries a
+  `@packageDocumentation` TypeDoc comment (the `docs` script generates the API reference under `docs-api/`).
+- **ADR references**: each README and implementation doc references its Accepted ADR; the ADR chain is consistent
+  (Section 10).
+- **No TODO/FIXME**: a repository scan of `apps/*/{src,tests,benchmarks,README.md}` for `TODO`/`FIXME`/`XXX`/`HACK`
+  returns none.
+- **No unresolved audit findings**: both consolidated audits end CLEAN (Section 8); the two Low observations were a
+  fixed documentation-staleness and a dispositioned non-defect.
+
+## 14. Roadmap and final status
+
+```
+Phase 3 - Runtime Integration (COMPLETE & FROZEN)
+
+  [x] Stage 1 - Composition Root
+  [x] Stage 2 - Namespace Wiring
+  [x] Stage 3 - Dependency Injection Integration
+  [x] Stage 4 - Runtime Lifecycle
+  [x] Stage 5 - Execution Pipeline
+  [x] Stage 6 - Plugin Loading
+  [x] Stage 7 - Error Propagation
+  [x] Stage 8 - Event Flow
+  [x] Stage 9 - Runtime Freeze
+
+STATUS:
+  COMPLETE
+  VALIDATED
+  AUDITED
+  FROZEN
+```
+
+Phase 3 is officially complete. The project does not proceed to Phase 4 (operational implementations) until it is
+explicitly authorized, preserving the design-first, freeze-per-layer discipline followed throughout the roadmap.
