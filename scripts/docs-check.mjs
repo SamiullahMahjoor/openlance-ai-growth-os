@@ -110,6 +110,11 @@ for (const name of subdirs(join(repoRoot, 'packages'))) {
 for (const name of subdirs(join(repoRoot, 'tools'))) {
   packageDirs.push({ dir: join(repoRoot, 'tools', name), name, klass: 'tools' });
 }
+if (existsSync(join(repoRoot, 'apps'))) {
+  for (const name of subdirs(join(repoRoot, 'apps'))) {
+    packageDirs.push({ dir: join(repoRoot, 'apps', name), name, klass: 'app' });
+  }
+}
 
 for (const pkg of packageDirs) {
   const label = `${pkg.klass}/${pkg.name}`;
@@ -130,7 +135,13 @@ for (const pkg of packageDirs) {
     if (aios[field] === undefined) fail(`${label}: aios.${field} is missing`);
   }
   const expectedLayer =
-    pkg.klass === 'substrate' ? 'substrate' : pkg.klass === 'namespace' ? 'namespace' : 'tools';
+    pkg.klass === 'substrate'
+      ? 'substrate'
+      : pkg.klass === 'namespace'
+        ? 'namespace'
+        : pkg.klass === 'app'
+          ? 'app'
+          : 'tools';
   if (aios.layer !== expectedLayer)
     fail(`${label}: aios.layer is "${aios.layer}", expected "${expectedLayer}"`);
 
@@ -211,6 +222,7 @@ for (const number of indexed.keys()) {
 // Referenced ADRs must exist (anywhere in source, docs, and tooling).
 const referenceFiles = [
   ...walk(join(repoRoot, 'packages'), (n) => /\.(ts|md|json)$/.test(n)),
+  ...walk(join(repoRoot, 'apps'), (n) => /\.(ts|md|json)$/.test(n)),
   ...walk(join(repoRoot, 'tools'), (n) => /\.(ts|md|json|js|cjs|mjs)$/.test(n)),
   ...walk(join(repoRoot, 'docs'), (n) => n.endsWith('.md')),
   ...walk(join(repoRoot, 'scripts'), (n) => /\.(mjs|js|cjs)$/.test(n)),
@@ -227,7 +239,10 @@ for (const file of referenceFiles) {
 // ---------------------------------------------------------------------------
 // 4. No focused (.only) or skipped (.skip) tests or benchmarks (DoD criterion 3).
 // ---------------------------------------------------------------------------
-for (const file of walk(join(repoRoot, 'packages'), (n) => /\.(test|bench)\.ts$/.test(n))) {
+for (const file of [
+  ...walk(join(repoRoot, 'packages'), (n) => /\.(test|bench)\.ts$/.test(n)),
+  ...walk(join(repoRoot, 'apps'), (n) => /\.(test|bench)\.ts$/.test(n)),
+]) {
   const text = readFileSync(file, 'utf8');
   const focused = text.match(/\.(only|skip)\s*\(/);
   if (focused)

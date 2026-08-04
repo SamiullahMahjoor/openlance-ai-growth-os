@@ -39,7 +39,7 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0014](0014-di-token-composition-root.md) | Cross-package services are exposed as DI tokens registered by the composition root | Accepted |
 | [0015](0015-runtime-coverage-policy.md) | Runtime coverage policy - measure all source, exclude only barrels and type-only modules | Accepted |
 | [0016](0016-realized-compilation-strategy.md) | Realized compilation and type-checking strategy | Accepted |
-| [0017](0017-dev-harness-deferral.md) | Defer apps/dev-harness to the start of the Runtime phase | Accepted |
+| [0017](0017-dev-harness-deferral.md) | Defer apps/dev-harness to the start of the Runtime phase | Superseded by ADR-0026 |
 | [0018](0018-scaffold-and-golden-fixture-strategy.md) | Scaffold conventions and golden-fixture testing strategy | Accepted |
 | [0019](0019-production-import-graph-enforcement.md) | Enforce the dependency graph against production bare-specifier imports | Accepted |
 | [0020](0020-namespace-implementation-model.md) | Namespace implementation model - immutable stateless domain model | Accepted |
@@ -48,3 +48,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0023](0023-namespace-development-lifecycle.md) | Namespace development lifecycle | Accepted |
 | [0024](0024-namespace-purity-categories.md) | Namespace purity categories | Accepted |
 | [0025](0025-constitutional-dimension-independence.md) | Constitutional dimension independence | Accepted |
+| [0026](0026-application-composition-root.md) | Application composition root consumes the frozen DI mechanism; it is not a new container | Accepted |

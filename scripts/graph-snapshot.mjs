@@ -17,7 +17,7 @@
  * namespace edge appears as a reviewable diff. `--check` is wired into
  * `pnpm run validate` and CI.
  */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -51,7 +51,8 @@ const subdirectories = (dir) =>
     .filter((entry) => entry.isDirectory() && !FIXTURES.has(entry.name))
     .map((entry) => entry.name);
 
-/** The substrate and reserved namespace packages, each mapped to its `src/` directory. */
+/** The substrate, reserved namespace, and app packages, each mapped to its `src/` directory. */
+const appsDir = join(repoRoot, 'apps');
 const packageRoots = () => {
   const roots = [];
   for (const name of subdirectories(packagesDir)) {
@@ -62,6 +63,11 @@ const packageRoots = () => {
       }
     } else {
       roots.push([`@openlance/aios-${name}`, join(packagesDir, name, 'src')]);
+    }
+  }
+  if (existsSync(appsDir)) {
+    for (const name of subdirectories(appsDir)) {
+      roots.push([`@openlance/aios-${name}`, join(appsDir, name, 'src')]);
     }
   }
   return roots;

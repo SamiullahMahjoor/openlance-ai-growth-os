@@ -1,5 +1,13 @@
 {
   "@openlance/aios-agents": [],
+  "@openlance/aios-composition-root": [
+    "@openlance/aios-config",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-logging"
+  ],
   "@openlance/aios-config": [
     "@openlance/aios-di",
     "@openlance/aios-errors",

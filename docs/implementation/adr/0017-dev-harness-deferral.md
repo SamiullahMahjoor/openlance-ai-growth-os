@@ -1,17 +1,19 @@
 ---
 id: ADR-0017
 title: Defer apps/dev-harness to the start of the Runtime phase
-status: Accepted
+status: Superseded by ADR-0026
 date: 2026-08-03
 supersedes: []
-superseded_by: null
+superseded_by: ADR-0026
 ---
 
 # ADR-0017: Defer apps/dev-harness to the start of the Runtime phase
 
 ## Status
 
-Accepted
+Superseded by ADR-0026 (Phase 3, Stage 1 builds the application composition root, scoped to the substrate;
+the composition-root app is no longer deferred). Originally Accepted 2026-08-03. The decision below is left
+unedited as the historical record.
 
 ## Context
 
