@@ -94,6 +94,15 @@
     "@openlance/aios-logging"
   ],
   "@openlance/aios-prompts": [],
+  "@openlance/aios-provider-engine": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugins",
+    "@openlance/aios-providers",
+    "@openlance/aios-runtime"
+  ],
   "@openlance/aios-providers": [],
   "@openlance/aios-reasoning": [],
   "@openlance/aios-retrieval": [],

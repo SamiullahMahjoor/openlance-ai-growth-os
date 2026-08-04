@@ -1,0 +1,55 @@
+{
+  "name": "@openlance/aios-provider-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 1 Provider Engine: the Runtime's vendor-neutral operational provider subsystem. It carries out provider registration, capability evaluation, deterministic selection and routing, lifecycle, health, governed invocation behind a required GovernanceClearance, bounded failover, and response normalization, over a technology-neutral Provider abstraction. It consumes the frozen @openlance/aios-providers and @openlance/aios-runtime models and the frozen substrate, recreates none of them, and contains no vendor knowledge (no SDK, no vendor request/response model, no API URL, no auth); concrete adapters are separate later sub-stages (ADR-0035).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-providers": "workspace:*",
+    "@openlance/aios-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-PROVIDERS-README",
+      "OL-AI-RUNTIME-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

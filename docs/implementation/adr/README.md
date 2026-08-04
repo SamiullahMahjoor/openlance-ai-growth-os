@@ -57,3 +57,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0032](0032-plugin-loading-integration.md) | Plugin Loading is an application-level integration stage that consumes the frozen plugin framework; Phase 3 continues through Stage 9 | Accepted |
 | [0033](0033-error-propagation-plan.md) | The error propagation plan describes the chain's coded error topology and delegates validation to the frozen error registry | Accepted |
 | [0034](0034-event-flow-plan.md) | The event flow plan describes the chain's framework event topology and delegates envelope realization to the frozen event constructor | Accepted |
+| [0035](0035-phase4-operational-layer-and-provider-engine.md) | Phase 4 operational services execute behind a governance-cleared seam and register through the composition root; the Provider Engine is the Runtime's vendor-neutral operational provider subsystem | Accepted |
