@@ -2,11 +2,49 @@
   "name": "@openlance/aios-evolution",
   "version": "0.0.0",
   "private": true,
-  "description": "Reserved constitutional namespace package for ai/evolution/. Not implemented in Phase 2A.",
+  "type": "module",
+  "sideEffects": false,
+  "description": "Immutable, technology-neutral domain model of the AI evolution abstraction (Specification authority, ADR-0024 category 1 Pure Domain Model per ADR-0024 §42): the evolution classifications, immutable definitions and invariants, and pure ordering predicates that express the evolution specification. No deployment, migration tool, version-control system, or runtime (ai/evolution/, ADR-0020).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
   "aios": {
     "layer": "namespace",
     "constitution": [
-      "OL-AI-EVOLUTION-README"
+      "OL-AI-EVOLUTION-README",
+      "OL-AI-EVOLUTION-EVOLUTION",
+      "OL-AI-EVOLUTION-EVOLUTION-ARCHITECTURE",
+      "OL-AI-EVOLUTION-EVOLUTION-LIFECYCLE",
+      "OL-AI-EVOLUTION-EVOLUTION-PLANNING",
+      "OL-AI-EVOLUTION-CHANGE-MANAGEMENT",
+      "OL-AI-EVOLUTION-COMPATIBILITY-MANAGEMENT",
+      "OL-AI-EVOLUTION-MIGRATION-MODEL",
+      "OL-AI-EVOLUTION-DEPRECATION-MODEL",
+      "OL-AI-EVOLUTION-REPOSITORY-GROWTH",
+      "OL-AI-EVOLUTION-EVOLUTION-BOUNDARIES",
+      "OL-AI-EVOLUTION-EVOLUTION-VERSIONING"
     ],
     "stability": "Experimental",
     "apiVersion": "0.0.0",

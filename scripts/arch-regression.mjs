@@ -7,12 +7,12 @@
  * and each legal scenario, runs dependency-cruiser with the real repository config, asserts the
  * expected rule fires (or that a legal import passes), and removes every probe afterward.
  *
- * SAFETY (critical, since Phase 2B namespaces now carry real source): every artifact this suite
- * creates carries the `__arch_probe__` marker (probe files by name, temporary namespace barrels by
- * a leading marker comment). Cleanup removes only marker-carrying files and only the `src`
- * directories this suite created; it never touches a package that already had source. Namespace
- * fixtures write scratch barrels only into namespaces that are still reserved; a legal fixture may
- * reference an implemented namespace by import without writing to its source.
+ * SAFETY (critical, since every Phase 2B namespace now carries real source): the AI layer is complete,
+ * so NO namespace is reserved and this suite writes no scratch barrels at all. Every fixture is a marker
+ * `__arch_probe__` probe file added alongside a package's real source and importing a real package by its
+ * bare workspace specifier (or a sibling probe by relative path, for the cycle test). A probe is never a
+ * package entry, so it never clobbers a real `src/index.ts`; cleanup and the final sweep remove only
+ * marker-carrying files, and the suite creates no `src` directory, so real code is never touched.
  *
  * It mutates the working tree transiently and must run as its own step, never concurrently with
  * build/test. Wired into `pnpm run validate` and CI as `arch:check`.
@@ -29,10 +29,7 @@ const namespacesDir = join(repoRoot, 'packages', 'namespaces');
 const createdFiles = new Set();
 const createdDirs = new Set();
 
-/** A temporary namespace barrel; carries the marker so cleanup can recognise it. */
-const barrel = (importLine = '') =>
-  `// ${PROBE}\n${importLine}${importLine ? '\n' : ''}export const value = 1;\n`;
-/** A probe file added alongside a package's real source; carries the marker. */
+/** A probe file added alongside a package's real source; carries the marker so cleanup can recognise it. */
 const probe = (importLine) => `// ${PROBE}\n${importLine}\n`;
 
 const place = (relPath, content) => {
@@ -95,12 +92,13 @@ const runCruise = (targets) => {
   }
 };
 
-// Only the evolution namespace remains reserved, so namespace fixtures write a scratch barrel into
-// evolution/src/index.ts and, where a second namespace or an implemented target is needed, add a marker
-// probe file (__arch_probe__.ts) into an implemented namespace's src -- which never clobbers its real
-// barrel and is swept afterward, the same pattern the substrate scenarios use. Relationships come from the
-// frozen ai/architecture/dependency-map.md: operations may depend on runtime (allowed); operations may not
-// depend on evolution (forbidden); evolution may not depend on operations (evolution deps: none, forbidden).
+// The AI layer is complete: every namespace carries real source and none is reserved. Every fixture is a
+// marker probe file added alongside a package's real source, importing a real package by its bare workspace
+// specifier (or, for the cycle test, a sibling probe by relative path). A probe is never a package entry, so
+// it never clobbers a real src/index.ts. Relationships come from the frozen ai/architecture/dependency-map.md:
+// operations may depend on runtime (allowed); operations may not depend on evolution (forbidden); evolution
+// may not depend on operations (evolution deps: none, forbidden); a substrate package may not depend on a
+// namespace (forbidden).
 const scenarios = [
   // --- Legal imports must succeed ---
   {
@@ -134,18 +132,21 @@ const scenarios = [
     rule: 'substrate-layer-kernel',
   },
   {
-    name: 'cycle-bare-import',
-    style: 'bare package (cycle)',
-    // Only evolution is still reserved, so a two-namespace package cycle cannot be built without writing
-    // an implemented namespace's real barrel (a marker probe is never the package entry, so it cannot close
-    // a package-level cycle). The cycle is therefore formed inside the reserved evolution namespace, with the
-    // closing edge a production bare workspace import (@openlance/aios-evolution): the barrel imports a marker
-    // sibling, and the sibling imports the package back, so no-circular fires against a bare specifier.
+    name: 'cycle-probe-import',
+    style: 'marker probe (cycle)',
+    // No namespace is reserved, so a package-level cycle cannot be closed by a bare import (the return edge
+    // must originate from a package entry, and no real src/index.ts is writable). The no-circular rule is
+    // exercised by two sibling marker probes in an implemented namespace that import each other by relative
+    // path, forming a file-level cycle; no-circular is import-syntax-agnostic and fires on the probe cycle
+    // without touching evolution's real barrel or its real modules.
     files: [
-      ['packages/namespaces/evolution/src/index.ts', barrel("import './__arch_probe__cycle.js';")],
       [
-        'packages/namespaces/evolution/src/__arch_probe__cycle.ts',
-        barrel("import '@openlance/aios-evolution';"),
+        'packages/namespaces/evolution/src/__arch_probe__a.ts',
+        probe("import './__arch_probe__b.js';"),
+      ],
+      [
+        'packages/namespaces/evolution/src/__arch_probe__b.ts',
+        probe("import './__arch_probe__a.js';"),
       ],
     ],
     targets: 'packages/namespaces/evolution',
@@ -155,8 +156,9 @@ const scenarios = [
   {
     name: 'substrate-to-namespace-bare-import',
     style: 'bare package',
+    // a substrate package may not import a namespace; the forbidden edge is a marker probe in errors
+    // importing the real evolution package.
     files: [
-      ['packages/namespaces/evolution/src/index.ts', barrel()],
       ['packages/errors/src/__arch_probe__.ts', probe("import '@openlance/aios-evolution';")],
     ],
     targets: 'packages/errors packages/namespaces/evolution',
@@ -166,11 +168,9 @@ const scenarios = [
   {
     name: 'illegal-namespace-edge-bare-import',
     style: 'bare package (namespace)',
-    // operations (deps: governance, runtime) may not import evolution; evolution is still reserved and
-    // operations is implemented, so the forbidden edge is a marker probe in operations importing the
-    // reserved evolution barrel.
+    // operations (deps: governance, runtime) may not import evolution; the forbidden edge is a marker probe
+    // in the real operations importing the real evolution package.
     files: [
-      ['packages/namespaces/evolution/src/index.ts', barrel()],
       [
         'packages/namespaces/operations/src/__arch_probe__.ts',
         probe("import '@openlance/aios-evolution';"),
@@ -181,15 +181,14 @@ const scenarios = [
     rule: 'namespace-operations',
   },
   {
-    name: 'reserved-namespace-forbidden-edge-bare-import',
+    name: 'evolution-forbidden-edge-bare-import',
     style: 'bare package (namespace)',
-    // evolution (deps: none) may not import operations; evolution is still reserved and operations is
-    // implemented, so the reserved evolution barrel imports the real operations package and needs no
-    // scratch barrel written into operations.
+    // evolution (deps: none) may not import operations; the forbidden edge is a marker probe in the real
+    // evolution importing the real operations package.
     files: [
       [
-        'packages/namespaces/evolution/src/index.ts',
-        barrel("import '@openlance/aios-operations';"),
+        'packages/namespaces/evolution/src/__arch_probe__.ts',
+        probe("import '@openlance/aios-operations';"),
       ],
     ],
     targets: 'packages/namespaces/evolution packages/namespaces/operations',
