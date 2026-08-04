@@ -1,10 +1,11 @@
-# Phase 3 (Runtime Integration), Stages 1 to 5 Record
+# Phase 3 (Runtime Integration), Completion Record
 
-**Status: SUPERSEDED by [ADR-0032](adr/0032-plugin-loading-integration.md) (Phase 3 reopened).** This document
-originally recorded Phase 3 complete at Stage 5 (ADR-0031). Per the canonical roadmap, ADR-0032 reopened Phase 3 to
-continue through Stage 9 (Stage 6 Plugin Loading, Stage 7 Error Propagation, Stage 8 Event Flow, Stage 9 a single
-consolidated Runtime Freeze). This record of Stages 1 to 5 below remains accurate; the Phase 3 freeze is now the
-consolidated Stage 9 Runtime Freeze rather than a close at Stage 5.
+**Status: COMPLETE + FROZEN at Stage 9.** The consolidated freeze is
+[RUNTIME-INTEGRATION-FREEZE.md](RUNTIME-INTEGRATION-FREEZE.md) (the authoritative Phase 3 freeze). Phase 3 ran
+Stages 1 to 8 (the eight `apps/`-layer packages) and was frozen together as one layer at Stage 9. Roadmap history:
+this document originally recorded Phase 3 complete at Stage 5 (ADR-0031); ADR-0032 then reopened Phase 3 to continue
+through Stage 9 (Stage 6 Plugin Loading, Stage 7 Error Propagation, Stage 8 Event Flow, Stage 9 the consolidated
+Runtime Freeze), all now built and frozen. The record of Stages 1 to 5 below remains accurate.
 
 Phase 3 built the runtime-integration layer as a chain of immutable, descriptive, non-executing `apps/`-layer
 packages, each consuming the prior and each binding a genuinely new frozen model into the object graph, over the
@@ -81,7 +82,9 @@ Wiring), and per ADR-0032 Phase 3 continues through Stage 9 to express those and
 - **Stage 8, Event Flow** (ADR-0034, `31-event-flow.md`): the app-level description of the chain's framework event
   topology, realizing each declared event type via the frozen `@openlance/aios-events` `createEvent` (never calling
   the bus). Built. Publishing / subscribing / dispatching events at run time remains Phase 4.
-- **Stage 9, Runtime Freeze** (planned): a single consolidated freeze of the Phase 3 integration layer.
+- **Stage 9, Runtime Freeze** (RUNTIME-INTEGRATION-FREEZE.md): the single consolidated freeze of the whole
+  eight-package Phase 3 integration layer. Done; Phase 3 is COMPLETE, VALIDATED, AUDITED, and FROZEN. Stage 9 built
+  no new functionality and introduced no new ADR (the freeze decision was already recorded in ADR-0032).
 
 ## Immutability of Phase 3
 

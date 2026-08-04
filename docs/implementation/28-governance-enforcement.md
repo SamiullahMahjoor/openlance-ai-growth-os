@@ -1,12 +1,15 @@
-# 28. Governance Enforcement design (Phase 3, Stage 6)
+# 28. Governance Enforcement design (Phase 3, Stage 6 checkpoint)
 
-**Status: RESOLVED (Ambiguity Gate raised; Phase 3/Phase 4 boundary reassessed; Option B approved).** This document
-raised the gate and reassessed the boundary (Sections 4, 5): Governance Enforcement has no new descriptive
-constitutional ownership, so every descriptive construction duplicates frozen ownership and every executing one
-invents enforcement. The gate was resolved by approval of **Option B** (Section 7): the Phase 3 descriptive chain is
-complete at Stage 5, no Stage 6 package is built, and Governance Enforcement is recorded as an operational Phase 4
-capability. [ADR-0031](adr/0031-governance-enforcement-boundary.md) is Accepted. The analysis below is retained as
-the rationale.
+**Status: SUPERSEDED scope (Governance Enforcement remains Phase 4).** This document was the Stage 6 checkpoint
+that resolved (Option B) to record [ADR-0031](adr/0031-governance-enforcement-boundary.md): Governance Enforcement
+has no new descriptive constitutional ownership (every descriptive construction duplicates frozen ownership and
+every executing one invents enforcement), so no package was built for it and it is an operational Phase 4
+capability. That Governance-Enforcement finding still holds. However, the accompanying scope conclusion, "the
+Phase 3 chain is complete at Stage 5, no Stage 6 package," was subsequently **superseded by ADR-0032**, which
+reopened Phase 3 to continue through Stage 9 (Stage 6 became Plugin Loading; then Error Propagation, Event Flow,
+Runtime Freeze). ADR-0031 is `Superseded by ADR-0032`; see `PHASE-3-COMPLETE.md`. The analysis below is retained as
+the historical rationale for the Governance-Enforcement / Phase-4 conclusion; read "Phase 3 complete at Stage 5" in
+it as the superseded scope claim, not the current roadmap.
 
 ## 1. Mandate
 
