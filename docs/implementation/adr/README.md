@@ -53,4 +53,5 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0028](0028-di-integration-layer.md) | The DI-integration layer consumes the frozen DI, composition root, and namespace wiring; it registers nothing and activates nothing | Accepted |
 | [0029](0029-runtime-lifecycle-plan.md) | The runtime lifecycle plan consumes the frozen runtime model and the DI integration; it references the model and carries nothing out | Accepted |
 | [0030](0030-execution-pipeline-plan.md) | The execution pipeline plan composes the frozen runtime workflow with the lifecycle plan; it references the model and executes nothing | Accepted |
-| [0031](0031-governance-enforcement-boundary.md) | The Phase 3 descriptive chain is complete at Stage 5; Governance Enforcement is an operational Phase 4 capability | Accepted |
+| [0031](0031-governance-enforcement-boundary.md) | The Phase 3 descriptive chain is complete at Stage 5; Governance Enforcement is an operational Phase 4 capability | Superseded by ADR-0032 |
+| [0032](0032-plugin-loading-integration.md) | Plugin Loading is an application-level integration stage that consumes the frozen plugin framework; Phase 3 continues through Stage 9 | Accepted |

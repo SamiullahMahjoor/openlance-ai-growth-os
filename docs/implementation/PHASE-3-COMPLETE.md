@@ -1,6 +1,10 @@
-# Phase 3 (Runtime Integration), Completion Record
+# Phase 3 (Runtime Integration), Stages 1 to 5 Record
 
-**Status:** COMPLETE at Stage 5. Recorded by [ADR-0031](adr/0031-governance-enforcement-boundary.md) (Accepted).
+**Status: SUPERSEDED by [ADR-0032](adr/0032-plugin-loading-integration.md) (Phase 3 reopened).** This document
+originally recorded Phase 3 complete at Stage 5 (ADR-0031). Per the canonical roadmap, ADR-0032 reopened Phase 3 to
+continue through Stage 9 (Stage 6 Plugin Loading, Stage 7 Error Propagation, Stage 8 Event Flow, Stage 9 a single
+consolidated Runtime Freeze). This record of Stages 1 to 5 below remains accurate; the Phase 3 freeze is now the
+consolidated Stage 9 Runtime Freeze rather than a close at Stage 5.
 
 Phase 3 built the runtime-integration layer as a chain of immutable, descriptive, non-executing `apps/`-layer
 packages, each consuming the prior and each binding a genuinely new frozen model into the object graph, over the
@@ -57,23 +61,25 @@ Real Governance Enforcement, and real execution, are **operational implementatio
 is a separate, design-first phase: each stage produces a design document approved before implementation and, where
 it needs a concept the constitution does not already define, its own ADR. It is not begun here.
 
-### Post-Stage-5 concerns assessed and assigned to Phase 4
+### Post-Stage-5 roadmap (revised by ADR-0032)
 
-Each further integration concern proposed after Stage 5 was assessed from source and found to add no new descriptive
-constitutional ownership, confirming the boundary:
+Each further integration concern was assessed from source. Its underlying **mechanism** is a frozen substrate
+package, and *executing* it (loading, propagating, flowing at run time) is Phase 4. The **application-level
+integration** of each mechanism into the runtime chain is, however, a thin descriptive stage (parallel to Namespace
+Wiring), and per ADR-0032 Phase 3 continues through Stage 9 to express those and then freeze the layer together:
 
 - **Governance Enforcement** (ADR-0031, `28-governance-enforcement.md`): decomposes into the frozen governance rules
-  + the frozen runtime validation order (already in the Stage 5 plan) + runtime execution. Phase 4.
-- **Plugin Loading** (`29-plugin-loading.md`): already owned in full by the frozen substrate `@openlance/aios-plugins`
-  package (subsystem 07, ADR-0012, ADR-0013); actually loading and activating plugins is execution, and there are
-  zero plugins. Phase 4.
-- **Error Propagation**: owned by the frozen substrate `@openlance/aios-errors` package (the `BaseError` taxonomy
-  and the `Result` channel, ADR-0006); propagating errors at run time is execution. Phase 4.
-- **Event Flow**: owned by the frozen substrate `@openlance/aios-events` package (the `EventBus`); flowing events at
-  run time is execution. Phase 4.
-
-Each drives a frozen substrate mechanism at run time once the operational layer exists; none is a new descriptive
-Phase 3 layer.
+  + the frozen runtime validation order (already in the Stage 5 plan) + runtime execution; no distinct integration
+  package. Remains **Phase 4**.
+- **Stage 6, Plugin Loading** (ADR-0032, `29-plugin-loading.md`): the app-level plugin declaration (available /
+  enabled / compatible / ready) attached to the chain, delegating compatibility to the frozen
+  `@openlance/aios-plugins` host. Built. Actually loading/activating plugins remains Phase 4.
+- **Stage 7, Error Propagation** (planned): the app-level integration over the frozen `@openlance/aios-errors`
+  package (the `BaseError` taxonomy and the `Result` channel, ADR-0006). Propagating errors at run time remains
+  Phase 4.
+- **Stage 8, Event Flow** (planned): the app-level integration over the frozen `@openlance/aios-events` package (the
+  `EventBus`). Flowing events at run time remains Phase 4.
+- **Stage 9, Runtime Freeze** (planned): a single consolidated freeze of the Phase 3 integration layer.
 
 ## Immutability of Phase 3
 

@@ -68,6 +68,12 @@
     "@openlance/aios-tools"
   ],
   "@openlance/aios-operations": [],
+  "@openlance/aios-plugin-loading": [
+    "@openlance/aios-errors",
+    "@openlance/aios-execution-pipeline",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugins"
+  ],
   "@openlance/aios-plugins": [
     "@openlance/aios-config",
     "@openlance/aios-di",

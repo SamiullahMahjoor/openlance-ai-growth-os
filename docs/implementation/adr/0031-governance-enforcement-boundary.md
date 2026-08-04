@@ -1,23 +1,26 @@
 ---
 id: ADR-0031
 title: The Phase 3 descriptive chain is complete at Stage 5; Governance Enforcement is an operational Phase 4 capability
-status: Accepted
+status: Superseded by ADR-0032
 date: 2026-08-04
 supersedes: []
-superseded_by: null
+superseded_by: ADR-0032
 ---
 
 # ADR-0031: The Phase 3 descriptive chain is complete at Stage 5; Governance Enforcement is an operational Phase 4 capability
 
 ## Status
 
-**Accepted** (Phase 3, Stage 6 checkpoint). This ADR raised an Ambiguity Gate and reassessed the Phase 3/Phase 4
-boundary: the Stage 6 mandate, read against the frozen surface, would in every construction duplicate Governance,
-Runtime, and Execution Pipeline ownership, or invent enforcement logic and execute the runtime. The gate was
-resolved by approval of **Option B**: the Phase 3 runtime-integration chain is complete at Stage 5, no Stage 6
-package is built, and Governance Enforcement is recorded as an operational Phase 4 capability. It introduces no
-duplicate constitutional truth, changes no frozen work, and preserves ADR-0005, ADR-0020, ADR-0021, and ADR-0026 to
-ADR-0030. See `docs/implementation/28-governance-enforcement.md`.
+**Superseded by ADR-0032.** This ADR recorded the Phase 3 chain complete at Stage 5 (resolving the Governance
+Enforcement gate: that concern added no new descriptive ownership, so no package was built for it, and it remains an
+operational Phase 4 capability). ADR-0032 subsequently reopened Phase 3 to continue the roadmap through Stage 9
+(Plugin Loading, Error Propagation, Event Flow, Runtime Freeze). This ADR's finding about **Governance Enforcement**
+still holds (it is Phase 4); only the "Phase 3 is complete at Stage 5" scope conclusion is superseded. The Decision
+below is retained unedited as the historical record.
+
+_Originally Accepted (Phase 3, Stage 6 checkpoint): the Governance Enforcement gate was resolved by approval of
+Option B (Phase 3 complete at Stage 5, no package built, Governance Enforcement is Phase 4). See
+`docs/implementation/28-governance-enforcement.md`._
 
 ## Context
 
