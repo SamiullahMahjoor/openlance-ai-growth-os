@@ -17,6 +17,12 @@
     "@openlance/aios-errors",
     "@openlance/aios-kernel"
   ],
+  "@openlance/aios-di-integration": [
+    "@openlance/aios-composition-root",
+    "@openlance/aios-errors",
+    "@openlance/aios-kernel",
+    "@openlance/aios-namespace-wiring"
+  ],
   "@openlance/aios-errors": [
     "@openlance/aios-kernel"
   ],
