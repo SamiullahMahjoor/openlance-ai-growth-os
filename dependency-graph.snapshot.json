@@ -60,6 +60,14 @@
     "@openlance/aios-kernel"
   ],
   "@openlance/aios-memory": [],
+  "@openlance/aios-memory-engine": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-memory",
+    "@openlance/aios-plugins"
+  ],
   "@openlance/aios-namespace-wiring": [
     "@openlance/aios-agents",
     "@openlance/aios-composition-root",
