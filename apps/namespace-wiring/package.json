@@ -1,0 +1,60 @@
+{
+  "name": "@openlance/aios-namespace-wiring",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 3 Stage 2 namespace wiring: an immutable, validated namespace manifest that declares the 13 frozen namespaces to the application and extends the Stage 1 Application graph. Descriptive metadata only; it consumes the frozen namespaces and composition root, recreates nothing, wires no service, and re-encodes no constitutional dependency map (ADR-0027).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agents": "workspace:*",
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-evaluation": "workspace:*",
+    "@openlance/aios-evolution": "workspace:*",
+    "@openlance/aios-governance": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-memory": "workspace:*",
+    "@openlance/aios-operations": "workspace:*",
+    "@openlance/aios-prompts": "workspace:*",
+    "@openlance/aios-providers": "workspace:*",
+    "@openlance/aios-reasoning": "workspace:*",
+    "@openlance/aios-retrieval": "workspace:*",
+    "@openlance/aios-runtime": "workspace:*",
+    "@openlance/aios-safety": "workspace:*",
+    "@openlance/aios-tools": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

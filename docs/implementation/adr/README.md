@@ -49,3 +49,4 @@ An ADR records a decision the constitution does not fix (tooling, package manage
 | [0024](0024-namespace-purity-categories.md) | Namespace purity categories | Accepted |
 | [0025](0025-constitutional-dimension-independence.md) | Constitutional dimension independence | Accepted |
 | [0026](0026-application-composition-root.md) | Application composition root consumes the frozen DI mechanism; it is not a new container | Accepted |
+| [0027](0027-namespace-manifest-layer.md) | The namespace manifest layer consumes frozen namespaces and defers the dependency topology to the constitution | Accepted |

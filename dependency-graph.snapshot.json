@@ -37,6 +37,24 @@
     "@openlance/aios-kernel"
   ],
   "@openlance/aios-memory": [],
+  "@openlance/aios-namespace-wiring": [
+    "@openlance/aios-agents",
+    "@openlance/aios-composition-root",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation",
+    "@openlance/aios-evolution",
+    "@openlance/aios-governance",
+    "@openlance/aios-kernel",
+    "@openlance/aios-memory",
+    "@openlance/aios-operations",
+    "@openlance/aios-prompts",
+    "@openlance/aios-providers",
+    "@openlance/aios-reasoning",
+    "@openlance/aios-retrieval",
+    "@openlance/aios-runtime",
+    "@openlance/aios-safety",
+    "@openlance/aios-tools"
+  ],
   "@openlance/aios-operations": [],
   "@openlance/aios-plugins": [
     "@openlance/aios-config",
