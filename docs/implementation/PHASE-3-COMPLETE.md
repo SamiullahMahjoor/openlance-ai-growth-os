@@ -57,6 +57,24 @@ Real Governance Enforcement, and real execution, are **operational implementatio
 is a separate, design-first phase: each stage produces a design document approved before implementation and, where
 it needs a concept the constitution does not already define, its own ADR. It is not begun here.
 
+### Post-Stage-5 concerns assessed and assigned to Phase 4
+
+Each further integration concern proposed after Stage 5 was assessed from source and found to add no new descriptive
+constitutional ownership, confirming the boundary:
+
+- **Governance Enforcement** (ADR-0031, `28-governance-enforcement.md`): decomposes into the frozen governance rules
+  + the frozen runtime validation order (already in the Stage 5 plan) + runtime execution. Phase 4.
+- **Plugin Loading** (`29-plugin-loading.md`): already owned in full by the frozen substrate `@openlance/aios-plugins`
+  package (subsystem 07, ADR-0012, ADR-0013); actually loading and activating plugins is execution, and there are
+  zero plugins. Phase 4.
+- **Error Propagation**: owned by the frozen substrate `@openlance/aios-errors` package (the `BaseError` taxonomy
+  and the `Result` channel, ADR-0006); propagating errors at run time is execution. Phase 4.
+- **Event Flow**: owned by the frozen substrate `@openlance/aios-events` package (the `EventBus`); flowing events at
+  run time is execution. Phase 4.
+
+Each drives a frozen substrate mechanism at run time once the operational layer exists; none is a new descriptive
+Phase 3 layer.
+
 ## Immutability of Phase 3
 
 The five frozen Phase 3 packages are settled. Each may change only for compiler compatibility, security
