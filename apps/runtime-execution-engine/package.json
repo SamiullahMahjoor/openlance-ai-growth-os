@@ -1,0 +1,56 @@
+{
+  "name": "@openlance/aios-runtime-execution-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 10 Runtime Execution Engine: the Runtime's operational execution subsystem, the operational realization of the frozen ai/runtime model. It consumes an immutable ExecutionRequest (ExecutionPlan + GovernanceDecision + SafetyDecision + ExecutionContext), verifies the governance/safety preconditions, and executes an authorized and safe plan by driving the frozen execution state machine and orchestrating steps over an injected step-execution seam, with bounded retry/timeout/cancellation/recovery/checkpointing and deterministic result aggregation. It never authorizes, evaluates safety, selects a provider, or overrides an upstream decision, holds no vendor knowledge, and is deterministic in orchestration (ADR-0044).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-governance-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-runtime": "workspace:*",
+    "@openlance/aios-safety-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-RUNTIME-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

@@ -163,6 +163,17 @@
     "@openlance/aios-retrieval"
   ],
   "@openlance/aios-runtime": [],
+  "@openlance/aios-runtime-execution-engine": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-governance-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugins",
+    "@openlance/aios-runtime",
+    "@openlance/aios-safety-engine"
+  ],
   "@openlance/aios-runtime-lifecycle": [
     "@openlance/aios-di-integration",
     "@openlance/aios-errors",
