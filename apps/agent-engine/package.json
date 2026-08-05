@@ -1,0 +1,59 @@
+{
+  "name": "@openlance/aios-agent-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 7 Agent Engine: the Runtime's operational agent subsystem and the first orchestration engine, the operational realization of the frozen Agents namespace. As the composition owner it consumes the six foundational engines (Provider, Prompt, Memory, Retrieval, Tool, Reasoning) and composes an agent's steps over their public request contracts into an immutable AgentExecutionPlan, validated against the agent's capabilities and permissions and any acyclic coordination topology. It composes and stops: it never executes, orchestrates, schedules, combines results, selects a provider, or mints governance, and it contains no vendor knowledge (ADR-0041).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agents": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-memory-engine": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-prompt-engine": "workspace:*",
+    "@openlance/aios-provider-engine": "workspace:*",
+    "@openlance/aios-reasoning-engine": "workspace:*",
+    "@openlance/aios-retrieval-engine": "workspace:*",
+    "@openlance/aios-tool-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-AGENTS-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

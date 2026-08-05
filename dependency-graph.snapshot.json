@@ -1,4 +1,18 @@
 {
+  "@openlance/aios-agent-engine": [
+    "@openlance/aios-agents",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-memory-engine",
+    "@openlance/aios-plugins",
+    "@openlance/aios-prompt-engine",
+    "@openlance/aios-provider-engine",
+    "@openlance/aios-reasoning-engine",
+    "@openlance/aios-retrieval-engine",
+    "@openlance/aios-tool-engine"
+  ],
   "@openlance/aios-agents": [],
   "@openlance/aios-composition-root": [
     "@openlance/aios-config",
