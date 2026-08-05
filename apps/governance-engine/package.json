@@ -1,0 +1,54 @@
+{
+  "name": "@openlance/aios-governance-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 8 Governance Enforcement Engine: the Runtime's operational authorization subsystem, the operational realization of the frozen Governance namespace (the runtime validation pipeline ADR-0035 anticipated). It authorizes an immutable AgentExecutionPlan by applying the frozen governance model (permission, constitutional validation, autonomy, human oversight) and produces an immutable GovernanceDecision (AUTHORIZE / DENY / REQUIRE_APPROVAL / ESCALATE). It authorizes and stops: it executes nothing, invokes no engine, scores no risk, mints no policy and no provider clearance, is deterministic and fail-closed, and contains no vendor knowledge (ADR-0042).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-governance": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-GOVERNANCE-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

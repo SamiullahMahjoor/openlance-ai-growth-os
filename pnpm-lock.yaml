@@ -345,6 +345,55 @@ importers:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@22.20.1)
 
+  apps/governance-engine:
+    dependencies:
+      '@openlance/aios-agent-engine':
+        specifier: workspace:*
+        version: link:../agent-engine
+      '@openlance/aios-di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      '@openlance/aios-errors':
+        specifier: workspace:*
+        version: link:../../packages/errors
+      '@openlance/aios-events':
+        specifier: workspace:*
+        version: link:../../packages/events
+      '@openlance/aios-governance':
+        specifier: workspace:*
+        version: link:../../packages/namespaces/governance
+      '@openlance/aios-kernel':
+        specifier: workspace:*
+        version: link:../../packages/kernel
+      '@openlance/aios-plugins':
+        specifier: workspace:*
+        version: link:../../packages/plugins
+    devDependencies:
+      '@openlance/aios-composition-root':
+        specifier: workspace:*
+        version: link:../composition-root
+      '@openlance/aios-config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@openlance/aios-logging':
+        specifier: workspace:*
+        version: link:../../packages/logging
+      '@openlance/aios-tsconfig':
+        specifier: workspace:*
+        version: link:../../tools/tsconfig
+      '@vitest/coverage-v8':
+        specifier: ^2.1.8
+        version: 2.1.9(vitest@2.1.9(@types/node@22.20.1))
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.25)(typescript@5.9.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.1)
+
   apps/memory-engine:
     dependencies:
       '@openlance/aios-di':
