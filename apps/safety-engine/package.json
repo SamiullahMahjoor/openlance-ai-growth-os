@@ -1,0 +1,60 @@
+{
+  "name": "@openlance/aios-safety-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 9 Safety Engine: the Runtime's operational protection subsystem, the operational realization of the frozen Safety namespace. It evaluates an authorized AgentExecutionPlan against the GovernanceDecision that authorized it, identifies runtime hazards, classifies required protection by applying the governed trust, and produces an immutable SafetyDecision (SAFE / SANITIZE / RESTRICT / DEGRADE / ESCALATE / REFUSE / UNSAFE). It protects and stops: it authorizes nothing, executes nothing, invokes no engine, selects and invokes no provider, performs no inference, is deterministic and fail-closed, and contains no vendor knowledge (ADR-0043).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-governance": "workspace:*",
+    "@openlance/aios-governance-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-memory-engine": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-prompt-engine": "workspace:*",
+    "@openlance/aios-retrieval-engine": "workspace:*",
+    "@openlance/aios-safety": "workspace:*",
+    "@openlance/aios-tool-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-SAFETY-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

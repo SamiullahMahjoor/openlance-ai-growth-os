@@ -170,6 +170,21 @@
     "@openlance/aios-runtime"
   ],
   "@openlance/aios-safety": [],
+  "@openlance/aios-safety-engine": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-governance",
+    "@openlance/aios-governance-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-memory-engine",
+    "@openlance/aios-plugins",
+    "@openlance/aios-prompt-engine",
+    "@openlance/aios-retrieval-engine",
+    "@openlance/aios-safety",
+    "@openlance/aios-tool-engine"
+  ],
   "@openlance/aios-testing": [
     "@openlance/aios-di",
     "@openlance/aios-errors",
