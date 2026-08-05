@@ -1,0 +1,46 @@
+{
+  "name": "@openlance/aios-provider-adapter-openai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Platform Completion PC-2 OpenAI provider adapter: the first concrete provider adapter, a separate leaf package implemented against the frozen Provider Engine seam (ADR-0047). It maps a neutral text-generation request to and from the OpenAI chat-completions API, isolating all vendor knowledge here, behind an injected transport (no HTTP client, no SDK), with the API key and base URL injected (no embedded credential). It is fail-closed and never throws; it accepts a GovernanceClearance and never inspects or mints one; it never modifies the frozen Provider Engine.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-provider-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-PROVIDERS-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

@@ -152,6 +152,10 @@
     "@openlance/aios-provider-engine"
   ],
   "@openlance/aios-prompts": [],
+  "@openlance/aios-provider-adapter-openai": [
+    "@openlance/aios-kernel",
+    "@openlance/aios-provider-engine"
+  ],
   "@openlance/aios-provider-engine": [
     "@openlance/aios-di",
     "@openlance/aios-errors",
