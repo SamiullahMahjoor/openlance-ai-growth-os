@@ -46,6 +46,14 @@
     "@openlance/aios-kernel"
   ],
   "@openlance/aios-evaluation": [],
+  "@openlance/aios-evaluation-engine": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugins"
+  ],
   "@openlance/aios-event-flow": [
     "@openlance/aios-error-propagation",
     "@openlance/aios-errors",
