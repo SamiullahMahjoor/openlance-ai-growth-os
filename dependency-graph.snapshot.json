@@ -122,6 +122,14 @@
   ],
   "@openlance/aios-providers": [],
   "@openlance/aios-reasoning": [],
+  "@openlance/aios-reasoning-engine": [
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-events",
+    "@openlance/aios-kernel",
+    "@openlance/aios-plugins",
+    "@openlance/aios-reasoning"
+  ],
   "@openlance/aios-retrieval": [],
   "@openlance/aios-retrieval-engine": [
     "@openlance/aios-di",
