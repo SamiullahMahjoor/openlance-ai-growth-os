@@ -1,0 +1,53 @@
+{
+  "name": "@openlance/aios-application-host",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Platform Completion PC-3 AIOS Bootstrap / application host: the thin operational application host (ADR-0048). It consumes the frozen composition root to compose the engine modules into one validated application, loads configuration, registers the engine modules and the provider adapters, and exposes a single governed application entrypoint (a resolver over the frozen container). It is fail-closed and atomic; it drives no execution, mints no clearance, and invokes no provider; it owns no engine behavior and no composition mechanism, and never modifies a frozen engine.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-provider-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-evaluation-engine": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-operations-engine": "workspace:*",
+    "@openlance/aios-provider-adapter-openai": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}
