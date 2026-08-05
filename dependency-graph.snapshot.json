@@ -36,6 +36,14 @@
     "@openlance/aios-errors",
     "@openlance/aios-kernel"
   ],
+  "@openlance/aios-content-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-marketing-intelligence"
+  ],
   "@openlance/aios-di": [
     "@openlance/aios-errors",
     "@openlance/aios-kernel"
@@ -97,6 +105,13 @@
     "@openlance/aios-config",
     "@openlance/aios-di",
     "@openlance/aios-errors",
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-marketing-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
     "@openlance/aios-kernel"
   ],
   "@openlance/aios-memory": [],

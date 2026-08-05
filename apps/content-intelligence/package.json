@@ -1,0 +1,51 @@
+{
+  "name": "@openlance/aios-content-intelligence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 5 Stage 2 Content Intelligence: the second AI Growth OS Feature, a deterministic domain subsystem that owns the content-creation behavior only (ADR-0050). It consumes a Marketing Intelligence output and the brand voice by reference, and frames a governed content-generation task: an immutable ContentPlan carrying the frozen Agent Engine AgentRequest (prompt, provider steps), plus a content-quality EvaluationRequest for the frozen Evaluation Engine. It is deterministic and fail-closed; it never owns marketing strategy or brand truth, never executes, invokes a provider, selects a model, authorizes, or decides, and builds no new platform infrastructure.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-evaluation-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-marketing-intelligence": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}
