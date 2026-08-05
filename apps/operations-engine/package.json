@@ -1,0 +1,55 @@
+{
+  "name": "@openlance/aios-operations-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 4 Stage 11 Operations Engine: the Runtime's operational supervision subsystem, the operational realization of the frozen ai/operations model. It consumes only immutable runtime outputs (RuntimeEvent, ExecutionRecord, ExecutionStatistics), derives its operational state internally, and produces only operations-owned outputs (OperationalStatus, HealthReport, IncidentReport, OperationalAlert, MaintenancePlan, OperationalMetrics, OperationalDashboard, CapacityReport, OperationalDiagnostics, OperationalAudit). It applies the frozen HEALTH_STATES and MAINTENANCE_CATEGORIES, is deterministic, idempotent, fail-closed, and zero-trust, never executes, orchestrates, or extends a runtime contract, and holds no vendor knowledge (ADR-0045).",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-events": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-operations": "workspace:*",
+    "@openlance/aios-plugins": "workspace:*",
+    "@openlance/aios-runtime": "workspace:*",
+    "@openlance/aios-runtime-execution-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [
+      "OL-AI-OPERATIONS-README"
+    ],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}
