@@ -31,6 +31,14 @@
     "@openlance/aios-logging",
     "@openlance/aios-provider-engine"
   ],
+  "@openlance/aios-automation-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-openlance-growth-workflows"
+  ],
   "@openlance/aios-campaign-intelligence": [
     "@openlance/aios-agent-engine",
     "@openlance/aios-analytics-intelligence",

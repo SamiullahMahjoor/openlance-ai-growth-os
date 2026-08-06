@@ -1,0 +1,17 @@
+# @openlance/aios-automation-intelligence
+
+The AIOS **Automation Intelligence** subsystem (Phase 5, Stage 8). See [ADR-0056](../../docs/implementation/adr/0056-automation-intelligence.md) and the [design doc](../../docs/implementation/53-automation-intelligence.md).
+
+It is a deterministic domain subsystem that owns the automation-planning **behavior** only. It builds no infrastructure; it is the `Growth Workflows -> Automation` step of the chain (Marketing -> Content -> SEO -> Social -> Analytics -> Campaign -> Growth Workflows -> Automation), the eighth and final AI Growth OS Feature. It **prepares governed automation opportunities** from the certified growth workflows; it never executes, schedules, or orchestrates automation, never bypasses `GovernanceClearance`, and never duplicates Runtime Execution.
+
+## What it does
+
+`AutomationIntelligence.plan(request)` frames a governed automation opportunity for one of eleven automation capabilities (automation-opportunity analysis, workflow/task automation planning, trigger recommendation, handoff planning, guardrail and escalation recommendation, monitoring recommendation, rollout planning, automation roadmap planning, automation evaluation). It validates the request and produces an immutable, content-hashed `AutomationPlan` carrying the consumed `workflow` reference, any knowledge references, and the frozen Agent Engine `AgentRequest` (a `prompt` step grounded in the growth workflow and knowledge, and a `provider` step for a provider-neutral `text-generation` need). `automationRequestFromWorkflow(workflow, framing)` builds an automation request from a Growth Workflows `GrowthWorkflow` (consumed by reference, carrying the six planner references transitively). `evaluationRequest(plan, metrics)` frames an automation-quality `EvaluationRequest`. `agentDefinition()` returns the automation agent.
+
+## Ownership and boundaries
+
+It owns its capability catalogue, framing, dependency mapping, validation, and statistics. It consumes the growth workflow (by reference) and knowledge (canonical `knowledge/...` references) by reference, and owns no business truth. It never owns Growth Workflows, marketing/content/SEO/social/analytics/campaign behavior, execution, scheduling, orchestration, a runtime, a provider, prompts, retrieval, governance, evaluation, or knowledge. It owns no schedule, trigger, cron, or job primitive (all `ai/runtime/`), mints or bypasses no `GovernanceClearance` (private to `provider-engine`), and produces no Runtime `ExecutionRequest`/`ExecutionRecord`. It never executes, schedules, or orchestrates an automation; it builds no `AgentExecutionPlan` and no new platform mechanism. It is deterministic and fail-closed, and holds no vendor knowledge. Its eleven capabilities are a distinct namespace from the sixty-eight planner capabilities and the fifteen Growth Workflows types.
+
+## Dependencies
+
+Type-only, barrel-only app-to-app (consumed frozen contracts): `agent-engine` (the `AgentRequest` / `AgentStep` contract), `evaluation-engine` (the `EvaluationRequest` contract), and `openlance-growth-workflows` (the `GrowthWorkflow` output contract, its immediate predecessor in the chain, which carries the six planner references). Substrate: `di`, `errors`, `kernel`. It takes no dependency on `runtime-execution-engine`, `governance-engine`, `provider-engine`, `operations-engine`, or `safety-engine`. Acyclic terminal step of the linear chain (Growth Workflows does not depend on Automation); registers through the composition-root seam under `AUTOMATION_MANAGER`.
