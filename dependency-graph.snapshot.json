@@ -242,6 +242,22 @@
     "@openlance/aios-safety",
     "@openlance/aios-tool-engine"
   ],
+  "@openlance/aios-seo-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-content-intelligence",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel"
+  ],
+  "@openlance/aios-social-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-seo-intelligence"
+  ],
   "@openlance/aios-testing": [
     "@openlance/aios-di",
     "@openlance/aios-errors",
