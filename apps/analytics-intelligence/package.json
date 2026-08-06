@@ -1,0 +1,51 @@
+{
+  "name": "@openlance/aios-analytics-intelligence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 5 Stage 5 Analytics Intelligence: the fifth AI Growth OS Feature, a deterministic domain subsystem that owns the analytics behavior only (ADR-0053). The Social -> Analytics step of the growth chain: it consumes a Social Intelligence output and, through it, the SEO, content, and marketing references (all by reference), plus knowledge by reference, and frames a governed analytics task: an immutable AnalyticsPlan carrying the frozen Agent Engine AgentRequest (prompt, provider steps), plus an analytics-quality EvaluationRequest for the frozen Evaluation Engine. It is deterministic and fail-closed; it never owns business truth, never executes, invokes a provider, selects a model, evaluates, decides, orchestrates, or schedules, and builds no new platform infrastructure.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-evaluation-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*",
+    "@openlance/aios-social-intelligence": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

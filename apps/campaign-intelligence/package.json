@@ -1,0 +1,55 @@
+{
+  "name": "@openlance/aios-campaign-intelligence",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 5 Stage 6 Campaign Intelligence: the sixth AI Growth OS Feature, a deterministic domain subsystem that owns the campaign planning behavior only (ADR-0054). The final Analytics -> Campaign step of the growth chain: it consumes an Analytics Intelligence output and, through it, the social, SEO, content, and marketing references (all by reference), plus knowledge by reference, and frames a governed campaign task: an immutable CampaignPlan carrying the frozen Agent Engine AgentRequest (prompt, provider steps), plus a campaign-quality EvaluationRequest for the frozen Evaluation Engine. It is deterministic and fail-closed; it never creates marketing strategy, content, SEO, social, or analytics, never executes, schedules, invokes a provider, orchestrates, or decides, and builds no new platform infrastructure.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-analytics-intelligence": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-evaluation-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-content-intelligence": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-marketing-intelligence": "workspace:*",
+    "@openlance/aios-seo-intelligence": "workspace:*",
+    "@openlance/aios-social-intelligence": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}

@@ -14,6 +14,14 @@
     "@openlance/aios-tool-engine"
   ],
   "@openlance/aios-agents": [],
+  "@openlance/aios-analytics-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel",
+    "@openlance/aios-social-intelligence"
+  ],
   "@openlance/aios-application-host": [
     "@openlance/aios-composition-root",
     "@openlance/aios-config",
@@ -22,6 +30,14 @@
     "@openlance/aios-kernel",
     "@openlance/aios-logging",
     "@openlance/aios-provider-engine"
+  ],
+  "@openlance/aios-campaign-intelligence": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-analytics-intelligence",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel"
   ],
   "@openlance/aios-composition-root": [
     "@openlance/aios-config",
