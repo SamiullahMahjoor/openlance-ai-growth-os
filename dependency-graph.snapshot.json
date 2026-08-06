@@ -157,6 +157,14 @@
     "@openlance/aios-safety",
     "@openlance/aios-tools"
   ],
+  "@openlance/aios-openlance-growth-workflows": [
+    "@openlance/aios-agent-engine",
+    "@openlance/aios-campaign-intelligence",
+    "@openlance/aios-di",
+    "@openlance/aios-errors",
+    "@openlance/aios-evaluation-engine",
+    "@openlance/aios-kernel"
+  ],
   "@openlance/aios-operations": [],
   "@openlance/aios-operations-engine": [
     "@openlance/aios-di",

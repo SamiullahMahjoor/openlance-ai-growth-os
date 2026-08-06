@@ -1,0 +1,56 @@
+{
+  "name": "@openlance/aios-openlance-growth-workflows",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Phase 5 Stage 7 OpenLance Growth Workflows: a deterministic domain subsystem that owns the growth-workflow behavior only (ADR-0055). It composes the six frozen planners (Marketing, Content, SEO, Social, Analytics, Campaign) into reusable OpenLance growth workflows. The Campaign -> Growth Workflows step of the chain: it consumes a Campaign Intelligence output and, through it, the five earlier planner references (all by reference), plus knowledge by reference, and frames a governed workflow task: an immutable GrowthWorkflow carrying the frozen Agent Engine AgentRequest (prompt, provider steps), plus a workflow-quality EvaluationRequest for the frozen Evaluation Engine. It is deterministic and fail-closed; it never executes, schedules, automates, or orchestrates a workflow, never invokes a provider, and builds no new platform infrastructure.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "bench": "vitest bench --run",
+    "docs": "typedoc src/index.ts --out docs-api"
+  },
+  "dependencies": {
+    "@openlance/aios-agent-engine": "workspace:*",
+    "@openlance/aios-campaign-intelligence": "workspace:*",
+    "@openlance/aios-di": "workspace:*",
+    "@openlance/aios-errors": "workspace:*",
+    "@openlance/aios-evaluation-engine": "workspace:*",
+    "@openlance/aios-kernel": "workspace:*"
+  },
+  "devDependencies": {
+    "@openlance/aios-analytics-intelligence": "workspace:*",
+    "@openlance/aios-composition-root": "workspace:*",
+    "@openlance/aios-config": "workspace:*",
+    "@openlance/aios-content-intelligence": "workspace:*",
+    "@openlance/aios-logging": "workspace:*",
+    "@openlance/aios-marketing-intelligence": "workspace:*",
+    "@openlance/aios-seo-intelligence": "workspace:*",
+    "@openlance/aios-social-intelligence": "workspace:*",
+    "@openlance/aios-tsconfig": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "aios": {
+    "layer": "app",
+    "constitution": [],
+    "stability": "Experimental",
+    "apiVersion": "0.0.0",
+    "generation": 1
+  }
+}
